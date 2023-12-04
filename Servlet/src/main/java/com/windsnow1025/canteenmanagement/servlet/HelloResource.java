@@ -1,4 +1,4 @@
-package com.windsnow1025.canteenmanagement.servlet.servlet;
+package com.windsnow1025.canteenmanagement.servlet;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
