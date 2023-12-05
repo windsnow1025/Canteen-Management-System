@@ -75,7 +75,7 @@ public class JDBCHelper {
     // Change this function for each new version
     public void onUpgrade(Connection connection) throws SQLException {
         try (Statement statement = connection.createStatement()) {
-            
+
         }
         logger.log(Level.INFO, "Database upgraded");
     }
