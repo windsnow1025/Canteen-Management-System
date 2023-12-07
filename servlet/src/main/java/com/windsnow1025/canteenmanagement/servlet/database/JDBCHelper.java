@@ -29,6 +29,40 @@ public class JDBCHelper {
             INSERT INTO metadata (version) VALUES (0)
             """;
 
+    // user_type: consumer / canteen_admin / master_admin
+    private static final String CREATE_TABLE_USER = """
+            CREATE TABLE IF NOT EXISTS user (
+                id INT AUTO_INCREMENT,
+                username VARCHAR(255) NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                user_type VARCHAR(255) NOT NULL,
+                cateen_id INT,
+                PRIMARY KEY (id)
+            )
+            """;
+
+    private static final String CREATE_TABLE_CANTEEN = """
+            CREATE TABLE IF NOT EXISTS canteen (
+                id INT AUTO_INCREMENT,
+                canteen_name VARCHAR(255) NOT NULL,
+                intro TEXT NOT NULL,
+                bussiness_hours VARCHAR(255) NOT NULL,
+                PRIMARY KEY (id)
+            )
+            """;
+
+    private static final String CREATE_TABLE_DISH = """
+            CREATE TABLE IF NOT EXISTS dish (
+                id INT AUTO_INCREMENT,
+                dish_name VARCHAR(255) NOT NULL,
+                price FLOAT NOT NULL,
+                discount_rate FLOAT NOT NULL,
+                cuisine VARCHAR(255) NOT NULL,
+                picture BLOB,
+                PRIMARY KEY (id)
+            )
+            """;
+
     public JDBCHelper() {
         try {
             InputStream inputStream = JDBCHelper.class.getClassLoader().getResourceAsStream("config.json");
@@ -68,6 +102,9 @@ public class JDBCHelper {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(CREATE_TABLE_METADATA);
             statement.executeUpdate(INSERT_METADATA);
+            statement.executeUpdate(CREATE_TABLE_USER);
+            statement.executeUpdate(CREATE_TABLE_CANTEEN);
+            statement.executeUpdate(CREATE_TABLE_DISH);
         }
         logger.log(Level.INFO, "Database created");
     }
