@@ -15,7 +15,7 @@ public class JDBCHelper {
     private static String DATABASE_URL;
     private static String DATABASE_USER;
     private static String DATABASE_PASSWORD;
-    private static final String DATABASE_VERSION = "1.2";
+    private static final String DATABASE_VERSION = "1.0";
 
     private Connection connection;
 
