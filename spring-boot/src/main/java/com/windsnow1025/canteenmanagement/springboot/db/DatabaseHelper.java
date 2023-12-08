@@ -1,11 +1,10 @@
-package com.windsnow1025.canteenmanagement.springboot.database;
+package com.windsnow1025.canteenmanagement.springboot.db;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.sql.*;
 
 public abstract class DatabaseHelper {
