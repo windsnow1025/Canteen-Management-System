@@ -98,8 +98,7 @@ public class JDBCHelper extends DatabaseHelper {
 
     @Override
     protected void setDatabaseConfig() {
-        try {
-            InputStream inputStream = JDBCHelper.class.getClassLoader().getResourceAsStream("config.json");
+        try (InputStream inputStream = JDBCHelper.class.getClassLoader().getResourceAsStream("config.json")) {
             String text = new String(inputStream.readAllBytes());
             JSONObject jsonObject = new JSONObject(text);
             dbUrl = jsonObject.getString("database_url");
