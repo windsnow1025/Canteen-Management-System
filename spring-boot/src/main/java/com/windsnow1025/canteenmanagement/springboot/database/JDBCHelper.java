@@ -103,7 +103,7 @@ public class JDBCHelper extends DatabaseHelper {
             String text = new String(inputStream.readAllBytes());
             JSONObject jsonObject = new JSONObject(text);
             dbUrl = jsonObject.getString("database_url");
-            dbUsername = jsonObject.getString("database_user");
+            dbUsername = jsonObject.getString("database_username");
             dbPassword = jsonObject.getString("database_password");
             dbDriverClassName = "com.mysql.cj.jdbc.Driver";
             dbVersion = "1.0";
