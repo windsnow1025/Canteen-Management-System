@@ -1,14 +1,9 @@
 package com.windsnow1025.canteenmanagement.servlet.database;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class JDBCHelper extends DatabaseHelper {
 
