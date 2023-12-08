@@ -36,6 +36,7 @@ public class JDBCHelper {
                 username VARCHAR(255) NOT NULL,
                 password VARCHAR(255) NOT NULL,
                 user_type VARCHAR(255) NOT NULL,
+                user_level VARCHAR(255),
                 cateen_id INT,
                 PRIMARY KEY (id)
             )
@@ -46,7 +47,9 @@ public class JDBCHelper {
                 id INT AUTO_INCREMENT,
                 canteen_name VARCHAR(255) NOT NULL,
                 intro TEXT NOT NULL,
+                location VARCHAR(255) NOT NULL,
                 bussiness_hours VARCHAR(255) NOT NULL,
+                announcement VARCHAR(255),
                 PRIMARY KEY (id)
             )
             """;
@@ -59,7 +62,45 @@ public class JDBCHelper {
                 discount_rate FLOAT NOT NULL,
                 cuisine VARCHAR(255) NOT NULL,
                 picture BLOB,
+                canteen_id INT NOT NULL,
                 PRIMARY KEY (id)
+            )
+            """;
+
+    private static final String CREATE_TABLE_COMPLAINT = """
+            CREATE TABLE IF NOT EXITS complaint (
+            id INT AUTO_INCREMENT,
+            canteen_id INT NOT NULL,
+            detail VARCHAR(255),
+            complaint_result VARCHAR(255),
+            PRIMARY KEY (id),
+            FOREIGN KEY (canteen_id) REFERENCES canteen(id)
+            )
+            """;
+
+    private static final String CREATE_TABLE_VOTE = """
+            CREATE TABLE IF NOT EXISTS vote (
+            id INT AUTO_INCREMENT,
+            release_time DATA NOT NULL,
+            title VARCHAR(255),
+            rating_result VARCHAR(255),
+            canteen_id INT NOT NULL,
+            PRIMARY KEY (id)
+            FOREIGN KEY (canteen_id) REFERENCES canteen(id)
+            )
+            """;
+
+    private static final String CREATE_TABLE_EVALUATION = """
+            CREATE TABLE IF NOT EXISTS evaluation(
+            id INT AUTO_INCREMENT,
+            user_id INT NOT NULL,
+            dish_id INT NOT NULL,
+            content TEXT,
+            picture BLOB,
+            rating FLOAT NOT NULL,
+            PRIMARY KEY (id),
+            FOREIGN KEY (user_id) REFERENCES user(id),
+            FOREIGN KEY (dish_id) REFERENCES dish(id),
             )
             """;
 
@@ -105,6 +146,9 @@ public class JDBCHelper {
             statement.executeUpdate(CREATE_TABLE_USER);
             statement.executeUpdate(CREATE_TABLE_CANTEEN);
             statement.executeUpdate(CREATE_TABLE_DISH);
+            statement.executeUpdate(CREATE_TABLE_COMPLAINT);
+            statement.executeUpdate(CREATE_TABLE_VOTE);
+            statement.executeUpdate(CREATE_TABLE_EVALUATION);
         }
         logger.log(Level.INFO, "Database created");
     }
@@ -140,6 +184,7 @@ public class JDBCHelper {
             updateStatement.executeUpdate();
         }
     }
+
 
     public void closeConnection() throws SQLException {
         if (connection != null) {
