@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
+import java.util.*;
 
 public abstract class DatabaseHelper {
     protected static final Logger logger = LoggerFactory.getLogger(DatabaseHelper.class);
@@ -15,8 +16,6 @@ public abstract class DatabaseHelper {
     protected static String dbPassword;
     protected static String dbDriverClassName;
     protected static String dbVersion;
-
-    private Connection connection;
 
     public DatabaseHelper() {
         try {
@@ -30,33 +29,52 @@ public abstract class DatabaseHelper {
             config.setDriverClassName(dbDriverClassName);
             dataSource = new HikariDataSource(config);
 
-            connection = getConnection();
+            // Version control
             String currentVersion = selectVersion();
             if (currentVersion == null) {
-                onCreate(connection);
+                onCreate();
             } else if (!currentVersion.equals(dbVersion)) {
-                onUpgrade(connection);
+                onUpgrade();
             }
         } catch (SQLException e) {
             logger.error("Database connection failed", e);
         }
     }
 
-    protected abstract void setDatabaseConfig();
-
     public Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }
 
+    public List<Map<String, Object>> select(String query, Object... params) throws SQLException {
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            setParameters(preparedStatement, params);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSetToList(resultSet);
+            }
+        }
+    }
+
+    public int executeUpdate(String query, Object... params) throws SQLException {
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            setParameters(preparedStatement, params);
+            return preparedStatement.executeUpdate();
+        }
+    }
+
+    // Set dbUrl, dbUsername, dbPassword, dbDriverClassName, dbVersion
+    protected abstract void setDatabaseConfig();
+
     // To be overridden
-    protected void onCreate(Connection connection) throws SQLException {
+    protected void onCreate() throws SQLException {
         createMetadata();
         insertVersion();
         logger.info("Database created");
     }
 
     // To be overridden
-    protected void onUpgrade(Connection connection) throws SQLException {
+    protected void onUpgrade() throws SQLException {
         updateVersion();
         logger.info("Database upgraded");
     }
@@ -67,57 +85,61 @@ public abstract class DatabaseHelper {
                     version VARCHAR(255)
                 );
                 """;
-        try (Statement statement = connection.createStatement()) {
+        try (Statement statement = getConnection().createStatement()) {
             statement.executeUpdate(CREATE_METADATA);
         }
     }
 
     protected void dropMetadata() throws SQLException {
-        final String DROP_METADATA = """
-                DROP TABLE IF EXISTS metadata
-                """;
-        try (Statement statement = connection.createStatement()) {
+        final String DROP_METADATA = "DROP TABLE IF EXISTS metadata";
+        try (Statement statement = getConnection().createStatement()) {
             statement.executeUpdate(DROP_METADATA);
         }
     }
 
     protected String selectVersion() {
         final String SELECT_METADATA = "SELECT version FROM metadata";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(SELECT_METADATA)) {
-            if (resultSet.next()) {
-                return resultSet.getString("version");
+        try {
+            List<Map<String, Object>> results = select(SELECT_METADATA);
+            if (!results.isEmpty()) {
+                return (String) results.get(0).get("version");
             } else {
                 return null;
             }
         } catch (SQLException e) {
+            logger.error("Error selecting version", e);
             return null;
         }
     }
 
     protected void insertVersion() throws SQLException {
-        final String INSERT_METADATA = """
-                INSERT INTO metadata (version) VALUES (?)
-                """;
-        try (PreparedStatement insertStatement = connection.prepareStatement(INSERT_METADATA)) {
-            insertStatement.setString(1, dbVersion);
-            insertStatement.executeUpdate();
-        }
+        final String INSERT_METADATA = "INSERT INTO metadata (version) VALUES (?)";
+        executeUpdate(INSERT_METADATA, dbVersion);
     }
 
     protected void updateVersion() throws SQLException {
-        final String UPDATE_METADATA = """
-                UPDATE metadata SET version = ?
-                """;
-        try (PreparedStatement updateStatement = connection.prepareStatement(UPDATE_METADATA)) {
-            updateStatement.setString(1, dbVersion);
-            updateStatement.executeUpdate();
+        final String UPDATE_METADATA = "UPDATE metadata SET version = ?";
+        executeUpdate(UPDATE_METADATA, dbVersion);
+    }
+
+    private void setParameters(PreparedStatement preparedStatement, Object[] params) throws SQLException {
+        for (int i = 0; i < params.length; i++) {
+            preparedStatement.setObject(i + 1, params[i]);
         }
     }
 
-    public void closeConnection() throws SQLException {
-        if (connection != null) {
-            connection.close();
+    private List<Map<String, Object>> resultSetToList(ResultSet resultSet) throws SQLException {
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+        int columns = resultSetMetaData.getColumnCount();
+        List<Map<String, Object>> rows = new ArrayList<>();
+        while (resultSet.next()) {
+            Map<String, Object> row = new HashMap<>(columns);
+            for (int i = 1; i <= columns; ++i) {
+                row.put(resultSetMetaData.getColumnName(i), resultSet.getObject(i));
+            }
+            rows.add(row);
         }
+        return rows;
     }
+
 }

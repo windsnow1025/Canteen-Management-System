@@ -111,8 +111,8 @@ public class JDBCHelper extends DatabaseHelper {
     }
 
     @Override
-    public void onCreate(Connection connection) throws SQLException {
-        try (Statement statement = connection.createStatement()) {
+    public void onCreate() throws SQLException {
+        try (Statement statement = getConnection().createStatement()) {
             statement.executeUpdate(CREATE_TABLE_METADATA);
             statement.executeUpdate(INSERT_METADATA);
             statement.executeUpdate(CREATE_TABLE_USER);
@@ -129,8 +129,8 @@ public class JDBCHelper extends DatabaseHelper {
     }
 
     @Override
-    public void onUpgrade(Connection connection) throws SQLException {
-        try (Statement statement = connection.createStatement()) {
+    public void onUpgrade() throws SQLException {
+        try (Statement statement = getConnection().createStatement()) {
             // Drop all
             statement.executeUpdate("DROP TABLE IF EXISTS metadata");
             statement.executeUpdate("DROP TABLE IF EXISTS complaint");
