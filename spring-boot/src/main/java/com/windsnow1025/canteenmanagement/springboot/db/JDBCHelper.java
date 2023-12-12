@@ -120,7 +120,6 @@ public class JDBCHelper extends DatabaseHelper {
     public void onUpgrade() throws SQLException {
         try (Statement statement = getConnection().createStatement()) {
             // Drop all
-            statement.executeUpdate("DROP TABLE IF EXISTS metadata");
             statement.executeUpdate("DROP TABLE IF EXISTS complaint");
             statement.executeUpdate("DROP TABLE IF EXISTS vote");
             statement.executeUpdate("DROP TABLE IF EXISTS evaluation");
