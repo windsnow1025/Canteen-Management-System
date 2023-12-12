@@ -7,16 +7,6 @@ import java.sql.*;
 
 public class JDBCHelper extends DatabaseHelper {
 
-    private static final String CREATE_TABLE_METADATA = """
-            CREATE TABLE IF NOT EXISTS metadata (
-                version VARCHAR(255)
-            );
-            """;
-
-    private static final String INSERT_METADATA = """
-            INSERT INTO metadata (version) VALUES (0)
-            """;
-
     // user_type: consumer / canteen_admin / master_admin
     private static final String CREATE_TABLE_USER = """
             CREATE TABLE IF NOT EXISTS user (
@@ -113,8 +103,6 @@ public class JDBCHelper extends DatabaseHelper {
     @Override
     public void onCreate() throws SQLException {
         try (Statement statement = getConnection().createStatement()) {
-            statement.executeUpdate(CREATE_TABLE_METADATA);
-            statement.executeUpdate(INSERT_METADATA);
             statement.executeUpdate(CREATE_TABLE_USER);
             statement.executeUpdate(CREATE_TABLE_CANTEEN);
             statement.executeUpdate(CREATE_TABLE_DISH);
@@ -141,8 +129,6 @@ public class JDBCHelper extends DatabaseHelper {
             statement.executeUpdate("DROP TABLE IF EXISTS user");
 
             // Create all
-            statement.executeUpdate(CREATE_TABLE_METADATA);
-            statement.executeUpdate(INSERT_METADATA);
             statement.executeUpdate(CREATE_TABLE_USER);
             statement.executeUpdate(CREATE_TABLE_CANTEEN);
             statement.executeUpdate(CREATE_TABLE_DISH);
