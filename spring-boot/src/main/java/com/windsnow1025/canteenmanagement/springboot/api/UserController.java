@@ -35,10 +35,10 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<User> loginUser(@RequestBody Map<String, String> request) {
+    public ResponseEntity<User> loginUser(@RequestBody String username) {
         try {
-            User user = new User();
-            if (user != null) {
+            if (username != null) {
+                User user = userDAO.getUserByUsername(username);
                 return ResponseEntity.ok(user);
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -49,9 +49,9 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Map<String, Object>> signupUser(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, Object>> signupUser(@RequestBody User user) {
         try {
-            boolean isSignedUp = true;
+            boolean isSignedUp = userDAO.addNewUser(user);
             if (isSignedUp) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Signup successful"));
             } else {

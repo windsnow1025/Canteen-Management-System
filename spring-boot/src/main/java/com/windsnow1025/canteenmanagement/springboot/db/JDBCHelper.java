@@ -15,7 +15,7 @@ public class JDBCHelper extends DatabaseHelper {
                 password VARCHAR(255) NOT NULL,
                 user_type VARCHAR(255) NOT NULL,
                 user_level VARCHAR(255),
-                cateen_id INT,
+                canteen_id INT,
                 PRIMARY KEY (id)
             )
             """;
@@ -94,7 +94,7 @@ public class JDBCHelper extends DatabaseHelper {
             dbUsername = jsonObject.getString("database_username");
             dbPassword = jsonObject.getString("database_password");
             dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-            dbVersion = "1.1";
+            dbVersion = "1.1.1";
         } catch (IOException e) {
             logger.error("Database config failed", e);
         }

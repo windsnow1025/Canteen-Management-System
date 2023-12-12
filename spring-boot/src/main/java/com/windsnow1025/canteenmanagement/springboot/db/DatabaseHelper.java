@@ -55,6 +55,7 @@ public abstract class DatabaseHelper {
         }
     }
 
+
     public int executeUpdate(String query, Object... params) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
