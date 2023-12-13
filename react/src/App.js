@@ -1,10 +1,13 @@
 import './index.css';
-import NavBar from "./components/navBar";
+import Register from "./register";
+import Login from "./login";
+import FirstPage from "./firstPage";
 
 function App() {
   return (
     <div className="App">
-      <NavBar />
+        <FirstPage />
+
     </div>
   );
 }
