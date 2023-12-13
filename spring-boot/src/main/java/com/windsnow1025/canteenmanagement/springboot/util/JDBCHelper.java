@@ -1,4 +1,4 @@
-package com.windsnow1025.canteenmanagement.springboot.db;
+package com.windsnow1025.canteenmanagement.springboot.util;
 
 import org.json.JSONObject;
 

@@ -1,6 +1,6 @@
 package com.windsnow1025.canteenmanagement.springboot;
 
-import com.windsnow1025.canteenmanagement.springboot.db.JDBCHelper;
+import com.windsnow1025.canteenmanagement.springboot.util.JDBCHelper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

@@ -1,6 +1,7 @@
-package com.windsnow1025.canteenmanagement.springboot.db;
+package com.windsnow1025.canteenmanagement.springboot.dao;
 
 import com.windsnow1025.canteenmanagement.springboot.model.User;
+import com.windsnow1025.canteenmanagement.springboot.util.JDBCHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

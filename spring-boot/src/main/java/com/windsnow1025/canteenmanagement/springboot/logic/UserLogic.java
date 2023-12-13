@@ -1,6 +1,6 @@
 package com.windsnow1025.canteenmanagement.springboot.logic;
 
-import com.windsnow1025.canteenmanagement.springboot.db.UserDAO;
+import com.windsnow1025.canteenmanagement.springboot.dao.UserDAO;
 import com.windsnow1025.canteenmanagement.springboot.model.User;
 import com.windsnow1025.canteenmanagement.springboot.util.JwtUtil;
 
