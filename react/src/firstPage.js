@@ -23,6 +23,12 @@ const recommendDish = [
         price: 2
     }
 ];
+
+const Posts= [
+    {
+
+    }
+];
 const FirstPage: React.FC = () => (
     <>
         <NavBar />
