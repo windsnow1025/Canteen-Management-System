@@ -87,17 +87,22 @@ public class JDBCHelper extends DatabaseHelper {
 
     @Override
     protected void setDatabaseConfig() {
-        try (InputStream inputStream = JDBCHelper.class.getClassLoader().getResourceAsStream("config.json")) {
-            String text = new String(inputStream.readAllBytes());
-            JSONObject jsonObject = new JSONObject(text);
-            dbUrl = jsonObject.getString("database_url");
-            dbUsername = jsonObject.getString("database_username");
-            dbPassword = jsonObject.getString("database_password");
-            dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-            dbVersion = "1.1.2";
-        } catch (IOException e) {
-            logger.error("Database config failed", e);
-        }
+//        try (InputStream inputStream = JDBCHelper.class.getClassLoader().getResourceAsStream("config.json")) {
+//            String text = new String(inputStream.readAllBytes());
+//            JSONObject jsonObject = new JSONObject(text);
+//            dbUrl = jsonObject.getString("database_url");
+//            dbUsername = jsonObject.getString("database_username");
+//            dbPassword = jsonObject.getString("database_password");
+//            dbDriverClassName = "com.mysql.cj.jdbc.Driver";
+//            dbVersion = "1.1.2";
+//        } catch (IOException e) {
+//            logger.error("Database config failed", e);
+//        }
+        dbUrl = "jdbc:mysql://learn-canteen-mysql:3306/" + System.getenv("MYSQL_DATABASE");
+        dbUsername = System.getenv("MYSQL_USER");
+        dbPassword = System.getenv("MYSQL_PASSWORD");
+        dbDriverClassName = "com.mysql.cj.jdbc.Driver";
+        dbVersion = "1.1.2";
     }
 
     @Override
