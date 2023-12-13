@@ -102,9 +102,11 @@ public class UserController {
         try {
             int id = Integer.parseInt(request.get("id"));
             String userType = request.get("userType");
+            int canteenId = Integer.parseInt(request.get("canteen_id"));
             User user = new User();
             user.setId(id);
             user.setUserType(userType);
+            user.setCanteenId(canteenId);
             if (userDAO.updateUserStatusById(user)){
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "UpdateType successful"));
             }else
@@ -136,4 +138,6 @@ public class UserController {
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
     }
+
+
 }

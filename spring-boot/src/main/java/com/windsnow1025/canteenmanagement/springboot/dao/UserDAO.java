@@ -6,8 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -90,11 +88,12 @@ public class UserDAO {
     }
 
     public boolean updateUserStatusById(User user){
-        String sql = "UPDATE user SET user_type = ? WHERE id = ?";
+        String sql = "UPDATE user SET user_type = ?, canteen_id = ? WHERE id = ?";
         String userType = user.getUserType();
+        int canteenId = user.getCanteenId();
         int id = user.getId();
         try {
-            int rowsAffected = jdbcHelper.executeUpdate(sql,userType,id);
+            int rowsAffected = jdbcHelper.executeUpdate(sql, userType, canteenId, id);
             return rowsAffected > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -112,6 +111,7 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
+
 
 
 }
