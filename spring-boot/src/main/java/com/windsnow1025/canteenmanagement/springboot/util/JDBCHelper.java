@@ -82,32 +82,56 @@ public class JDBCHelper extends DatabaseHelper {
             )
             """;
 
+    private static final String CREATE_TABLE_POST = """
+            CREATE TABLE IF NOT EXISTS post(
+                id INT AUTO_INCREMENT,
+                user_id INT NOT NULL,
+                title VARCHAR(255),
+                content TEXT,
+                picture BLOB,
+                PRIMARY KEY (id),
+                FOREIGN KEY (user_id) REFERENCES user(id),
+            )
+            """;
+
+    private static final String CREATE_TABLE_COMMENT = """
+            CREATE TABLE IF NOT EXISTS post(
+                id INT AUTO_INCREMENT,
+                user_id INT NOT NULL,
+                post_id INT NOT NULL,
+                content TEXT NOT NULL,
+                PRIMARY KEY (id),
+                FOREIGN KEY (user_id) REFERENCES user(id),
+                FOREIGN KEY (post_id) REFERENCES post(id)
+            )
+            """;
+
     private static final String INSERT_MASTER = """
             INSERT INTO user (username, password, user_type, user_level, canteen_id)
             VALUES ("master","12345678901","master_admin","MAX","-1")
             """;
 
-    private static final String INSERT_CANTEEN_FIRST = """
+    private static final String INSERT_CANTEEN_1 = """
             INSERT INTO canteen (canteen_name, intro, location, business_hours, announcement)
             VALUES ("一餐厅", "....", "杨浦区军工路516号上海理工大学内", "06:00 – 22:00", "一食堂禁止携带酒水");
             """;
 
-    private static final String INSERT_CANTEEN_SECOND = """
+    private static final String INSERT_CANTEEN_2 = """
             INSERT INTO canteen (canteen_name, intro, location, business_hours, announcement)
             VALUES ("二食堂", "基础学院学子的唯二选择之一", "杨浦区军工路1100号上海理工大学内", "06:00 – 22:00", "二食堂禁止携带本部食堂的食物");
             """;
 
-    private static final String INSERT_CANTEEN_THIRD = """
+    private static final String INSERT_CANTEEN_3 = """
             INSERT INTO canteen (canteen_name, intro, location, business_hours, announcement)
             VALUES ("思餐厅", "思餐厅天下第二", "杨浦区军工路516号上海理工大学内", "06:00 – 22:00", "思餐厅禁止情侣长时间霸占座位，时间就是金钱我的朋友");
             """;
 
-    private static final String INSERT_CANTEEN_FOURTH = """
+    private static final String INSERT_CANTEEN_4 = """
             INSERT INTO canteen (canteen_name, intro, location, business_hours, announcement)
             VALUES ("五食堂", "五食堂天下第一！！！！！！", "杨浦区军工路516号上海理工大学内", "06:00 – 22:00", "五食堂禁止情侣入内，享受美食吧，诸位，五食堂是你们肠胃最坚实的壁垒");
             """;
 
-    private static final String INSERT_CANTEEN_MINI = """
+    private static final String INSERT_CANTEEN_5 = """
             INSERT INTO canteen (canteen_name, intro, location, business_hours, announcement)
             VALUES ("迷你餐厅", "金刚胃训练处", "杨浦区军工路516号上海理工大学内", "06:00 – 22:00", "请各位同学就餐前，准备好自己的医保卡");
             """;
@@ -125,7 +149,7 @@ public class JDBCHelper extends DatabaseHelper {
             dbUsername = jsonObject.getString("database_username");
             dbPassword = jsonObject.getString("database_password");
             dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-            dbVersion = "1.1.4";
+            dbVersion = "1.2.0";
         } catch (IOException e) {
             logger.error("Database config failed", e);
         }
@@ -145,12 +169,14 @@ public class JDBCHelper extends DatabaseHelper {
             statement.executeUpdate(CREATE_TABLE_COMPLAINT);
             statement.executeUpdate(CREATE_TABLE_VOTE);
             statement.executeUpdate(CREATE_TABLE_EVALUATION);
+            statement.executeUpdate(CREATE_TABLE_POST);
+            statement.executeUpdate(CREATE_TABLE_COMMENT);
             statement.executeUpdate(INSERT_MASTER);
-            statement.executeUpdate(INSERT_CANTEEN_FIRST);
-            statement.executeUpdate(INSERT_CANTEEN_SECOND);
-            statement.executeUpdate(INSERT_CANTEEN_THIRD);
-            statement.executeUpdate(INSERT_CANTEEN_FOURTH);
-            statement.executeUpdate(INSERT_CANTEEN_MINI);
+            statement.executeUpdate(INSERT_CANTEEN_1);
+            statement.executeUpdate(INSERT_CANTEEN_2);
+            statement.executeUpdate(INSERT_CANTEEN_3);
+            statement.executeUpdate(INSERT_CANTEEN_4);
+            statement.executeUpdate(INSERT_CANTEEN_5);
         }
 
         createMetadata();
@@ -162,9 +188,11 @@ public class JDBCHelper extends DatabaseHelper {
     public void onUpgrade() throws SQLException {
         try (Statement statement = getConnection().createStatement()) {
             // Drop all
-            statement.executeUpdate("DROP TABLE IF EXISTS complaint");
-            statement.executeUpdate("DROP TABLE IF EXISTS vote");
+            statement.executeUpdate("DROP TABLE IF EXISTS comment");
+            statement.executeUpdate("DROP TABLE IF EXISTS post");
             statement.executeUpdate("DROP TABLE IF EXISTS evaluation");
+            statement.executeUpdate("DROP TABLE IF EXISTS vote");
+            statement.executeUpdate("DROP TABLE IF EXISTS complaint");
             statement.executeUpdate("DROP TABLE IF EXISTS dish");
             statement.executeUpdate("DROP TABLE IF EXISTS canteen");
             statement.executeUpdate("DROP TABLE IF EXISTS user");
