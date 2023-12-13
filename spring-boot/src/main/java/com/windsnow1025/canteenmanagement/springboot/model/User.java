@@ -23,6 +23,11 @@ public class User implements Serializable {
     }
 
     public User(String username, String password, String userType, String userLevel, int canteenId) {
+        this.username = username;
+        this.password = password;
+        this.userType = userType;
+        this.userLevel = userLevel;
+        this.canteenId = canteenId;
     }
 
     public int getId() {
