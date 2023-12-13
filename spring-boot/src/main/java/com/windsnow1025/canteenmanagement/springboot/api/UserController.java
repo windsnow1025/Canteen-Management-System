@@ -1,7 +1,10 @@
 package com.windsnow1025.canteenmanagement.springboot.api;
 
+import com.windsnow1025.canteenmanagement.springboot.dao.UserDAO;
 import com.windsnow1025.canteenmanagement.springboot.logic.UserLogic;
 import com.windsnow1025.canteenmanagement.springboot.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +15,7 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
     private final UserLogic userLogic;
 
     public UserController() {
@@ -28,6 +32,7 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
         } catch (Exception e) {
+            logger.error("Get user info error", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -44,6 +49,7 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
         } catch (Exception e) {
+            logger.error("Login user error", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -64,6 +70,7 @@ public class UserController {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Signup failed"));
             }
         } catch (Exception e) {
+            logger.error("Signup user error", e);
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
     }

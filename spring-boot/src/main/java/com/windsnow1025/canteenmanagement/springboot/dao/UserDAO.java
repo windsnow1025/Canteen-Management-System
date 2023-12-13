@@ -49,7 +49,7 @@ public class UserDAO {
                 return null;
             }
         } catch (SQLException e) {
-            logger.error("getUserByUsername error", e);
+            logger.error("Select user by username and password error", e);
             throw new RuntimeException(e);
         }
     }
@@ -70,7 +70,7 @@ public class UserDAO {
                 return null;
             }
         } catch (SQLException e) {
-            logger.error("getUserByUsername error", e);
+            logger.error("Select user by username error", e);
             throw new RuntimeException(e);
         }
     }
