@@ -49,8 +49,14 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Map<String, Object>> signupUser(@RequestBody User user) {
+    public ResponseEntity<Map<String, Object>> signupUser(@RequestBody Map<String, String> request) {
         try {
+            String username = request.get("username");
+            String password = request.get("password");
+            String userType = request.get("userType");
+            String userLevel = request.get("userLevel");
+            int canteenId = Integer.parseInt(request.get("canteenId"));
+            User user = new User(username, password, userType, userLevel, canteenId);
             boolean isSignedUp = userLogic.signUp(user);
             if (isSignedUp) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Signup successful"));

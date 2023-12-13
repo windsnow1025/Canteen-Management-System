@@ -11,8 +11,8 @@ public class User implements Serializable {
     private int canteenId;
 
     public User() {
-
     }
+
     public User(int id, String username, String password, String userType, String userLevel, int canteenId) {
         this.id = id;
         this.username = username;
@@ -20,6 +20,9 @@ public class User implements Serializable {
         this.userType = userType;
         this.userLevel = userLevel;
         this.canteenId = canteenId;
+    }
+
+    public User(String username, String password, String userType, String userLevel, int canteenId) {
     }
 
     public int getId() {
