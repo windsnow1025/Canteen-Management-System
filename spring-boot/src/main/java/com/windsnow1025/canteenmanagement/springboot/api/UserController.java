@@ -1,7 +1,6 @@
 package com.windsnow1025.canteenmanagement.springboot.api;
 
-import com.windsnow1025.canteenmanagement.springboot.db.JDBCHelper;
-import com.windsnow1025.canteenmanagement.springboot.db.UserDAO;
+import com.windsnow1025.canteenmanagement.springboot.logic.UserLogic;
 import com.windsnow1025.canteenmanagement.springboot.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,17 +12,16 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserDAO userDAO;
+    private final UserLogic userLogic;
 
     public UserController() {
-        JDBCHelper jdbcHelper = new JDBCHelper();
-        this.userDAO = new UserDAO();
+        this.userLogic = new UserLogic();
     }
 
     @GetMapping("/info")
-    public ResponseEntity<User> getUser(@RequestParam Map<String, String> request) {
+    public ResponseEntity<User> getUser(@RequestHeader("Authorization") String token) {
         try {
-            User user = new User();
+            User user = userLogic.getInfo(token);
             if (user != null) {
                 return ResponseEntity.ok(user);
             } else {
@@ -35,11 +33,13 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<User> loginUser(@RequestBody String username) {
+    public ResponseEntity<User> loginUser(@RequestBody Map<String, String> request) {
         try {
-            if (username != null) {
-                User user = userDAO.selectByUsername(username);
-                return ResponseEntity.ok(user);
+            String username = request.get("username");
+            String password = request.get("password");
+            String token = userLogic.signIn(username, password);
+            if (token != null) {
+                return ResponseEntity.ok().header("Authorization", token).build();
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
@@ -51,7 +51,7 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<Map<String, Object>> signupUser(@RequestBody User user) {
         try {
-            boolean isSignedUp = userDAO.insert(user);
+            boolean isSignedUp = userLogic.signUp(user);
             if (isSignedUp) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Signup successful"));
             } else {

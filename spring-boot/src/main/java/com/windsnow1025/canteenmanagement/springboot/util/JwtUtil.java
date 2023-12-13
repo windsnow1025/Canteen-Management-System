@@ -13,8 +13,8 @@ public class JwtUtil {
         return Jwts.builder().subject(username).signWith(key).compact();
     }
 
-    public static String parseJWT(String jws) {
-        return Jwts.parser().verifyWith(key).build().parseSignedClaims(jws).getPayload().getSubject();
+    public static String parseJWT(String jwt) {
+        return Jwts.parser().verifyWith(key).build().parseSignedClaims(jwt).getPayload().getSubject();
     }
 }
 

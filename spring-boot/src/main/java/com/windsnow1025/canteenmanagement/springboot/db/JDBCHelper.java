@@ -11,7 +11,7 @@ public class JDBCHelper extends DatabaseHelper {
     private static final String CREATE_TABLE_USER = """
             CREATE TABLE IF NOT EXISTS user (
                 id INT AUTO_INCREMENT,
-                username VARCHAR(255) NOT NULL,
+                username VARCHAR(255) NOT NULL UNIQUE,
                 password VARCHAR(255) NOT NULL,
                 user_type VARCHAR(255) NOT NULL,
                 user_level VARCHAR(255),
@@ -94,7 +94,7 @@ public class JDBCHelper extends DatabaseHelper {
             dbUsername = jsonObject.getString("database_username");
             dbPassword = jsonObject.getString("database_password");
             dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-            dbVersion = "1.1.1";
+            dbVersion = "1.1.2";
         } catch (IOException e) {
             logger.error("Database config failed", e);
         }

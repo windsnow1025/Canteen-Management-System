@@ -28,12 +28,31 @@ public class UserDAO {
             int rowsAffected = jdbcHelper.executeUpdate(sql, username, password, userType, userLevel, canteenId);
             return rowsAffected > 0;
         } catch (SQLException e) {
-            logger.error("addNewUser error", e);
+            logger.error("Insert user error", e);
             throw new RuntimeException(e);
         }
     }
 
-    // 用户名唯一， 不能重复
+    public User selectByUsernamePassword(String username, String password) {
+        String sql = "SELECT * FROM user WHERE username = ? AND password = ?";
+        try {
+            List<Map<String, Object>> result = jdbcHelper.select(sql, username, password);
+            if (!result.isEmpty()) {
+                Map<String, Object> resultMap = result.getFirst();
+                int userId = (int) resultMap.get("id");
+                String userType = (String) resultMap.get("user_type");
+                String userLevel = (String) resultMap.get("user_level");
+                int canteenId = (int) resultMap.get("canteen_id");
+                return new User(userId, username, password, userType, userLevel, canteenId);
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            logger.error("getUserByUsername error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
     public User selectByUsername(String username) {
         String sql = "SELECT * FROM user WHERE username = ?";
         try {
@@ -51,28 +70,6 @@ public class UserDAO {
             }
         } catch (SQLException e) {
             logger.error("getUserByUsername error", e);
-            throw new RuntimeException(e);
-        }
-    }
-
-    public boolean updateById(String changColumnName, String changeColumnValue, int userId) {
-        String sql = "UPDATE user SET " + changColumnName + "=? WHERE id = ?";
-        try {
-            int rowsAffected = jdbcHelper.executeUpdate(sql, changeColumnValue, userId);
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            logger.error("changeById error", e);
-            throw new RuntimeException(e);
-        }
-    }
-
-    public boolean deleteById(String userId) {
-        String sql = "DELETE FROM user WHERE id = ?";
-        try {
-            int rowsAffected = jdbcHelper.executeUpdate(sql, userId);
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            logger.error("deleteUserById error", e);
             throw new RuntimeException(e);
         }
     }
