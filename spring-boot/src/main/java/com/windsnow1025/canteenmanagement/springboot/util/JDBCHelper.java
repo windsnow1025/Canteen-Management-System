@@ -1,8 +1,5 @@
 package com.windsnow1025.canteenmanagement.springboot.util;
 
-import org.json.JSONObject;
-
-import java.io.*;
 import java.sql.*;
 
 public class JDBCHelper extends DatabaseHelper {
