@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +24,8 @@ public class UserDAO {
         String sql = "INSERT INTO user (username, password, user_type, user_level, canteen_id) VALUES (?,?,?,?,?)";
         String username = user.getUsername();
         String password = user.getPassword();
-        String userType = user.getUserType();
-        String userLevel = user.getUserLevel();
+        String userType = "consumer";
+        String userLevel = "1";
         int canteenId = user.getCanteenId();
         try {
             int rowsAffected = jdbcHelper.executeUpdate(sql, username, password, userType, userLevel, canteenId);
@@ -74,4 +76,42 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean updateUserPasswordById(User user){
+        String sql = "UPDATE user SET password = ? WHERE id = ?";
+        String password = user.getPassword();
+        int id = user.getId();
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql,password,id);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updateUserStatusById(User user){
+        String sql = "UPDATE user SET user_type = ? WHERE id = ?";
+        String userType = user.getUserType();
+        int id = user.getId();
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql,userType,id);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updateUserLevelById(User user){
+        String sql = "UPDATE user SET user_level = ? WHERE id = ?";
+        String userLevel = user.getUserLevel();
+        int id = user.getId();
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql,userLevel,id);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

@@ -1,5 +1,9 @@
 package com.windsnow1025.canteenmanagement.springboot.util;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 
 public class JDBCHelper extends DatabaseHelper {
@@ -78,6 +82,10 @@ public class JDBCHelper extends DatabaseHelper {
             )
             """;
 
+    private static final String INSERT_MASTER = """
+            INSERT INTO user (username, password, user_type, user_level, canteen_id) VALUES ("master","12345678901","master_admin","MAX","-1")
+            """;
+
     public JDBCHelper() {
         super();
     }
@@ -99,7 +107,7 @@ public class JDBCHelper extends DatabaseHelper {
         dbUsername = System.getenv("MYSQL_USER");
         dbPassword = System.getenv("MYSQL_PASSWORD");
         dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-        dbVersion = "1.1.2";
+        dbVersion = "1.1.3";
     }
 
     @Override
@@ -111,6 +119,7 @@ public class JDBCHelper extends DatabaseHelper {
             statement.executeUpdate(CREATE_TABLE_COMPLAINT);
             statement.executeUpdate(CREATE_TABLE_VOTE);
             statement.executeUpdate(CREATE_TABLE_EVALUATION);
+            statement.executeUpdate(INSERT_MASTER);
         }
 
         createMetadata();
@@ -129,16 +138,10 @@ public class JDBCHelper extends DatabaseHelper {
             statement.executeUpdate("DROP TABLE IF EXISTS canteen");
             statement.executeUpdate("DROP TABLE IF EXISTS user");
 
-            // Create all
-            statement.executeUpdate(CREATE_TABLE_USER);
-            statement.executeUpdate(CREATE_TABLE_CANTEEN);
-            statement.executeUpdate(CREATE_TABLE_DISH);
-            statement.executeUpdate(CREATE_TABLE_COMPLAINT);
-            statement.executeUpdate(CREATE_TABLE_VOTE);
-            statement.executeUpdate(CREATE_TABLE_EVALUATION);
         }
 
         updateVersion();
+        onCreate();
         logger.info("Database upgraded");
     }
 }
