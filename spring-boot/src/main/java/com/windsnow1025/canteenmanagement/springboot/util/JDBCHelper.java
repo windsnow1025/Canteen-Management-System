@@ -86,7 +86,7 @@ public class JDBCHelper extends DatabaseHelper {
             CREATE TABLE IF NOT EXISTS post(
                 id INT AUTO_INCREMENT,
                 user_id INT NOT NULL,
-                time VARCHAR(255) NOT NULL
+                time VARCHAR(255) NOT NULL,
                 title VARCHAR(255) NOT NULL,
                 content TEXT,
                 picture BLOB,
