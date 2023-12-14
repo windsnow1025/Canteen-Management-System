@@ -25,4 +25,19 @@ public class UserLogic {
     public boolean signUp(User user) {
         return userDao.insert(user);
     }
+
+    public boolean updatePassword(String token, String newPassword) {
+        String oldUsername = JwtUtil.parseJWT(token);
+        return userDao.updatePassword(oldUsername, newPassword);
+    }
+
+    public boolean updateType(String token, String newType, int canteenId) {
+        String oldUsername = JwtUtil.parseJWT(token);
+        return userDao.updateType(oldUsername, newType, canteenId);
+    }
+
+    public boolean updateLevel(String token, String newLevel) {
+        String oldUsername = JwtUtil.parseJWT(token);
+        return userDao.updateLevel(oldUsername, newLevel);
+    }
 }

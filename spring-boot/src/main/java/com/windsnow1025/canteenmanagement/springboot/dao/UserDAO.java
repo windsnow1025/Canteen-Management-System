@@ -75,43 +75,37 @@ public class UserDAO {
         }
     }
 
-    public boolean updateUserPasswordById(User user){
-        String sql = "UPDATE user SET password = ? WHERE id = ?";
-        String password = user.getPassword();
-        int id = user.getId();
+    public boolean updatePassword(String username, String newPassword) {
+        String sql = "UPDATE user SET password = ? WHERE username = ?";
         try {
-            int rowsAffected = jdbcHelper.executeUpdate(sql,password,id);
+            int rowsAffected = jdbcHelper.executeUpdate(sql, newPassword, username);
             return rowsAffected > 0;
         } catch (SQLException e) {
+            logger.error("Update password error", e);
             throw new RuntimeException(e);
         }
     }
 
-    public boolean updateUserStatusById(User user){
-        String sql = "UPDATE user SET user_type = ?, canteen_id = ? WHERE id = ?";
-        String userType = user.getUserType();
-        int canteenId = user.getCanteenId();
-        int id = user.getId();
+    public boolean updateType(String username, String newType, int canteenId) {
+        String sql = "UPDATE user SET user_type = ?, canteen_id = ? WHERE username = ?";
         try {
-            int rowsAffected = jdbcHelper.executeUpdate(sql, userType, canteenId, id);
+            int rowsAffected = jdbcHelper.executeUpdate(sql, newType, canteenId, username);
             return rowsAffected > 0;
         } catch (SQLException e) {
+            logger.error("Update type error", e);
             throw new RuntimeException(e);
         }
     }
 
-    public boolean updateUserLevelById(User user){
-        String sql = "UPDATE user SET user_level = ? WHERE id = ?";
-        String userLevel = user.getUserLevel();
-        int id = user.getId();
+    public boolean updateLevel(String username, String newLevel) {
+        String sql = "UPDATE user SET user_level = ? WHERE username = ?";
         try {
-            int rowsAffected = jdbcHelper.executeUpdate(sql,userLevel,id);
+            int rowsAffected = jdbcHelper.executeUpdate(sql, newLevel, username);
             return rowsAffected > 0;
         } catch (SQLException e) {
+            logger.error("Update level error", e);
             throw new RuntimeException(e);
         }
     }
-
-
 
 }

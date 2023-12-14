@@ -40,13 +40,13 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<User> loginUser(@RequestBody Map<String, String> request) {
+    public ResponseEntity<String> loginUser(@RequestBody Map<String, String> request) {
         try {
             String username = request.get("username");
             String password = request.get("password");
             String token = userLogic.signIn(username, password);
             if (token != null) {
-                return ResponseEntity.ok().header("Authorization", token).build();
+                return ResponseEntity.ok(token);
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
@@ -78,63 +78,50 @@ public class UserController {
     }
 
     @PostMapping("/updatePassword")
-    public ResponseEntity<Map<String, Object>> updatePassword(@RequestBody Map<String,String> request){
+    public ResponseEntity<Map<String, Object>> updatePassword(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
-            String password = request.get("password");
-            int useId = Integer.parseInt(request.get("id"));
-            User user = new User();
-            user.setId(useId);
-            user.setPassword(password);
-            if (userDAO.updateUserPasswordById(user)){
+            String newPassword = request.get("password");
+            boolean result = userLogic.updatePassword(token, newPassword);
+            if (result) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "UpdatePassword successful"));
-            }else
-            {
+            } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "UpdatePassword failed"));
             }
         } catch (Exception e) {
-            logger.error("Update password error",e);
+            logger.error("Update password error", e);
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
     }
 
     @PostMapping("/updateType")
-    public ResponseEntity<Map<String, Object>> updateType(@RequestBody Map<String, String> request){
+    public ResponseEntity<Map<String, Object>> updateType(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
-            int id = Integer.parseInt(request.get("id"));
             String userType = request.get("userType");
             int canteenId = Integer.parseInt(request.get("canteen_id"));
-            User user = new User();
-            user.setId(id);
-            user.setUserType(userType);
-            user.setCanteenId(canteenId);
-            if (userDAO.updateUserStatusById(user)){
+            boolean result = userLogic.updateType(token, userType, canteenId);
+            if (result) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "UpdateType successful"));
-            }else
-            {
+            } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "UpdateType failed"));
             }
-        }catch (Exception e){
-            logger.error("Update type error",e);
+        } catch (Exception e) {
+            logger.error("Update type error", e);
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
     }
 
     @PostMapping("/updateLevel")
-    public ResponseEntity<Map<String, Object>> updateLevel(@RequestBody Map<String, String> request){
+    public ResponseEntity<Map<String, Object>> updateLevel(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
-            int id = Integer.parseInt(request.get("id"));
             String userLevel = request.get("userLevel");
-            User user = new User();
-            user.setId(id);
-            user.setUserLevel(userLevel);
-            if (userDAO.updateUserLevelById(user)){
+            boolean result = userLogic.updateLevel(token, userLevel);
+            if (result) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "UpdateLevel successful"));
-            }else
-            {
+            } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "UpdateLevel failed"));
             }
-        }catch (Exception e){
-            logger.error("Update level error",e);
+        } catch (Exception e) {
+            logger.error("Update level error", e);
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
     }
