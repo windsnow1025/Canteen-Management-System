@@ -36,6 +36,10 @@ export default class UserApi {
         return res.data;
     }
 
+    static async deleteToken(){
+        localStorage.removeItem('token');
+    }
+
 
 
     async fetchCredit() {
