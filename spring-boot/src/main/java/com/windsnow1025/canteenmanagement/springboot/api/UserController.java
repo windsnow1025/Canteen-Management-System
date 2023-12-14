@@ -56,7 +56,7 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<Map<String, Object>> signupUser(@RequestBody Map<String, String> request) {
         try {
-            int canteenId = Integer.parseInt(null);
+            int canteenId = 0;
             String username = request.get("username");
             String password = request.get("password");
             String userType = request.get("userType");
