@@ -6,42 +6,64 @@ JAVA 21
 
 ## API Examples
 
-### user/info
+### GET: user/info
 
 none
 
-### user/all-name
+### GET: user/all-name
 
 none
 
-### user/signup
+### POST: user/signin (no token)
 
 ```json
 {
   "username": "user",
-  "password": "password",
-  "userType": "consumer",
-  "userLevel": "ordinary",
-  "canteenId": 0
+  "password": "password"
 }
 ```
 
-### user/signin
+### POST: user/signup (no token)
 
 ```json
 {
-  "username": "user"
+  "username": "user",
+  "password": "password"
 }
 ```
 
-### canteen/all-name
+### PUT: user/password
+
+```json
+{
+  "password": "123"
+}
+```
+
+### PUT: user/type
+
+```json
+{
+  "userType": "admin"
+}
+```
+
+### PUT: user/level
+
+```json
+{
+  "userLevel": "2"
+}
+```
+
+### POST: canteen/all-name
 ```json
 {
   "username": "master"
 }
 ```
 
-### canteen/info
+### POST: canteen/info
 
 ```json
 {
@@ -50,7 +72,7 @@ none
 }
 ```
 
-### canteen/create
+### POST: canteen/create
 
 ```json
 {
@@ -60,7 +82,7 @@ none
 }
 ```
 
-### canteen/canteen-name
+### PUT: canteen/canteen-name
 
 ```json
 {
@@ -70,7 +92,7 @@ none
 }
 ```
 
-### canteen/intro
+### PUT: canteen/intro
 
 ```json
 {
@@ -80,7 +102,7 @@ none
 }
 ```
 
-### canteen/location
+### PUT: canteen/location
 
 ```json
 {
@@ -90,7 +112,7 @@ none
 }
 ```
 
-### canteen/business-hours
+### PUT: canteen/business-hours
 
 ```json
 {
@@ -100,7 +122,7 @@ none
 }
 ```
 
-### canteen/announcement
+### PUT: canteen/announcement
 
 ```json
 {
@@ -110,7 +132,7 @@ none
 }
 ```
 
-### canteen/delete
+### DELETE: canteen/delete
 
 ```json
 {
