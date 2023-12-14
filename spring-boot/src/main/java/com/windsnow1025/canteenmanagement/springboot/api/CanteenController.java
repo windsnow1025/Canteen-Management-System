@@ -158,9 +158,8 @@ public class CanteenController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Map<String, Object>> delete(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, Object>> delete(@RequestHeader("Authorization") String token, @RequestParam("canteenName") String canteenName) {
         try {
-            String canteenName = request.get("canteenName");
             boolean isDelete = canteenLogic.delete(token, canteenName);
             if (isDelete) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Delete successful"));
