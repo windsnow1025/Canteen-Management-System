@@ -8,11 +8,7 @@ JAVA 21
 
 ### GET: user/info
 
-none
-
 ### GET: user/all-name
-
-none
 
 ### POST: user/signin (no token)
 
@@ -56,27 +52,14 @@ none
 }
 ```
 
-### POST: canteen/all-name
-```json
-{
-  "username": "master"
-}
-```
+### GET: canteen/all-name
 
-### POST: canteen/info
-
-```json
-{
-  "username": "master",
-  "canteenName": "一餐厅"
-}
-```
+### GET: canteen/info?canteenName=一餐厅
 
 ### POST: canteen/create
 
 ```json
 {
-  "username": "master",
   "canteenName": "四餐厅",
   "location": "杨浦区军工路516号上海理工大学内"
 }
@@ -86,7 +69,6 @@ none
 
 ```json
 {
-  "username": "master",
   "id": 7,
   "canteenName": "上海理工大学肠胃科"
 }
@@ -96,7 +78,6 @@ none
 
 ```json
 {
-  "username": "master",
   "canteenName": "四餐厅",
   "intro": "我才是基础学院学生的唯二选择"
 }
@@ -106,7 +87,6 @@ none
 
 ```json
 {
-  "username": "master",
   "canteenName": "上海理工大学肠胃科",
   "location": "上海理工大学"
 }
@@ -116,7 +96,6 @@ none
 
 ```json
 {
-  "username": "master",
   "canteenName": "四餐厅",
   "businessHours": "06:00 - 22:00"
 }
@@ -126,7 +105,6 @@ none
 
 ```json
 {
-  "username": "master",
   "canteenName": "四餐厅",
   "announcement": "基础学院的荣耀就由我来守护"
 }
@@ -136,7 +114,6 @@ none
 
 ```json
 {
-  "username": "master",
   "canteenName": "四餐厅"
 }
 ```

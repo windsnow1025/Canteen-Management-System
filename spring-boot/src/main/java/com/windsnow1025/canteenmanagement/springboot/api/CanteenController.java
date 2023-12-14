@@ -22,11 +22,10 @@ public class CanteenController {
         canteenLogic = new CanteenLogic();
     }
 
-    @PostMapping("/all-name")
-    public ResponseEntity<List<String>> getAllName(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
+    @GetMapping("/all-name")
+    public ResponseEntity<List<String>> getAllName(@RequestHeader("Authorization") String token) {
         try {
-            String username = request.get("username");
-            List<String> canteenList = canteenLogic.getAllName(token, username);
+            List<String> canteenList = canteenLogic.getAllName(token);
             if (canteenList != null) {
                 return ResponseEntity.ok(canteenList);
             } else {
@@ -38,12 +37,10 @@ public class CanteenController {
         }
     }
 
-    @PostMapping("/info")
-    public ResponseEntity<Canteen> getCanteen(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
+    @GetMapping("/info")
+    public ResponseEntity<Canteen> getCanteen(@RequestHeader("Authorization") String token, @RequestParam("canteenName") String canteenName) {
         try {
-            String canteenName = request.get("canteenName");
-            String username = request.get("username");
-            Canteen canteen = canteenLogic.getInfo(token, username, canteenName);
+            Canteen canteen = canteenLogic.getInfo(token, canteenName);
             if (canteen != null) {
                 return ResponseEntity.ok(canteen);
             } else {
@@ -58,13 +55,12 @@ public class CanteenController {
     @PostMapping("/create")
     public ResponseEntity<Map<String, Object>> create(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
-            String username = request.get("username");
             String canteenName = request.get("canteenName");
             String intro = request.get("intro");
             String location = request.get("location");
             String businessHours = request.get("businessHours");
             String announcement = request.get("announcement");
-            boolean isCreate = canteenLogic.insert(token, username, canteenName, intro, location, businessHours, announcement);
+            boolean isCreate = canteenLogic.insert(token, canteenName, intro, location, businessHours, announcement);
             if (isCreate) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Create successful"));
             } else {
@@ -79,10 +75,9 @@ public class CanteenController {
     @PutMapping("/canteen-name")
     public ResponseEntity<Map<String, Object>> updateCanteenName(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
-            String username = request.get("username");
             int id = Integer.parseInt(request.get("id"));
             String canteenName = request.get("canteenName");
-            boolean isUpdate = canteenLogic.updateCanteenName(token, username, id, canteenName);
+            boolean isUpdate = canteenLogic.updateCanteenName(token, id, canteenName);
             if (isUpdate) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "UpdateCanteenName successful"));
             } else {
@@ -97,10 +92,9 @@ public class CanteenController {
     @PutMapping("/intro")
     public ResponseEntity<Map<String, Object>> updateIntro(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
-            String username = request.get("username");
             String canteenName = request.get("canteenName");
             String newIntro = request.get("intro");
-            boolean isUpdate = canteenLogic.updateIntro(token, username, canteenName, newIntro);
+            boolean isUpdate = canteenLogic.updateIntro(token, canteenName, newIntro);
             if (isUpdate) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "UpdateIntro successful"));
             } else {
@@ -115,10 +109,9 @@ public class CanteenController {
     @PutMapping("/location")
     public ResponseEntity<Map<String, Object>> updateLocation(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
-            String username = request.get("username");
             String canteenName = request.get("canteenName");
             String newLocation = request.get("location");
-            boolean isUpdate = canteenLogic.updateLocation(token, username, canteenName, newLocation);
+            boolean isUpdate = canteenLogic.updateLocation(token, canteenName, newLocation);
             if (isUpdate) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "UpdateLocation successful"));
             } else {
@@ -133,10 +126,9 @@ public class CanteenController {
     @PutMapping("/business-hours")
     public ResponseEntity<Map<String, Object>> updateBusinessHours(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
-            String username = request.get("username");
             String canteenName = request.get("canteenName");
             String newBusinessHours = request.get("businessHours");
-            boolean isUpdate = canteenLogic.updateBusinessHour(token, username, canteenName, newBusinessHours);
+            boolean isUpdate = canteenLogic.updateBusinessHour(token, canteenName, newBusinessHours);
             if (isUpdate) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Update BusinessHours successful"));
             } else {
@@ -151,10 +143,9 @@ public class CanteenController {
     @PutMapping("/announcement")
     public ResponseEntity<Map<String, Object>> updateAnnouncement(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
-            String username = request.get("username");
             String canteenName = request.get("canteenName");
             String newAnnouncement = request.get("announcement");
-            boolean isUpdate = canteenLogic.updateAnnouncement(token, username, canteenName, newAnnouncement);
+            boolean isUpdate = canteenLogic.updateAnnouncement(token, canteenName, newAnnouncement);
             if (isUpdate) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "UpdateAnnouncement successful"));
             } else {
@@ -169,9 +160,8 @@ public class CanteenController {
     @DeleteMapping("/delete")
     public ResponseEntity<Map<String, Object>> delete(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
-            String username = request.get("username");
             String canteenName = request.get("canteenName");
-            boolean isDelete = canteenLogic.delete(token, username, canteenName);
+            boolean isDelete = canteenLogic.delete(token, canteenName);
             if (isDelete) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Delete successful"));
             } else {
