@@ -124,10 +124,13 @@ export default class CanteenApi{
 
     static async deleteCanteen(canteenName) {
         const token = localStorage.getItem('token');
-        const res = await axios.put("https://www.windsnow1025.com/learn/api/canteen/canteen/delete", {
-            canteenName:canteenName
-        }, {
-            headers: {Authorization: `${token}`}
+        const res = await axios.delete("https://www.windsnow1025.com/learn/api/canteen/canteen/delete", {
+            params: {
+                canteenName: canteenName
+            },
+            headers: {
+                Authorization: `${token}`
+            }
         });
         return res.data.message;
     }
