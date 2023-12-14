@@ -2,20 +2,19 @@ import React, {useState} from 'react';
 import NavBar from "./components/navBar";
 import UserApi from "./api/UserApi";
 
-const Login = () => {
+const ChangePassword = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
 
     const handleSignIn = async () => {
         try {
-            const token = await UserApi.signIn(username, password);
-            // 在这里处理登录成功后的逻辑，比如保存token到本地存储或进行页面跳转等操作
-            setMessage(token);
-            localStorage.setItem('token', token);
+            const message = await UserApi.updatePassword(username, password);
+            // 在这里处理修改成功后的逻辑
+            setMessage(message);
         } catch (error) {
-            // 在这里处理登录失败后的逻辑，比如显示错误信息等操作
-            setMessage("登录失败");
+            // 在这里处理失败后的逻辑，比如显示错误信息等操作
+            setMessage("修改失败");
         }
     };
 
@@ -24,7 +23,7 @@ const Login = () => {
             <NavBar/>
             <div className="flex items-center justify-center h-screen">
                 <div className="bg-white rounded-lg shadow-lg p-8 m-4 w-full max-w-xs">
-                    <h1 className="mb-4 text-xl text-center">登录</h1>
+                    <h1 className="mb-4 text-xl text-center">修改密码</h1>
                     <div className="flex flex-row items-center mb-4">
                         <label className="mr-2">Account</label>
                         <input className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -48,4 +47,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default ChangePassword;
