@@ -101,7 +101,7 @@ public class CanteenDAO {
     public boolean updateAnnouncement(String canteenName, String announcement){
         String sql = "UPDATE canteen SET announcement = ? WHERE canteen_name = ?";
         try {
-            int rowsAffected = jdbcHelper.executeUpdate(sql, announcement, announcement);
+            int rowsAffected = jdbcHelper.executeUpdate(sql, announcement, canteenName);
             return rowsAffected > 0;
         } catch (SQLException e) {
             logger.error("updateAnnouncement error",e);
@@ -110,7 +110,7 @@ public class CanteenDAO {
     }
 
     public boolean delete(String canteenName){
-        String sql = "DROP FROM canteen WHERE canteen_name = ?";
+        String sql = "DELETE FROM canteen WHERE canteen_name = ?";
         try {
             int rowsAffected = jdbcHelper.executeUpdate(sql, canteenName);
             return rowsAffected > 0;

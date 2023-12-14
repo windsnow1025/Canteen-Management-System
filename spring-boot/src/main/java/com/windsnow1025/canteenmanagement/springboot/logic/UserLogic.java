@@ -22,7 +22,8 @@ public class UserLogic {
         return JwtUtil.createJWT(user.getUsername());
     }
 
-    public boolean signUp(User user) {
+    public boolean signUp(String username, String password, String userType, String userLevel, int canteenId) {
+        User user = new User(username, password, userType, userLevel, canteenId);
         return userDao.insert(user);
     }
 

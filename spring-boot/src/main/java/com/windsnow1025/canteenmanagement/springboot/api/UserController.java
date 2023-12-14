@@ -64,8 +64,7 @@ public class UserController {
             if (request.get("canteenId") != null) {
                 canteenId = Integer.parseInt(request.get("canteenId"));
             }
-            User user = new User(username, password, userType, userLevel, canteenId);
-            boolean isSignedUp = userLogic.signUp(user);
+            boolean isSignedUp = userLogic.signUp(username, password, userType, userLevel, canteenId);
             if (isSignedUp) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Signup successful"));
             } else {

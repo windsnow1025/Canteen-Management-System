@@ -15,37 +15,39 @@ import java.util.Map;
 @RequestMapping("/canteen")
 public class CanteenController {
     private static final Logger logger = LoggerFactory.getLogger(CanteenDAO.class);
-    private CanteenLogic canteenLogic;
+    private final CanteenLogic canteenLogic;
 
     public CanteenController(){
         canteenLogic = new CanteenLogic();
     }
 
-    @GetMapping("/info")
-    public ResponseEntity<Canteen> getCanteen(@RequestHeader("Authorization") String token){
+    @PostMapping("/info")
+    public ResponseEntity<Canteen> getCanteen(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
         try {
-            Canteen canteen = canteenLogic.getInfo(token);
+            String canteenName = request.get("canteenName");
+            String username = request.get("username");
+            Canteen canteen = canteenLogic.getInfo(token, username, canteenName);
             if (canteen != null){
                 return ResponseEntity.ok(canteen);
             }else{
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
         }catch (Exception e){
-            logger.error("Get canteen info error");
+            logger.error("Get canteen info error",e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Map<String, Object>> create(@RequestBody Map<String, String> request){
+    public ResponseEntity<Map<String, Object>> create(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
         try {
-            String canteenName = request.get("canteen_name");
+            String username = request.get("username");
+            String canteenName = request.get("canteenName");
             String intro = request.get("intro");
             String location = request.get("location");
-            String businessHours = request.get("business_hours");
+            String businessHours = request.get("businessHours");
             String announcement = request.get("announcement");
-            Canteen canteen = new Canteen(canteenName, intro, location, businessHours, announcement);
-            boolean isCreate = canteenLogic.insert(canteen);
+            boolean isCreate = canteenLogic.insert(token, username, canteenName, intro, location, businessHours, announcement);
             if (isCreate) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Create successful"));
             } else {
@@ -57,11 +59,13 @@ public class CanteenController {
         }
     }
 
-    @PostMapping("/update/CanteenName")
+    @PutMapping("/canteen-name")
     public ResponseEntity<Map<String, Object>> updateCanteenName(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
         try {
-            String newCanteenName = request.get("newCanteenName");
-            boolean isUpdate = canteenLogic.updateCanteenName(token,newCanteenName);
+            String username = request.get("username");
+            int id = Integer.parseInt(request.get("id"));
+            String canteenName = request.get("canteenName");
+            boolean isUpdate = canteenLogic.updateCanteenName(token, username, id, canteenName);
             if (isUpdate) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "UpdateCanteenName successful"));
             } else {
@@ -73,11 +77,13 @@ public class CanteenController {
         }
     }
 
-    @PostMapping("/update/Intro")
+    @PutMapping("/intro")
     public ResponseEntity<Map<String, Object>> updateIntro(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
         try {
-            String newIntro = request.get("newIntro");
-            boolean isUpdate = canteenLogic.updateIntro(token, newIntro);
+            String username = request.get("username");
+            String canteenName = request.get("canteenName");
+            String newIntro = request.get("intro");
+            boolean isUpdate = canteenLogic.updateIntro(token, username, canteenName, newIntro);
             if (isUpdate) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "UpdateIntro successful"));
             } else {
@@ -89,11 +95,13 @@ public class CanteenController {
         }
     }
 
-    @PostMapping("/update/Location")
+    @PutMapping("/location")
     public ResponseEntity<Map<String, Object>> updateLocation(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
-            String newLocation = request.get("newLocation");
-            boolean isUpdate = canteenLogic.updateLocation(token, newLocation);
+            String username = request.get("username");
+            String canteenName = request.get("canteenName");
+            String newLocation = request.get("location");
+            boolean isUpdate = canteenLogic.updateLocation(token, username, canteenName, newLocation);
             if (isUpdate) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "UpdateLocation successful"));
             } else {
@@ -105,11 +113,13 @@ public class CanteenController {
         }
     }
 
-    @PostMapping("/update/BusinessHours")
+    @PutMapping("/business-hours")
     public ResponseEntity<Map<String, Object>> updateBusinessHours(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
-            String newBusinessHours = request.get("newBusinessHours");
-            boolean isUpdate = canteenLogic.updateBusinessHour(token, newBusinessHours);
+            String username = request.get("username");
+            String canteenName = request.get("canteenName");
+            String newBusinessHours = request.get("businessHours");
+            boolean isUpdate = canteenLogic.updateBusinessHour(token, username, canteenName, newBusinessHours);
             if (isUpdate) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Update BusinessHours successful"));
             } else {
@@ -121,26 +131,30 @@ public class CanteenController {
         }
     }
 
-    @PostMapping("/update/Announcement")
+    @PutMapping("/announcement")
     public ResponseEntity<Map<String, Object>> updateAnnouncement(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
-            String newAnnouncement = request.get("newAnnouncement");
-            boolean isUpdate = canteenLogic.updateAnnouncement(token, newAnnouncement);
+            String username = request.get("username");
+            String canteenName = request.get("canteenName");
+            String newAnnouncement = request.get("announcement");
+            boolean isUpdate = canteenLogic.updateAnnouncement(token, username, canteenName, newAnnouncement);
             if (isUpdate) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "UpdateAnnouncement successful"));
             } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "UpdateAnnouncement failed"));
             }
         }catch (Exception e){
-            logger.error("Update announcement error");
+            logger.error("Update announcement error",e);
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
     }
 
-    @PostMapping("/delete")
+    @GetMapping("/delete")
     public ResponseEntity<Map<String, Object>> delete(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
-            boolean isDelete = canteenLogic.delete(token);
+            String username = request.get("username");
+            String canteenName = request.get("canteenName");
+            boolean isDelete = canteenLogic.delete(token, username, canteenName);
             if (isDelete) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Delete successful"));
             } else {
