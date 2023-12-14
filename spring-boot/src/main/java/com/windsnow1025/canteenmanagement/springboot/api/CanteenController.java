@@ -57,7 +57,7 @@ public class CanteenController {
         }
     }
 
-    @PostMapping("/updateCanteenName")
+    @PostMapping("/update/CanteenName")
     public ResponseEntity<Map<String, Object>> updateCanteenName(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
         try {
             String newCanteenName = request.get("newCanteenName");
@@ -73,7 +73,7 @@ public class CanteenController {
         }
     }
 
-    @PostMapping("/updateIntro")
+    @PostMapping("/update/Intro")
     public ResponseEntity<Map<String, Object>> updateIntro(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
         try {
             String newIntro = request.get("newIntro");
@@ -89,7 +89,7 @@ public class CanteenController {
         }
     }
 
-    @PostMapping("/updateLocation")
+    @PostMapping("/update/Location")
     public ResponseEntity<Map<String, Object>> updateLocation(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String newLocation = request.get("newLocation");
@@ -105,7 +105,7 @@ public class CanteenController {
         }
     }
 
-    @PostMapping("/updateBusinessHours")
+    @PostMapping("/update/BusinessHours")
     public ResponseEntity<Map<String, Object>> updateBusinessHours(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String newBusinessHours = request.get("newBusinessHours");
@@ -121,7 +121,7 @@ public class CanteenController {
         }
     }
 
-    @PostMapping("/updateAnnouncement")
+    @PostMapping("/update/Announcement")
     public ResponseEntity<Map<String, Object>> updateAnnouncement(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String newAnnouncement = request.get("newAnnouncement");
