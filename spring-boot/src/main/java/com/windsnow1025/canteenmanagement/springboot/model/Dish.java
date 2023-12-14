@@ -9,12 +9,12 @@ public class Dish implements Serializable {
     private float price;
     private float discount_rate;
     private String cuisine;
-    private byte[] picture;
+    private String picture;
 
     public Dish() {
     }
 
-    public Dish(int canteen_id, String dishName, float price, float discount_rate, String cuisine, byte[] picture) {
+    public Dish(int canteen_id, String dishName, float price, float discount_rate, String cuisine, String picture) {
         this.canteen_id = canteen_id;
         this.dishName = dishName;
         this.price = price;
@@ -23,7 +23,7 @@ public class Dish implements Serializable {
         this.picture = picture;
     }
 
-    public Dish(int id, int canteen_id, String dishName, float price, float discount_rate, String cuisine, byte[] picture) {
+    public Dish(int id, int canteen_id, String dishName, float price, float discount_rate, String cuisine, String picture) {
         this.id = id;
         this.canteen_id = canteen_id;
         this.dishName = dishName;
@@ -81,11 +81,11 @@ public class Dish implements Serializable {
         this.cuisine = cuisine;
     }
 
-    public byte[] getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(byte[] picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 }
