@@ -56,11 +56,14 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<Map<String, Object>> signupUser(@RequestBody Map<String, String> request) {
         try {
+            int canteenId = Integer.parseInt(null);
             String username = request.get("username");
             String password = request.get("password");
             String userType = request.get("userType");
             String userLevel = request.get("userLevel");
-            int canteenId = Integer.parseInt(request.get("canteenId"));
+            if (request.get("canteenId") != null) {
+                canteenId = Integer.parseInt(request.get("canteenId"));
+            }
             User user = new User(username, password, userType, userLevel, canteenId);
             boolean isSignedUp = userLogic.signUp(user);
             if (isSignedUp) {
