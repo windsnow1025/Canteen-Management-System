@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,25 @@ public class CanteenDAO {
             return rowsAffected > 0;
         } catch (SQLException e) {
             logger.error("Canteen insert error");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> getAllCanteen(){
+        List<String> canteenName = new ArrayList<>();
+        String sql = "SELECT canteen_name FROM canteen";
+        try {
+            List<Map<String, Object>> results = jdbcHelper.select(sql);
+            if (! results.isEmpty()){
+                for (Map<String, Object> result : results){
+                    canteenName.add((String) result.get("canteen_name"));
+                }
+                return canteenName;
+            }else {
+                return null;
+            }
+        } catch (SQLException e) {
+            logger.error("getAllCanteen error", e);
             throw new RuntimeException(e);
         }
     }

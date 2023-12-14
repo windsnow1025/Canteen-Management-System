@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,26 @@ public class UserDAO {
             return rowsAffected > 0;
         } catch (SQLException e) {
             logger.error("Insert user error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<String> getAllUser(){
+        List<String> userList = new ArrayList<>();
+        String sql = "SELECT username FROM user";
+        try {
+            List<Map<String, Object>> results = jdbcHelper.select(sql);
+            if (! results.isEmpty()) {
+                for (Map<String, Object> result : results) {
+                    String username = (String) result.get("username");
+                    userList.add(username);
+                }
+                return userList;
+            }else {
+                return null;
+            }
+        } catch (SQLException e) {
+            logger.error("getAllUser error");
             throw new RuntimeException(e);
         }
     }

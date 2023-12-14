@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -19,6 +20,23 @@ public class CanteenController {
 
     public CanteenController(){
         canteenLogic = new CanteenLogic();
+    }
+
+    @PostMapping("/all-name")
+    public ResponseEntity<List<String>> getAllName(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
+        try {
+            String username = request.get("username");
+            List<String> canteenList = canteenLogic.getAllName(token, username);
+            if (canteenList != null){
+                return ResponseEntity.ok(canteenList);
+            }else
+            {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        }catch (Exception e){
+            logger.error("Get canteenName info error",e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PostMapping("/info")
@@ -149,7 +167,7 @@ public class CanteenController {
         }
     }
 
-    @GetMapping("/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<Map<String, Object>> delete(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String username = request.get("username");

@@ -143,6 +143,25 @@ public class JDBCHelper extends DatabaseHelper {
             VALUES ("1", "麻辣香锅(甜辣)", "200", "1", "本帮菜", NULL)
             """;
 
+    private static final String INSERT_DISH_2 = """
+            INSERT INTO dish (canteen_id, dish_name, price, discount_rate, cuisine, picture)
+            VALUES ("2", "不辣臭锅", "2", "0.5", "地府菜", NULL)
+            """;
+
+    private static final String INSERT_DISH_3 = """
+            INSERT INTO dish (canteen_id, dish_name, price, discount_rate, cuisine, picture)
+            VALUES ("3", "微辣酸锅", "20", "0.7", "天府菜", NULL)
+            """;
+
+    private static final String INSERT_DISH_4 = """
+            INSERT INTO dish (canteen_id, dish_name, price, discount_rate, cuisine, picture)
+            VALUES ("4", "中辣甜锅", "30", "0.8", "火星菜", NULL)
+            """;
+
+    private static final String INSERT_DISH_5 = """
+            INSERT INTO dish (canteen_id, dish_name, price, discount_rate, cuisine, picture)
+            VALUES ("5", "重辣苦锅", "20", "1.5", "一食堂菜", NULL)
+            """;
     public JDBCHelper() {
         super();
     }
@@ -156,7 +175,7 @@ public class JDBCHelper extends DatabaseHelper {
             dbUsername = jsonObject.getString("database_username");
             dbPassword = jsonObject.getString("database_password");
             dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-            dbVersion = "1.2.3";
+            dbVersion = "1.2.4";
         } catch (IOException e) {
             logger.error("Database config failed", e);
         }
@@ -164,7 +183,7 @@ public class JDBCHelper extends DatabaseHelper {
 //        dbUsername = System.getenv("MYSQL_USER");
 //        dbPassword = System.getenv("MYSQL_PASSWORD");
 //        dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-//        dbVersion = "1.2.2";
+//        dbVersion = "1.2.4";
     }
 
     @Override
@@ -185,6 +204,10 @@ public class JDBCHelper extends DatabaseHelper {
             statement.executeUpdate(INSERT_CANTEEN_4);
             statement.executeUpdate(INSERT_CANTEEN_5);
             statement.executeUpdate(INSERT_DISH_1);
+            statement.executeUpdate(INSERT_DISH_2);
+            statement.executeUpdate(INSERT_DISH_3);
+            statement.executeUpdate(INSERT_DISH_4);
+            statement.executeUpdate(INSERT_DISH_5);
         }
 
         createMetadata();
