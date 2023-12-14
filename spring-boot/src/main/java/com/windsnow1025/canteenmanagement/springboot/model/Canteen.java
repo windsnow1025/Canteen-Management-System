@@ -13,6 +13,14 @@ public class Canteen implements Serializable {
     public Canteen() {
     }
 
+    public Canteen(String canteenName, String intro, String location, String businessHour, String announcement) {
+        this.canteenName = canteenName;
+        this.intro = intro;
+        this.location = location;
+        this.businessHour = businessHour;
+        this.announcement = announcement;
+    }
+
     public Canteen(int id, String canteenName, String intro, String location, String businessHour, String announcement) {
         this.id = id;
         this.canteenName = canteenName;
