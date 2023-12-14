@@ -18,46 +18,45 @@ public class CanteenController {
     private static final Logger logger = LoggerFactory.getLogger(CanteenDAO.class);
     private final CanteenLogic canteenLogic;
 
-    public CanteenController(){
+    public CanteenController() {
         canteenLogic = new CanteenLogic();
     }
 
     @PostMapping("/all-name")
-    public ResponseEntity<List<String>> getAllName(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
+    public ResponseEntity<List<String>> getAllName(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String username = request.get("username");
             List<String> canteenList = canteenLogic.getAllName(token, username);
-            if (canteenList != null){
+            if (canteenList != null) {
                 return ResponseEntity.ok(canteenList);
-            }else
-            {
+            } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
-        }catch (Exception e){
-            logger.error("Get canteenName info error",e);
+        } catch (Exception e) {
+            logger.error("Get canteenName info error", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PostMapping("/info")
-    public ResponseEntity<Canteen> getCanteen(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
+    public ResponseEntity<Canteen> getCanteen(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String canteenName = request.get("canteenName");
             String username = request.get("username");
             Canteen canteen = canteenLogic.getInfo(token, username, canteenName);
-            if (canteen != null){
+            if (canteen != null) {
                 return ResponseEntity.ok(canteen);
-            }else{
+            } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
-        }catch (Exception e){
-            logger.error("Get canteen info error",e);
+        } catch (Exception e) {
+            logger.error("Get canteen info error", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Map<String, Object>> create(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
+    public ResponseEntity<Map<String, Object>> create(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String username = request.get("username");
             String canteenName = request.get("canteenName");
@@ -71,14 +70,14 @@ public class CanteenController {
             } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Create failed"));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Create canteen error", e);
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
     }
 
     @PutMapping("/canteen-name")
-    public ResponseEntity<Map<String, Object>> updateCanteenName(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
+    public ResponseEntity<Map<String, Object>> updateCanteenName(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String username = request.get("username");
             int id = Integer.parseInt(request.get("id"));
@@ -96,7 +95,7 @@ public class CanteenController {
     }
 
     @PutMapping("/intro")
-    public ResponseEntity<Map<String, Object>> updateIntro(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
+    public ResponseEntity<Map<String, Object>> updateIntro(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String username = request.get("username");
             String canteenName = request.get("canteenName");
@@ -125,7 +124,7 @@ public class CanteenController {
             } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "UpdateLocation failed"));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Update location error");
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
@@ -143,7 +142,7 @@ public class CanteenController {
             } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Update BusinessHours failed"));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Update business hours error");
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
@@ -161,8 +160,8 @@ public class CanteenController {
             } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "UpdateAnnouncement failed"));
             }
-        }catch (Exception e){
-            logger.error("Update announcement error",e);
+        } catch (Exception e) {
+            logger.error("Update announcement error", e);
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
     }
@@ -178,8 +177,8 @@ public class CanteenController {
             } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Delete failed"));
             }
-        }catch (Exception e){
-            logger.error("Delete  error");
+        } catch (Exception e) {
+            logger.error("Delete error");
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
     }
