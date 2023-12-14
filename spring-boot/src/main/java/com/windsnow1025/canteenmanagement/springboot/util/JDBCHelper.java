@@ -24,7 +24,7 @@ public class JDBCHelper extends DatabaseHelper {
     private static final String CREATE_TABLE_CANTEEN = """
             CREATE TABLE IF NOT EXISTS canteen (
                 id INT AUTO_INCREMENT,
-                canteen_name VARCHAR(255) NOT NULL,
+                canteen_name VARCHAR(255) NOT NULL UNIQUE,
                 intro TEXT,
                 location VARCHAR(255) NOT NULL,
                 business_hours VARCHAR(255),
