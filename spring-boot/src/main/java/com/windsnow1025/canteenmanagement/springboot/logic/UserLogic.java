@@ -4,6 +4,8 @@ import com.windsnow1025.canteenmanagement.springboot.dao.UserDAO;
 import com.windsnow1025.canteenmanagement.springboot.model.User;
 import com.windsnow1025.canteenmanagement.springboot.util.JwtUtil;
 
+import java.util.List;
+
 public class UserLogic {
 
     private final UserDAO userDao;
@@ -15,6 +17,11 @@ public class UserLogic {
     public User getInfo(String token) {
         String username = JwtUtil.parseJWT(token);
         return userDao.selectByUsername(username);
+    }
+
+    public List<String> getAllUser(String token){
+        String username = JwtUtil.parseJWT(token);
+        return userDao.getAllUser();
     }
 
     public String signIn(String username, String password) {

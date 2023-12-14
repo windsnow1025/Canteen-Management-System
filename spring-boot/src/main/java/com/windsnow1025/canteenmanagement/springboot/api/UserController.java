@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -32,6 +33,21 @@ public class UserController {
             }
         } catch (Exception e) {
             logger.error("Get user info error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/all-name")
+    public ResponseEntity<List<String>> getAllUser(@RequestHeader("Authorization") String token){
+        try {
+            List<String> userList = userLogic.getAllUser(token);
+            if (userList != null ){
+                return ResponseEntity.ok(userList);
+            }else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        }catch (Exception e){
+            logger.error("getAllUser");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

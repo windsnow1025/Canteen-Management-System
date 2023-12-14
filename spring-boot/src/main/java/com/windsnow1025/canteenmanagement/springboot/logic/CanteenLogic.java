@@ -4,6 +4,7 @@ import com.windsnow1025.canteenmanagement.springboot.dao.CanteenDAO;
 import com.windsnow1025.canteenmanagement.springboot.model.Canteen;
 import com.windsnow1025.canteenmanagement.springboot.util.JwtUtil;
 
+import java.util.List;
 import java.util.Objects;
 
 public class CanteenLogic {
@@ -16,6 +17,15 @@ public class CanteenLogic {
     public Canteen getInfo(String token, String username, String canteenName){
         if (Objects.equals(username, JwtUtil.parseJWT(token))) {
             return canteenDAO.selectCanteenByCanteenName(canteenName);
+        }else
+        {
+            return null;
+        }
+    }
+
+    public List<String> getAllName(String token, String username){
+        if (Objects.equals(username, JwtUtil.parseJWT(token))) {
+            return canteenDAO.getAllCanteen();
         }else
         {
             return null;
