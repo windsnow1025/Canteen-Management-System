@@ -17,10 +17,9 @@ export default class UserApi {
         return res.data.message
     }
 
-    static async updatePassword(username, password) {
+    static async updatePassword(password) {
         const token = localStorage.getItem('token');
         const res = await axios.put("https://www.windsnow1025.com/learn/api/canteen/user/password", {
-            username: username,
             password: password
         }, {
             headers: {Authorization: `${token}`}
@@ -36,17 +35,30 @@ export default class UserApi {
         return res.data;
     }
 
+    static async updateUserType(userType) {
+        const token = localStorage.getItem('token');
+        const res = await axios.put("https://www.windsnow1025.com/learn/api/canteen/user/type", {
+            userType: userType
+        }, {
+            headers: {Authorization: `${token}`}
+        });
+        return res.data.message;
+    }
+
+    static async updateUserLevel(userLevel) {
+        const token = localStorage.getItem('token');
+        const res = await axios.put("https://www.windsnow1025.com/learn/api/canteen/user/level", {
+            userLevel: userLevel
+        }, {
+            headers: {Authorization: `${token}`}
+        });
+        return res.data.message;
+    }
+
+
     static async deleteToken(){
         localStorage.removeItem('token');
     }
 
 
-
-    async fetchCredit() {
-        const token = localStorage.getItem('token');
-        const res = await axios.get("/api/user/credit", {
-            headers: {Authorization: `Bearer ${token}`}
-        });
-        return res.data.credit;
-    }
 }

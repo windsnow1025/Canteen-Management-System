@@ -5,6 +5,7 @@ import com.windsnow1025.canteenmanagement.springboot.model.User;
 import com.windsnow1025.canteenmanagement.springboot.util.JwtUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 public class UserLogic {
 
@@ -39,9 +40,13 @@ public class UserLogic {
         return userDao.updatePassword(oldUsername, newPassword);
     }
 
-    public boolean updateType(String token, String newType, int canteenId) {
+    public boolean updateType(String token, String username, String newType, int canteenId) {
         String oldUsername = JwtUtil.parseJWT(token);
-        return userDao.updateType(oldUsername, newType, canteenId);
+        if (Objects.equals(userDao.getUserTypeByName(oldUsername), "master_admin")){
+            return userDao.updateType(username, newType, canteenId);
+        }else {
+            return false;
+        }
     }
 
     public boolean updateLevel(String token, String newLevel) {

@@ -112,8 +112,9 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> updateType(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String userType = request.get("userType");
-            int canteenId = Integer.parseInt(request.get("canteen_id"));
-            boolean result = userLogic.updateType(token, userType, canteenId);
+            String username = request.get("username");
+            int canteenId = Integer.parseInt(request.get("canteenId"));
+            boolean result = userLogic.updateType(token, username, userType, canteenId);
             if (result) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "UpdateType successful"));
             } else {

@@ -96,6 +96,21 @@ public class UserDAO {
         }
     }
 
+    public String getUserTypeByName(String username){
+        String sql = "SELECT user_type FROM user WHERE username = ?";
+        try {
+            List<Map<String, Object>> result = jdbcHelper.select(sql, username);
+            if (! result.isEmpty()){
+                return (String) result.getFirst().get("user_type");
+            }else {
+                return null;
+            }
+        } catch (SQLException e) {
+            logger.error("getUserTypeByName error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
     public boolean updatePassword(String username, String newPassword) {
         String sql = "UPDATE user SET password = ? WHERE username = ?";
         try {

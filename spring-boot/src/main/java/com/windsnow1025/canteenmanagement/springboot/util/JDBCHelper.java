@@ -24,7 +24,7 @@ public class JDBCHelper extends DatabaseHelper {
     private static final String CREATE_TABLE_CANTEEN = """
             CREATE TABLE IF NOT EXISTS canteen (
                 id INT AUTO_INCREMENT,
-                canteen_name VARCHAR(255) NOT NULL,
+                canteen_name VARCHAR(255) NOT NULL UNIQUE,
                 intro TEXT,
                 location VARCHAR(255) NOT NULL,
                 business_hours VARCHAR(255),
@@ -184,7 +184,7 @@ public class JDBCHelper extends DatabaseHelper {
 //            dbUsername = jsonObject.getString("database_username");
 //            dbPassword = jsonObject.getString("database_password");
 //            dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-//            dbVersion = "1.2.5";
+//            dbVersion = "1.2.6";
 //        } catch (IOException e) {
 //            logger.error("Database config failed", e);
 //        }
@@ -192,7 +192,7 @@ public class JDBCHelper extends DatabaseHelper {
         dbUsername = System.getenv("MYSQL_USER");
         dbPassword = System.getenv("MYSQL_PASSWORD");
         dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-        dbVersion = "1.2.5";
+        dbVersion = "1.2.6";
     }
 
     @Override
