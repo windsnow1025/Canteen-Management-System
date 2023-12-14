@@ -28,10 +28,10 @@ export default class UserApi {
         return res.data.message;
     }
 
-    async fetchUsername() {
+    static async getUserInfo() {
         const token = localStorage.getItem('token');
-        const res = await axios.get('/api/auth/', {
-            headers: {Authorization: `Bearer ${token}`}
+        const res = await axios.get("https://www.windsnow1025.com/learn/api/canteen/user/info", {
+            headers: {Authorization: `${token}`}
         });
         return res.data;
     }
