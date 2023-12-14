@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import avataUrl1 from '../images/user_avatar.jpg';
 import messageIcon from '../images/message.png';
 import messageIconAlert from '../images/messageAlert.png';
+import UserInfo from "../UserInfo";
 class NavBar extends Component {
     messageAlertFlag = false;
     iconUrl = this.messageAlertFlag ? messageIconAlert : messageIcon;
@@ -13,7 +14,7 @@ class NavBar extends Component {
 
                 </div>
                 <div className="px-4 py-2 block w-1/3 flex items-center">
-                    <a href="/login" className="px-4 py-2 block">
+                    <a href="/user-info" className="px-4 py-2 block">
                         <img src={avataUrl1} alt="User" className="w-9 h-9 rounded-full border-2 border-white" />
                     </a>
                     <div className="px-4 py-2 block font-bold">
@@ -26,7 +27,16 @@ class NavBar extends Component {
                     <a href="/dishsh" className="px-4 py-2 block font-bold">菜品</a>
                     <a href="/canteen" className="px-4 py-2 block font-bold">食堂信息</a>
                 </div>
-                <div className="w-1/6">
+                <div className="w-1/6 flex text-center items-center">
+                    <a href="/login">
+                        登录
+                    </a>
+                    <a className="px-4 py-2 block">
+                        |
+                    </a>
+                    <a href="/register">
+                        注册
+                    </a>
                     <a href="/messages" className="px-4 py-2 block">
                         <img src={this.iconUrl} alt="User" className="w-6 h-6" />
                     </a>

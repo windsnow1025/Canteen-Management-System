@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import NavBar from "./components/navBar";
+import NavBar from "./components/NavBar";
 import UserApi from "./api/UserApi";
 
 const ChangePassword = () => {
