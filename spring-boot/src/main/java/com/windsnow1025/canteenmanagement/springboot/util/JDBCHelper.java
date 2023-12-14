@@ -90,7 +90,7 @@ public class JDBCHelper extends DatabaseHelper {
                 content TEXT,
                 picture BLOB,
                 PRIMARY KEY (id),
-                FOREIGN KEY (user_id) REFERENCES user(id),
+                FOREIGN KEY (user_id) REFERENCES user(id)
             )
             """;
 
@@ -149,7 +149,7 @@ public class JDBCHelper extends DatabaseHelper {
 //            dbUsername = jsonObject.getString("database_username");
 //            dbPassword = jsonObject.getString("database_password");
 //            dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-//            dbVersion = "1.2.1";
+//            dbVersion = "1.2.2";
 //        } catch (IOException e) {
 //            logger.error("Database config failed", e);
 //        }
@@ -157,7 +157,7 @@ public class JDBCHelper extends DatabaseHelper {
         dbUsername = System.getenv("MYSQL_USER");
         dbPassword = System.getenv("MYSQL_PASSWORD");
         dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-        dbVersion = "1.2.1";
+        dbVersion = "1.2.2";
     }
 
     @Override
