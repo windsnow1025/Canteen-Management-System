@@ -77,7 +77,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/update/password")
+    @PutMapping("/password")
     public ResponseEntity<Map<String, Object>> updatePassword(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String newPassword = request.get("password");
@@ -93,7 +93,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/update/type")
+    @PutMapping("/type")
     public ResponseEntity<Map<String, Object>> updateType(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String userType = request.get("userType");
@@ -110,7 +110,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/update/level")
+    @PutMapping("/level")
     public ResponseEntity<Map<String, Object>> updateLevel(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String userLevel = request.get("userLevel");
