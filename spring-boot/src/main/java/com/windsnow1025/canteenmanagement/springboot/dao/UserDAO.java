@@ -85,7 +85,6 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
-
     public boolean updateType(String username, String newType, int canteenId) {
         String sql = "UPDATE user SET user_type = ?, canteen_id = ? WHERE username = ?";
         try {

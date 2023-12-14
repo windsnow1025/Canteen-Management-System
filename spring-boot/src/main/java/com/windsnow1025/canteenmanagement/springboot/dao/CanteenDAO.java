@@ -5,9 +5,9 @@ import com.windsnow1025.canteenmanagement.springboot.util.JDBCHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 public class CanteenDAO {
     private static final Logger logger = LoggerFactory.getLogger(CanteenDAO.class);
@@ -32,4 +32,91 @@ public class CanteenDAO {
         }
     }
 
+    public Canteen selectCanteenByCanteenName(String canteenName){
+        String sql = "SELECT * FROM canteen WHERE canteen_name = ?";
+        try {
+            List<Map<String, Object>> result = jdbcHelper.select(sql, canteenName);
+            if (! result.isEmpty()){
+                Map<String, Object> resultMap = result.getFirst();
+                int canteenId = (int) resultMap.get("id");
+                String canteen_name = (String) resultMap.get("canteen_name");
+                String intro = (String) resultMap.get("intro");
+                String location = (String) resultMap.get("location");
+                String businessHour = (String) resultMap.get("business_hours");
+                String announcement = (String) resultMap.get("announcement");
+                return new Canteen(canteenId, canteen_name, intro, location, businessHour, announcement);
+            }else {
+                return null;
+            }
+        } catch (SQLException e) {
+            logger.error("selectCanteenByCanteenName error");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updateCanteenName(int id, String canteenName){
+        String sql = "UPDATE canteen SET canteen_name = ? WHERE id = ?";
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql,canteenName,id);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("updateCanteenName error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updateIntro(String canteenName, String intro){
+        String sql = "UPDATE canteen SET intro = ? WHERE canteen_name = ?";
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql,intro,canteenName);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("updateIntro error",e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updateLocation(String canteenName, String location){
+        String sql = "UPDATE canteen SET location = ? WHERE canteen_name = ?";
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql,location,canteenName);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("updateLocationById error",e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updateBusinessHour(String canteenName, String businessHours){
+        String sql = "UPDATE canteen SET business_hours = ? WHERE canteen_name = ?";
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql,businessHours,canteenName);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("updateBusinessHour error",e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updateAnnouncement(String canteenName, String announcement){
+        String sql = "UPDATE canteen SET announcement = ? WHERE canteen_name = ?";
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql, announcement, announcement);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("updateAnnouncement error",e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean delete(String canteenName){
+        String sql = "DROP FROM canteen WHERE canteen_name = ?";
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql, canteenName);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("delete error", e);
+            throw new RuntimeException(e);
+        }
+    }
 }
