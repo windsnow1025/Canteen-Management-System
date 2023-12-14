@@ -37,13 +37,13 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<String> loginUser(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, Object>> loginUser(@RequestBody Map<String, String> request) {
         try {
             String username = request.get("username");
             String password = request.get("password");
             String token = userLogic.signIn(username, password);
             if (token != null) {
-                return ResponseEntity.ok(token);
+                return ResponseEntity.ok(Map.of("token", token));
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
