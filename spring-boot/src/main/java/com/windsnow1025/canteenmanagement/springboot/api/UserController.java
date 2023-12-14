@@ -1,6 +1,5 @@
 package com.windsnow1025.canteenmanagement.springboot.api;
 
-import com.windsnow1025.canteenmanagement.springboot.dao.UserDAO;
 import com.windsnow1025.canteenmanagement.springboot.logic.UserLogic;
 import com.windsnow1025.canteenmanagement.springboot.model.User;
 import org.slf4j.Logger;
@@ -15,13 +14,11 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserLogic userLogic;
-    private final UserDAO userDAO;
 
     public UserController() {
         this.userLogic = new UserLogic();
-        userDAO = new UserDAO();
     }
 
     @GetMapping("/info")
@@ -40,13 +37,13 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<String> loginUser(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, Object>> loginUser(@RequestBody Map<String, String> request) {
         try {
             String username = request.get("username");
             String password = request.get("password");
             String token = userLogic.signIn(username, password);
             if (token != null) {
-                return ResponseEntity.ok(token);
+                return ResponseEntity.ok(Map.of("token", token));
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
@@ -77,7 +74,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/updatePassword")
+    @PostMapping("/update/password")
     public ResponseEntity<Map<String, Object>> updatePassword(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String newPassword = request.get("password");
@@ -93,7 +90,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/updateType")
+    @PostMapping("/update/type")
     public ResponseEntity<Map<String, Object>> updateType(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String userType = request.get("userType");
@@ -110,7 +107,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/updateLevel")
+    @PostMapping("/update/level")
     public ResponseEntity<Map<String, Object>> updateLevel(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String userLevel = request.get("userLevel");
