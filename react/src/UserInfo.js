@@ -71,9 +71,13 @@ const UserInfo = () => {
                                     </div>
                                 )}
                                 <div className="flex items-center justify-center">
-                                    <button
-                                        className="bg-red-800 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded w-1/2">退出登录
-                                    </button>
+                                    <a href="/login">
+                                        <button
+                                            className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
+                                            type="button" onClick={UserApi.deleteToken}>
+                                            退出登录
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                         ) : (
