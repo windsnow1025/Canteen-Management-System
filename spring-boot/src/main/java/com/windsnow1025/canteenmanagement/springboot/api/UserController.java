@@ -142,5 +142,19 @@ public class UserController {
         }
     }
 
+    @DeleteMapping("/delete")
+    public ResponseEntity<Map<String, Object>> delete(@RequestHeader("Authorization") String token, @RequestParam("username") String username){
+        try {
+            boolean result = userLogic.delete(token, username);
+            if (result) {
+                return ResponseEntity.ok(Map.of("status", "Success", "message", "Delete successful"));
+            } else {
+                return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Delete failed"));
+            }
+        } catch (Exception e) {
+            logger.error("Delete error", e);
+            return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
+        }
+    }
 
 }

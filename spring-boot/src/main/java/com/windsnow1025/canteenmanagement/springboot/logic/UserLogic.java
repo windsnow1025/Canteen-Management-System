@@ -56,4 +56,12 @@ public class UserLogic {
         String oldUsername = JwtUtil.parseJWT(token);
         return userDao.updateLevel(oldUsername, newLevel);
     }
+
+    public boolean delete(String token, String username){
+        if (Objects.equals(userDao.getUserTypeByName(JwtUtil.parseJWT(token)), "master_admin")) {
+            return userDao.delete(username);
+        }else {
+            return false;
+        }
+    }
 }

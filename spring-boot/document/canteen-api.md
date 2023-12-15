@@ -6,6 +6,8 @@
 
 ## GET canteen/info-id?canteenId=1
 
+## DELETE: canteen/delete?canteenName="迷你餐厅"
+
 ## POST: canteen/create
 
 ```json
@@ -58,10 +60,4 @@
   "canteenName": "四餐厅",
   "announcement": "基础学院的荣耀就由我来守护"
 }
-```
-
-## DELETE: canteen/delete
-
-```
-canteen/delete?canteenName="迷你餐厅"
 ```

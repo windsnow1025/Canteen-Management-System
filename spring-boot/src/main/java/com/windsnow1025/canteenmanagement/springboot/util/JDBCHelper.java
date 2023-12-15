@@ -65,47 +65,47 @@ public class JDBCHelper extends DatabaseHelper {
                 title VARCHAR(255),
                 vote_result VARCHAR(255),
                 PRIMARY KEY (id),
-                FOREIGN KEY (canteen_id) REFERENCES canteen(id)
+                FOREIGN KEY (canteen_id) REFERENCES canteen(id) ON DELETE CASCADE
             )
             """;
 
     private static final String CREATE_TABLE_EVALUATION = """
             CREATE TABLE IF NOT EXISTS evaluation(
                 id INT AUTO_INCREMENT,
-                user_id INT NOT NULL,
+                user_id INT,
                 dish_id INT NOT NULL,
                 content TEXT,
                 picture BLOB,
                 rating FLOAT NOT NULL,
                 PRIMARY KEY (id),
-                FOREIGN KEY (user_id) REFERENCES user(id),
-                FOREIGN KEY (dish_id) REFERENCES dish(id)
+                FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE SET NULL,
+                FOREIGN KEY (dish_id) REFERENCES dish(id) ON DELETE CASCADE
             )
             """;
 
     private static final String CREATE_TABLE_POST = """
             CREATE TABLE IF NOT EXISTS post(
                 id INT AUTO_INCREMENT,
-                user_id INT NOT NULL,
+                user_id INT,
                 time VARCHAR(255) NOT NULL,
                 title VARCHAR(255) NOT NULL,
                 content TEXT,
                 picture BLOB,
                 upvote INT NOT NULL,
                 PRIMARY KEY (id),
-                FOREIGN KEY (user_id) REFERENCES user(id)
+                FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE SET NULL
             )
             """;
 
     private static final String CREATE_TABLE_COMMENT = """
             CREATE TABLE IF NOT EXISTS post(
                 id INT AUTO_INCREMENT,
-                user_id INT NOT NULL,
+                user_id INT,
                 post_id INT NOT NULL,
                 content TEXT NOT NULL,
                 PRIMARY KEY (id),
-                FOREIGN KEY (user_id) REFERENCES user(id),
-                FOREIGN KEY (post_id) REFERENCES post(id)
+                FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE SET NULL,
+                FOREIGN KEY (post_id) REFERENCES post(id) ON DELETE CASCADE
             )
             """;
 
@@ -178,22 +178,22 @@ public class JDBCHelper extends DatabaseHelper {
 
     @Override
     protected void setDatabaseConfig() {
-        try (InputStream inputStream = JDBCHelper.class.getClassLoader().getResourceAsStream("config.json")) {
-            String text = new String(inputStream.readAllBytes());
-            JSONObject jsonObject = new JSONObject(text);
-            dbUrl = jsonObject.getString("database_url");
-            dbUsername = jsonObject.getString("database_username");
-            dbPassword = jsonObject.getString("database_password");
-            dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-            dbVersion = "1.2.6";
-        } catch (IOException e) {
-            logger.error("Database config failed", e);
-        }
-//        dbUrl = "jdbc:mysql://learn-canteen-mysql:3306/" + System.getenv("MYSQL_DATABASE");
-//        dbUsername = System.getenv("MYSQL_USER");
-//        dbPassword = System.getenv("MYSQL_PASSWORD");
-//        dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-//        dbVersion = "1.2.6";
+//        try (InputStream inputStream = JDBCHelper.class.getClassLoader().getResourceAsStream("config.json")) {
+//            String text = new String(inputStream.readAllBytes());
+//            JSONObject jsonObject = new JSONObject(text);
+//            dbUrl = jsonObject.getString("database_url");
+//            dbUsername = jsonObject.getString("database_username");
+//            dbPassword = jsonObject.getString("database_password");
+//            dbDriverClassName = "com.mysql.cj.jdbc.Driver";
+//            dbVersion = "1.3.0";
+//        } catch (IOException e) {
+//            logger.error("Database config failed", e);
+//        }
+        dbUrl = "jdbc:mysql://learn-canteen-mysql:3306/" + System.getenv("MYSQL_DATABASE");
+        dbUsername = System.getenv("MYSQL_USER");
+        dbPassword = System.getenv("MYSQL_PASSWORD");
+        dbDriverClassName = "com.mysql.cj.jdbc.Driver";
+        dbVersion = "1.3.0";
     }
 
     @Override
