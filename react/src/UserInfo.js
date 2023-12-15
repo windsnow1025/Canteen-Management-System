@@ -33,49 +33,76 @@ const UserInfo = () => {
                                 <p>User Level: {userInfo.userLevel}</p>
                                 <p>Canteen ID: {userInfo.canteenId}</p>
                                 {userInfo.userType === 'master_admin' && (
-                                    <div className="flex space-x-4 p-8 m-4 w-3/4 max-w-xs">
-                                        <button
-                                            className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded">食堂基本信息管理
-                                        </button>
-                                        <button
-                                            className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded">账号管理
-                                        </button>
-                                        <button
-                                            className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded">评价信息管理
-                                        </button>
-                                        <button
-                                            className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded">交流社区信息管理
-                                        </button>
+                                    <div className="flex flex-col space-y-4 items-center justify-center mt-3">
+                                        <a href="/canteen-info">
+                                            <button
+                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">食堂基本信息管理
+                                            </button>
+                                        </a>
+                                        <a>
+                                            <button
+                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">账号管理
+                                            </button>
+                                        </a>
+                                        <a>
+                                            <button
+                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">评价信息管理
+                                            </button>
+                                        </a>
+                                        <a>
+                                            <button
+                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">交流社区信息管理
+                                            </button>
+                                        </a>
                                     </div>
                                 )}
                                 {userInfo.userType === 'admin' && (
-                                    <div className="flex space-x-4 p-8 m-4 w-3/4 max-w-xs">
-                                        <button
-                                            className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded w-1/2">菜品维护
-                                        </button>
-                                        <button
-                                            className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded w-1/2">食堂评价处理
-                                        </button>
-                                        <button
-                                            className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded w-1/2">活动公告
-                                        </button>
-                                        <button
-                                            className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded w-1/2">发布投票调查
-                                        </button>
-                                        <button
-                                            className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded w-1/2">投诉信息处理
-                                        </button>
-                                        <button
-                                            className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded w-1/2">发布最新推荐菜品
-                                        </button>
+                                    <div className="flex flex-col space-y-4 items-center justify-center mt-4">
+                                        <a>
+                                            <button
+                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">菜品维护
+                                            </button>
+                                        </a>
+                                        <a>
+                                            <button
+                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">食堂评价处理
+                                            </button>
+                                        </a>
+                                        <a>
+                                            <button
+                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">活动公告
+                                            </button>
+                                        </a>
+                                        <a>
+                                            <button
+                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">发布投票调查
+                                            </button>
+                                        </a>
+                                        <a>
+                                            <button
+                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">投诉信息处理
+                                            </button>
+                                        </a>
+                                        <a>>
+                                            <button
+                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">发布最新推荐菜品
+                                            </button>
+                                        </a>
                                     </div>
                                 )}
-                                <div className="flex items-center justify-center">
+                                <div className="flex flex-col space-y-4 items-center justify-center mt-4">
                                     <a href="/login">
                                         <button
-                                            className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
+                                            className="bg-red-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
                                             type="button" onClick={UserApi.deleteToken}>
                                             退出登录
+                                        </button>
+                                    </a>
+                                    <a href="/change-password">
+                                        <button
+                                            className="bg-green-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
+                                            type="button" onClick={UserApi.deleteToken}>
+                                            修改密码
                                         </button>
                                     </a>
                                 </div>
