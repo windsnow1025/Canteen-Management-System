@@ -120,6 +120,21 @@ public class UserDAO {
         }
     }
 
+    public int getCanteenIdByName(String username){
+        String sql = "SELECT canteen_id FROM user WHERE username = ?";
+        try {
+            List<Map<String, Object>> result = jdbcHelper.select(sql, username);
+            if (! result.isEmpty()){
+                return (int) result.getFirst().get("canteen_id");
+            }else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            logger.error("getCanteenIdByName error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
     public boolean updatePassword(String username, String newPassword) {
         String sql = "UPDATE user SET password = ? WHERE username = ?";
         try {

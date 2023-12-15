@@ -6,8 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 
 public class DishDAO {
     private static final Logger logger = LoggerFactory.getLogger(DishDAO.class);
@@ -37,5 +39,30 @@ public class DishDAO {
         }
     }
 
-//    public List<Dish>
+    public List<Dish> getAllDish(){
+        List<Dish> dishList = new ArrayList<>();
+        String sql = "SELECT * FORM dish";
+        try {
+            List<Map<String, Object>> results = jdbcHelper.select(sql);
+            if (! results.isEmpty()){
+                for (Map<String, Object> result : results){
+                    int id = (int) result.get("id");
+                    int canteenId = (int) result.get("canteen_id");
+                    String dishName = (String) result.get("dish_name");
+                    float price = (float) result.get("price");
+                    float discount_rate = (float) result.get("discount_rate");
+                    String cuisine = (String) result.get("cuisine");
+                    byte[] pictureBytes = (byte[]) result.get("picture");
+                    String picture = ( pictureBytes != null) ? Base64.getEncoder().encodeToString(pictureBytes) :null;
+                    dishList.add(new Dish(id, canteenId, dishName, price, discount_rate, cuisine, picture));
+                }
+                return dishList;
+            }else {
+                return null;
+            }
+        } catch (SQLException e) {
+            logger.error("getAllDish error", e);
+            throw new RuntimeException(e);
+        }
+    }
 }
