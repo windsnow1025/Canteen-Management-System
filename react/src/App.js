@@ -8,6 +8,7 @@ import ChangePassword from "./ChangePassword";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import UserInfo from "./UserInfo";
 import CanteenInfo from "./CanteenInfo";
+import Canteen from "./Canteen"
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                     <Route path="/" element={<FirstPage />} />
                     <Route path="/user-info" element={<UserInfo />} />
                     <Route path="canteen-info" element={<CanteenInfo />} />
+                    <Route path="canteen" element={<Canteen />} />
                 </Routes>
             </div>
         </Router>
