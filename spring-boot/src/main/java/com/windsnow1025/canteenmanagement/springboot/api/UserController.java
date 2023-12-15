@@ -37,7 +37,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/all-name")
+    @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUser(@RequestHeader("Authorization") String token){
         try {
             List<User> userList = userLogic.getAllUser(token);

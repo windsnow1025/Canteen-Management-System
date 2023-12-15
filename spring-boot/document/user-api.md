@@ -2,11 +2,11 @@
 
 ## GET: user/info
 
-## GET: user/all-name
-
-## POST: user/signin (no token)
+## GET: user/all
 
 ## DELETE user/delete?username="consumer"
+
+## POST: user/signin (no token)
 
 ```json
 {

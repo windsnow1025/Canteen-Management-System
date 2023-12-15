@@ -111,16 +111,16 @@ public class JDBCHelper extends DatabaseHelper {
 
     private static final String INSERT_MASTER = """
             INSERT INTO user (username, password, user_type, user_level, canteen_id)
-            VALUES ("master","12345678901","master_admin","MAX","-1")
+            VALUES ("master","mpassword","master_admin","MAX","-1")
             """;
 
     private static final String INSERT_ADMIN = """
             INSERT INTO user (username, password, user_type, user_level, canteen_id)
-            VALUES ("admin","1234567890","canteen_admin","99","1")
+            VALUES ("admin","apassword","canteen_admin","99","1")
             """;
     private static final String INSERT_CONSUMER = """
             INSERT INTO user (username, password, user_type, user_level, canteen_id)
-            VALUES ("consumer","123456789","consumer","0","0")
+            VALUES ("consumer","cpassword","consumer","0","0")
             """;
 
     private static final String INSERT_CANTEEN_1 = """
@@ -185,7 +185,7 @@ public class JDBCHelper extends DatabaseHelper {
 //            dbUsername = jsonObject.getString("database_username");
 //            dbPassword = jsonObject.getString("database_password");
 //            dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-//            dbVersion = "1.3.0";
+//            dbVersion = "1.3.1";
 //        } catch (IOException e) {
 //            logger.error("Database config failed", e);
 //        }
@@ -193,7 +193,7 @@ public class JDBCHelper extends DatabaseHelper {
         dbUsername = System.getenv("MYSQL_USER");
         dbPassword = System.getenv("MYSQL_PASSWORD");
         dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-        dbVersion = "1.3.0";
+        dbVersion = "1.3.1";
     }
 
     @Override

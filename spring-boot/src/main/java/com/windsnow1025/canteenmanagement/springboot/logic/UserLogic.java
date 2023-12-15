@@ -20,10 +20,11 @@ public class UserLogic {
         return userDao.selectByUsername(username);
     }
 
-    public List<User> getAllUser(String token){
-        if (Objects.equals(userDao.getUserTypeByName(JwtUtil.parseJWT(token)), "master_admin")) {
+    public List<User> getAllUser(String token) {
+        String userType = userDao.getUserTypeByName(JwtUtil.parseJWT(token));
+        if (userType.equals("master_admin") || userType.equals("canteen_admin")) {
             return userDao.getAllUser();
-        }else {
+        } else {
             return null;
         }
     }
@@ -44,10 +45,10 @@ public class UserLogic {
     }
 
     public boolean updateType(String token, String username, String newType, int canteenId) {
-        String oldUsername = JwtUtil.parseJWT(token);
-        if (Objects.equals(userDao.getUserTypeByName(oldUsername), "master_admin")){
+        String userType = userDao.getUserTypeByName(JwtUtil.parseJWT(token));
+        if (userType.equals("master_admin") || userType.equals("canteen_admin")) {
             return userDao.updateType(username, newType, canteenId);
-        }else {
+        } else {
             return false;
         }
     }
@@ -57,10 +58,11 @@ public class UserLogic {
         return userDao.updateLevel(oldUsername, newLevel);
     }
 
-    public boolean delete(String token, String username){
-        if (Objects.equals(userDao.getUserTypeByName(JwtUtil.parseJWT(token)), "master_admin")) {
+    public boolean delete(String token, String username) {
+        String userType = userDao.getUserTypeByName(JwtUtil.parseJWT(token));
+        if (userType.equals("master_admin") || userType.equals("canteen_admin")) {
             return userDao.delete(username);
-        }else {
+        } else {
             return false;
         }
     }
