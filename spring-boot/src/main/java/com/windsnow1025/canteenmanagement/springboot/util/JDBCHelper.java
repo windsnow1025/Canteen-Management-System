@@ -185,7 +185,7 @@ public class JDBCHelper extends DatabaseHelper {
 //            dbUsername = jsonObject.getString("database_username");
 //            dbPassword = jsonObject.getString("database_password");
 //            dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-//            dbVersion = "1.3.0";
+//            dbVersion = "1.3.1";
 //        } catch (IOException e) {
 //            logger.error("Database config failed", e);
 //        }
@@ -193,7 +193,7 @@ public class JDBCHelper extends DatabaseHelper {
         dbUsername = System.getenv("MYSQL_USER");
         dbPassword = System.getenv("MYSQL_PASSWORD");
         dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-        dbVersion = "1.3.0";
+        dbVersion = "1.3.1";
     }
 
     @Override
