@@ -42,7 +42,8 @@ public class CanteenLogic {
     }
 
     public boolean insert(String token, String canteenName, String intro, String location, String businessHours, String announcement) {
-        if (Objects.equals(userDAO.getUserTypeByName(JwtUtil.parseJWT(token)), "master_admin")) {
+        String userType = userDAO.getUserTypeByName(JwtUtil.parseJWT(token));
+        if (userType.equals("master_admin") || userType.equals("canteen_admin")) {
             Canteen canteen = new Canteen(canteenName, intro, location, businessHours, announcement);
             return canteenDAO.insert(canteen);
         } else {
@@ -51,7 +52,8 @@ public class CanteenLogic {
     }
 
     public boolean updateCanteenName(String token, int id, String newCanteenName) {
-        if ( ! Objects.equals(userDAO.getUserTypeByName(JwtUtil.parseJWT(token)), "consumer")) {
+        String userType = userDAO.getUserTypeByName(JwtUtil.parseJWT(token));
+        if (userType.equals("master_admin") || userType.equals("canteen_admin")) {
             return canteenDAO.updateCanteenName(id, newCanteenName);
         } else {
             return false;
@@ -59,7 +61,8 @@ public class CanteenLogic {
     }
 
     public boolean updateIntro(String token, String canteenName, String newIntro) {
-        if ( ! Objects.equals(userDAO.getUserTypeByName(JwtUtil.parseJWT(token)), "consumer")) {
+        String userType = userDAO.getUserTypeByName(JwtUtil.parseJWT(token));
+        if (userType.equals("master_admin") || userType.equals("canteen_admin")) {
             return canteenDAO.updateIntro(canteenName, newIntro);
         } else {
             return false;
@@ -67,7 +70,8 @@ public class CanteenLogic {
     }
 
     public boolean updateLocation(String token, String canteenName, String newLocation) {
-        if ( ! Objects.equals(userDAO.getUserTypeByName(JwtUtil.parseJWT(token)), "consumer")) {
+        String userType = userDAO.getUserTypeByName(JwtUtil.parseJWT(token));
+        if (userType.equals("master_admin") || userType.equals("canteen_admin")) {
             return canteenDAO.updateLocation(canteenName, newLocation);
         } else {
             return false;
@@ -75,7 +79,8 @@ public class CanteenLogic {
     }
 
     public boolean updateBusinessHour(String token, String canteenName, String newBusinessHours) {
-        if ( ! Objects.equals(userDAO.getUserTypeByName(JwtUtil.parseJWT(token)), "consumer")) {
+        String userType = userDAO.getUserTypeByName(JwtUtil.parseJWT(token));
+        if (userType.equals("master_admin") || userType.equals("canteen_admin")) {
             return canteenDAO.updateBusinessHour(canteenName, newBusinessHours);
         } else {
             return false;
@@ -83,7 +88,8 @@ public class CanteenLogic {
     }
 
     public boolean updateAnnouncement(String token, String canteenName, String newAnnouncement) {
-        if (Objects.equals(JwtUtil.parseJWT(token), "master")) {
+        String userType = userDAO.getUserTypeByName(JwtUtil.parseJWT(token));
+        if (userType.equals("master_admin") || userType.equals("canteen_admin")) {
             return canteenDAO.updateAnnouncement(canteenName, newAnnouncement);
         } else {
             return false;
@@ -91,7 +97,8 @@ public class CanteenLogic {
     }
 
     public boolean delete(String token, String canteenName) {
-        if (Objects.equals(userDAO.getUserTypeByName(JwtUtil.parseJWT(token)), "master_admin")) {
+        String userType = userDAO.getUserTypeByName(JwtUtil.parseJWT(token));
+        if (userType.equals("master_admin") || userType.equals("canteen_admin")) {
             return canteenDAO.delete(canteenName);
         } else {
             return false;
