@@ -20,9 +20,12 @@ public class UserLogic {
         return userDao.selectByUsername(username);
     }
 
-    public List<String> getAllUser(String token){
-        String username = JwtUtil.parseJWT(token);
-        return userDao.getAllUser();
+    public List<User> getAllUser(String token){
+        if (Objects.equals(userDao.getUserTypeByName(JwtUtil.parseJWT(token)), "master_admin")) {
+            return userDao.getAllUser();
+        }else {
+            return null;
+        }
     }
 
     public String signIn(String username, String password) {

@@ -33,16 +33,22 @@ public class CanteenDAO {
         }
     }
 
-    public List<String> getAllCanteen(){
-        List<String> canteenName = new ArrayList<>();
-        String sql = "SELECT canteen_name FROM canteen";
+    public List<Canteen> getAllCanteen(){
+        List<Canteen> canteenNameList = new ArrayList<>();
+        String sql = "SELECT * FROM canteen";
         try {
             List<Map<String, Object>> results = jdbcHelper.select(sql);
             if (! results.isEmpty()){
                 for (Map<String, Object> result : results){
-                    canteenName.add((String) result.get("canteen_name"));
+                    int id = (int) result.get("id");
+                    String canteenName = (String) result.get("canteen_name");
+                    String intro = (String) result.get("intro");
+                    String location = (String) result.get("intro");
+                    String businessHours = (String) result.get("business_hours");
+                    String announcement = (String) result.get("announcement");
+                    canteenNameList.add(new Canteen(id, canteenName, intro, location, businessHours, announcement));
                 }
-                return canteenName;
+                return canteenNameList;
             }else {
                 return null;
             }
@@ -56,6 +62,28 @@ public class CanteenDAO {
         String sql = "SELECT * FROM canteen WHERE canteen_name = ?";
         try {
             List<Map<String, Object>> result = jdbcHelper.select(sql, canteenName);
+            if (! result.isEmpty()){
+                Map<String, Object> resultMap = result.getFirst();
+                int canteenId = (int) resultMap.get("id");
+                String canteen_name = (String) resultMap.get("canteen_name");
+                String intro = (String) resultMap.get("intro");
+                String location = (String) resultMap.get("location");
+                String businessHour = (String) resultMap.get("business_hours");
+                String announcement = (String) resultMap.get("announcement");
+                return new Canteen(canteenId, canteen_name, intro, location, businessHour, announcement);
+            }else {
+                return null;
+            }
+        } catch (SQLException e) {
+            logger.error("selectCanteenByCanteenName error");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Canteen selectCanteenById(int id){
+        String sql = "SELECT * FROM canteen WHERE id = ?";
+        try {
+            List<Map<String, Object>> result = jdbcHelper.select(sql, id);
             if (! result.isEmpty()){
                 Map<String, Object> resultMap = result.getFirst();
                 int canteenId = (int) resultMap.get("id");

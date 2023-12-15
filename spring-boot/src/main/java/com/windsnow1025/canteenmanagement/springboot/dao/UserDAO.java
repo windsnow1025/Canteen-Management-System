@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class UserDAO {
     private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
@@ -35,15 +36,23 @@ public class UserDAO {
         }
     }
 
-    public List<String> getAllUser(){
-        List<String> userList = new ArrayList<>();
-        String sql = "SELECT username FROM user";
+    public List<User> getAllUser(){
+        List<User> userList = new ArrayList<>();
+        String sql = "SELECT * FROM user";
         try {
             List<Map<String, Object>> results = jdbcHelper.select(sql);
             if (! results.isEmpty()) {
                 for (Map<String, Object> result : results) {
+                    int id = (int) result.get("id");
                     String username = (String) result.get("username");
-                    userList.add(username);
+                    String password = (String) result.get("password");
+                    String userType = (String) result.get("user_type");
+                    if (Objects.equals(userType, "master_admin")){
+                        continue;
+                    }
+                    String userLevel = (String) result.get("user_level");
+                    int canteenID = (int) result.get("canteen_id");
+                    userList.add(new User(id, username, password, userType, userLevel, canteenID));
                 }
                 return userList;
             }else {
