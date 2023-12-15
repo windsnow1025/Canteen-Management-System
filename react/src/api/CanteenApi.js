@@ -3,20 +3,64 @@ import axios from "axios";
 export default class CanteenApi{
 
     /*
-    [
-    "一餐厅",
-    "二食堂",
-    "思餐厅",
-    "五食堂",
-    "迷你餐厅"
-    ]
+[
+    {
+        "id": 1,
+        "canteenName": "一餐厅",
+        "intro": "....",
+        "location": "....",
+        "businessHour": "06:00 – 22:00",
+        "announcement": "一食堂禁止携带酒水"
+    },
+    {
+        "id": 2,
+        "canteenName": "二食堂",
+        "intro": "基础学院学子的唯二选择之一",
+        "location": "基础学院学子的唯二选择之一",
+        "businessHour": "06:00 – 22:00",
+        "announcement": "二食堂禁止携带本部食堂的食物"
+    },
+    {
+        "id": 3,
+        "canteenName": "思餐厅",
+        "intro": "思餐厅天下第二",
+        "location": "思餐厅天下第二",
+        "businessHour": "06:00 – 22:00",
+        "announcement": "思餐厅禁止情侣长时间霸占座位，时间就是金钱我的朋友"
+    },
+    {
+        "id": 4,
+        "canteenName": "五食堂",
+        "intro": "五食堂天下第一！！！！！！",
+        "location": "五食堂天下第一！！！！！！",
+        "businessHour": "06:00 – 22:00",
+        "announcement": "五食堂禁止情侣入内，享受美食吧，诸位，五食堂是你们肠胃最坚实的壁垒"
+    },
+    {
+        "id": 5,
+        "canteenName": "迷你餐厅",
+        "intro": "金刚胃训练处",
+        "location": "金刚胃训练处",
+        "businessHour": "06:00 – 22:00",
+        "announcement": "请各位同学就餐前，准备好自己的医保卡"
+    }
+]
      */
-    static async showAllName() {
+    static async showAllCanteen() {
         const token = localStorage.getItem('token');
-        const res = await axios.get("https://www.windsnow1025.com/learn/api/canteen/canteen/all-name", {
+        const res = await axios.get("https://www.windsnow1025.com/learn/api/canteen/canteen/all", {
             headers: {Authorization: `${token}`}
         });
         return res.data;
+    }
+
+    static async showAllCanteenNames() {
+        const token = localStorage.getItem('token');
+        const res = await axios.get("https://www.windsnow1025.com/learn/api/canteen/canteen/all", {
+            headers: {Authorization: `${token}`}
+        });
+        const canteens = res.data;
+        return canteens.map(canteen => canteen.canteenName);
     }
 
 
@@ -35,6 +79,19 @@ export default class CanteenApi{
         const res = await axios.get("https://www.windsnow1025.com/learn/api/canteen/canteen/info", {
             params: {
                 canteenName: canteenName
+            },
+            headers: {
+                Authorization: `${token}`
+            }
+        });
+        return res.data;
+    }
+
+    static async getCanteenInfoById(canteenId) {
+        const token = localStorage.getItem('token');
+        const res = await axios.get("https://www.windsnow1025.com/learn/api/canteen/canteen/info-id", {
+            params: {
+                canteenId: canteenId
             },
             headers: {
                 Authorization: `${token}`
@@ -100,11 +157,11 @@ export default class CanteenApi{
         return res.data.message;
     }
 
-    static async updateCanteenBusinessHours(canteenName,businessHours) {
+    static async updateCanteenBusinessHour(canteenName,businessHour) {
         const token = localStorage.getItem('token');
         const res = await axios.put("https://www.windsnow1025.com/learn/api/canteen/canteen/business-hours", {
             canteenName:canteenName,
-            businessHours: businessHours
+            businessHour: businessHour
         }, {
             headers: {Authorization: `${token}`}
         });
