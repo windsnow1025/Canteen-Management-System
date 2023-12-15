@@ -91,7 +91,7 @@ const UserInfo = () => {
                                     </div>
                                 )}
                                 <div className="flex flex-col space-y-4 items-center justify-center mt-4">
-                                    <a href="/login">
+                                    <a href="/src/Login">
                                         <button
                                             className="bg-red-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
                                             type="button" onClick={UserApi.deleteToken}>
