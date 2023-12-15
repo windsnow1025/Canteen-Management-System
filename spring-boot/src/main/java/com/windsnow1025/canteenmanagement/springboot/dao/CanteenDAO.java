@@ -135,10 +135,10 @@ public class CanteenDAO {
         }
     }
 
-    public boolean updateBusinessHour(String canteenName, String businessHours){
+    public boolean updateBusinessHour(String canteenName, String businessHour){
         String sql = "UPDATE canteen SET business_hours = ? WHERE canteen_name = ?";
         try {
-            int rowsAffected = jdbcHelper.executeUpdate(sql,businessHours,canteenName);
+            int rowsAffected = jdbcHelper.executeUpdate(sql,businessHour,canteenName);
             return rowsAffected > 0;
         } catch (SQLException e) {
             logger.error("updateBusinessHour error",e);

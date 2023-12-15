@@ -57,7 +57,7 @@ public class DishDAO {
                     dishList.add(new Dish(id, canteenId, dishName, price, discount_rate, cuisine, picture));
                 }
                 return dishList;
-            }else {
+            } else {
                 return null;
             }
         } catch (SQLException e) {
@@ -65,4 +65,42 @@ public class DishDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public Dish getDishById(int id){
+        String sql = "SELECT * FROM dish WHERE id = ?";
+        try {
+            List<Map<String, Object>> results = jdbcHelper.select(sql, id);
+            if (! results.isEmpty()){
+                    Map<String, Object> result = results.getFirst();
+                    int canteenId = (int) result.get("canteen_id");
+                    String dishName = (String) result.get("dish_name");
+                    float price = (float) result.get("price");
+                    float discount_rate = (float) result.get("discount_rate");
+                    String cuisine = (String) result.get("cuisine");
+                    byte[] pictureBytes = (byte[]) result.get("picture");
+                    String picture = ( pictureBytes != null) ? Base64.getEncoder().encodeToString(pictureBytes) :null;
+                return new Dish(id, canteenId, dishName, price, discount_rate, cuisine, picture);
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            logger.error("getDishById error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean hasPermission(String username){
+        String sql = "SELECT * FROM user JOIN dish ON user.canteen_id = dish.canteen_id WHERE user.username = ?";
+        try {
+            if (! jdbcHelper.select(sql, username).isEmpty()){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            logger.error("hasPermission error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
 }
