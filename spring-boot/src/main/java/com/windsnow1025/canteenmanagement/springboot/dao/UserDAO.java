@@ -152,4 +152,14 @@ public class UserDAO {
         }
     }
 
+    public boolean delete(String username){
+        String sql = "DELETE FROM user WHERE username = ?";
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql, username);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("Delete error", e);
+            throw new RuntimeException(e);
+        }
+    }
 }
