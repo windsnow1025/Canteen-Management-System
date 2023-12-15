@@ -38,9 +38,9 @@ public class UserController {
     }
 
     @GetMapping("/all-name")
-    public ResponseEntity<List<String>> getAllUser(@RequestHeader("Authorization") String token){
+    public ResponseEntity<List<User>> getAllUser(@RequestHeader("Authorization") String token){
         try {
-            List<String> userList = userLogic.getAllUser(token);
+            List<User> userList = userLogic.getAllUser(token);
             if (userList != null ){
                 return ResponseEntity.ok(userList);
             }else {
@@ -142,5 +142,19 @@ public class UserController {
         }
     }
 
+    @DeleteMapping("/delete")
+    public ResponseEntity<Map<String, Object>> delete(@RequestHeader("Authorization") String token, @RequestParam("username") String username){
+        try {
+            boolean result = userLogic.delete(token, username);
+            if (result) {
+                return ResponseEntity.ok(Map.of("status", "Success", "message", "Delete successful"));
+            } else {
+                return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Delete failed"));
+            }
+        } catch (Exception e) {
+            logger.error("Delete error", e);
+            return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
+        }
+    }
 
 }

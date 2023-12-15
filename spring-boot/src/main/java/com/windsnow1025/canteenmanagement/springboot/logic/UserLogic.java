@@ -20,9 +20,12 @@ public class UserLogic {
         return userDao.selectByUsername(username);
     }
 
-    public List<String> getAllUser(String token){
-        String username = JwtUtil.parseJWT(token);
-        return userDao.getAllUser();
+    public List<User> getAllUser(String token){
+        if (Objects.equals(userDao.getUserTypeByName(JwtUtil.parseJWT(token)), "master_admin")) {
+            return userDao.getAllUser();
+        }else {
+            return null;
+        }
     }
 
     public String signIn(String username, String password) {
@@ -52,5 +55,13 @@ public class UserLogic {
     public boolean updateLevel(String token, String newLevel) {
         String oldUsername = JwtUtil.parseJWT(token);
         return userDao.updateLevel(oldUsername, newLevel);
+    }
+
+    public boolean delete(String token, String username){
+        if (Objects.equals(userDao.getUserTypeByName(JwtUtil.parseJWT(token)), "master_admin")) {
+            return userDao.delete(username);
+        }else {
+            return false;
+        }
     }
 }

@@ -101,7 +101,7 @@ const UserInfo = () => {
                                     <a href="/change-password">
                                         <button
                                             className="bg-green-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
-                                            type="button" onClick={UserApi.deleteToken}>
+                                            type="button" >
                                             修改密码
                                         </button>
                                     </a>

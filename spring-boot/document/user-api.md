@@ -6,6 +6,8 @@
 
 ## POST: user/signin (no token)
 
+## DELETE user/delete?username="consumer"
+
 ```json
 {
   "username": "user",

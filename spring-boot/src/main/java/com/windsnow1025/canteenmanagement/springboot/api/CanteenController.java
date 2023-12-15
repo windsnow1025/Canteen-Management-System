@@ -23,9 +23,9 @@ public class CanteenController {
     }
 
     @GetMapping("/all-name")
-    public ResponseEntity<List<String>> getAllName(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<Canteen>> getAllName(@RequestHeader("Authorization") String token) {
         try {
-            List<String> canteenList = canteenLogic.getAllName(token);
+            List<Canteen> canteenList = canteenLogic.getAllName(token);
             if (canteenList != null) {
                 return ResponseEntity.ok(canteenList);
             } else {
@@ -41,6 +41,21 @@ public class CanteenController {
     public ResponseEntity<Canteen> getCanteen(@RequestHeader("Authorization") String token, @RequestParam("canteenName") String canteenName) {
         try {
             Canteen canteen = canteenLogic.getInfo(token, canteenName);
+            if (canteen != null) {
+                return ResponseEntity.ok(canteen);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } catch (Exception e) {
+            logger.error("Get canteen info error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/info-id")
+    public ResponseEntity<Canteen> getCanteenById(@RequestHeader("Authorization") String token, @RequestParam("canteenId") int id) {
+        try {
+            Canteen canteen = canteenLogic.getInfoById(token, id);
             if (canteen != null) {
                 return ResponseEntity.ok(canteen);
             } else {
