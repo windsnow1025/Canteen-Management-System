@@ -36,22 +36,22 @@ const UserInfo = () => {
                                     <div className="flex flex-col space-y-4 items-center justify-center mt-3">
                                         <a href="/canteen-info">
                                             <button
-                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">食堂基本信息管理
+                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-56">食堂基本信息管理
                                             </button>
                                         </a>
                                         <a>
                                             <button
-                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">账号管理
+                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-56">账号管理
                                             </button>
                                         </a>
                                         <a>
                                             <button
-                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">评价信息管理
+                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-56">评价信息管理
                                             </button>
                                         </a>
                                         <a>
                                             <button
-                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">交流社区信息管理
+                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-56">交流社区信息管理
                                             </button>
                                         </a>
                                     </div>

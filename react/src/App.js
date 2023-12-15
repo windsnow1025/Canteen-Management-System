@@ -7,6 +7,7 @@ import Community from "./Community";
 import ChangePassword from "./ChangePassword";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import UserInfo from "./UserInfo";
+import CanteenInfo from "./CanteenInfo";
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                     <Route path="/community" element={<Community />} />
                     <Route path="/" element={<FirstPage />} />
                     <Route path="/user-info" element={<UserInfo />} />
+                    <Route path="canteen-info" element={<CanteenInfo />} />
                 </Routes>
             </div>
         </Router>
