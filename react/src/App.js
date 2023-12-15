@@ -11,6 +11,7 @@ import CanteenInfo from "./CanteenInfo";
 import Canteen from "./Canteen"
 import CertainCanteenInfo from "./CertainCanteenInfo";
 import ModifyCanteenInfo from "./ModifyCanteenInfo";
+import AddCanteen from "./AddCanteen";
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                     <Route path="canteen" element={<Canteen />} />
                     <Route path="/certain-canteen-info" element={<CertainCanteenInfo />} />
                     <Route path="/modify-canteen-info" element={<ModifyCanteenInfo />} />
+                    <Route path="/canteen-add" element={<AddCanteen />} />
                 </Routes>
             </div>
         </Router>
