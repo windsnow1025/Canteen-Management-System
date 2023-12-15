@@ -61,6 +61,12 @@ const ModifyCanteenInfo = () => {
         setCanteenInfo(info);
     };
 
+    // 处理删除
+    const handleCanteenDelete = async () => {
+        await CanteenApi.deleteCanteen(canteenName);
+    };
+
+
     useEffect(() => {
         const fetchCanteenInfo = async () => {
             try {
@@ -115,6 +121,14 @@ const ModifyCanteenInfo = () => {
                                        type="text" value={newAnnouncement} onChange={(e) => setNewAnnouncement(e.target.value)} />
                                 <button className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
                                         onClick={handleAnnouncementChange}>修改公告</button>
+                                <br/>
+                                <a href="/canteen-info">
+                                    <button
+                                        className="bg-red-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
+                                        type="button" onClick={handleCanteenDelete}>
+                                        删除餐厅
+                                    </button>
+                                </a>
                             </div>
                         ) : (
                             <p>loading...</p>

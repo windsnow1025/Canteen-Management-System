@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Link, useLocation} from 'react-router-dom';
+import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
 import CanteenApi from "./api/CanteenApi";
 import NavBar from "./components/NavBar";
 
@@ -28,8 +28,13 @@ const AddCanteen = () => {
                                 <input className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                                        type="text" value={newLocation} onChange={(e) => setNewLocation(e.target.value)}/>
                                 <br/>
-                                <button className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
-                                        onClick={handleCanteenAdd}>确认添加</button>
+                                <a href="/canteen-info">
+                                    <button
+                                        className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
+                                        type="button" onClick={handleCanteenAdd}>
+                                        确认添加
+                                    </button>
+                                </a>
                             </div>
                         <br/>
                         <Link to={`/canteen-info`}>
