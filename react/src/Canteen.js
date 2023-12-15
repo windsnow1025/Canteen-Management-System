@@ -29,7 +29,7 @@ const Canteen =()=>{
                     <h1 className="mb-6 text-xl text-center">食堂信息</h1>
                     <Flex wrap="wrap" gap="small">
                         {canteenNames.map((name, i) => (
-                            <Link key={i} to={`/certain-canteen-info?$name}`}>
+                            <Link key={i} to={`/certain-canteen-info?name=${name}`}>
                                 <button
                                     className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
                                     type="primary">

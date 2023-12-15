@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import UserInfo from "./UserInfo";
 import CanteenInfo from "./CanteenInfo";
 import Canteen from "./Canteen"
+import CertainCanteenInfo from "./CertainCanteenInfo";
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                     <Route path="/user-info" element={<UserInfo />} />
                     <Route path="canteen-info" element={<CanteenInfo />} />
                     <Route path="canteen" element={<Canteen />} />
+                    <Route path="/certain-canteen-info" element={<CertainCanteenInfo />} />
                 </Routes>
             </div>
         </Router>
