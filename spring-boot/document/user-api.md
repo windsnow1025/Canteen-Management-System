@@ -4,9 +4,9 @@
 
 ## GET: user/all
 
-## POST: user/signin (no token)
-
 ## DELETE user/delete?username="consumer"
+
+## POST: user/signin (no token)
 
 ```json
 {

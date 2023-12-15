@@ -111,16 +111,16 @@ public class JDBCHelper extends DatabaseHelper {
 
     private static final String INSERT_MASTER = """
             INSERT INTO user (username, password, user_type, user_level, canteen_id)
-            VALUES ("master","12345678901","master_admin","MAX","-1")
+            VALUES ("master","mpassword","master_admin","MAX","-1")
             """;
 
     private static final String INSERT_ADMIN = """
             INSERT INTO user (username, password, user_type, user_level, canteen_id)
-            VALUES ("admin","1234567890","canteen_admin","99","1")
+            VALUES ("admin","apassword","canteen_admin","99","1")
             """;
     private static final String INSERT_CONSUMER = """
             INSERT INTO user (username, password, user_type, user_level, canteen_id)
-            VALUES ("consumer","123456789","consumer","0","0")
+            VALUES ("consumer","cpassword","consumer","0","0")
             """;
 
     private static final String INSERT_CANTEEN_1 = """

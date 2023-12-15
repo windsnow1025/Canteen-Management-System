@@ -7,13 +7,13 @@ JAVA 21
 ## Default user
 
 username: master
-password: 12345678901
+password: mpassword
 userType: master_admin
 
 username: admin
-password: 1234567890
+password: apassword
 userType: canteen_admin
 
 username: consumer
-password: 123456789
+password: cpassword
 userType: consumer
