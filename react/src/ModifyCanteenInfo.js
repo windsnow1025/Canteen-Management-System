@@ -8,6 +8,19 @@ const ModifyCanteenInfo = () => {
     const canteenName = new URLSearchParams(location.search).get('name');
     const [canteenInfo, setCanteenInfo] = useState(null);
 
+    const [newIntro, setNewIntro] = useState('');
+    const [newLocation, setNewLocation] = useState('');
+
+    const handleIntroChange = async () => {
+        // 调用接口更新简介信息
+        await CanteenApi.updateCanteenIntro(canteenName, newIntro);
+    };
+
+    const handleLocationChange = async () => {
+        // 调用接口更新位置信息
+        await CanteenApi.updateCanteenLocation(canteenName, newLocation);
+    };
+
     useEffect(() => {
         const fetchCanteenInfo = async () => {
             const info = await CanteenApi.getCanteenInfo(canteenName); // 使用您的获取食堂信息的方法
@@ -36,6 +49,11 @@ const ModifyCanteenInfo = () => {
                             <p>loading...</p>
                         )}
                         <br/>
+                        <input value={newIntro} onChange={(e) => setNewIntro(e.target.value)} />
+                        <button onClick={handleIntroChange}>更新简介</button>
+
+                        <input value={newLocation} onChange={(e) => setNewLocation(e.target.value)} />
+                        <button onClick={handleLocationChange}>更新位置</button>
                         <Link to={`/canteen-info`}>
                             <button
                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
