@@ -11,7 +11,7 @@ const Canteen =()=>{
     useEffect(() => {
         const fetchCanteenNames = async () => {
             try {
-                const names = await CanteenApi.showAllName();
+                const names = await CanteenApi.showAllCanteenNames();
                 setCanteenNames(names);
             } catch (error) {
                 console.error("Error fetching canteen names:", error);

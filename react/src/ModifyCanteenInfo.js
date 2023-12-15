@@ -7,26 +7,76 @@ const ModifyCanteenInfo = () => {
     const location = useLocation();
     const canteenName = new URLSearchParams(location.search).get('name');
     const [canteenInfo, setCanteenInfo] = useState(null);
-
     const [newIntro, setNewIntro] = useState('');
     const [newLocation, setNewLocation] = useState('');
+    const [newBusinessHour, setNewBusinessHour] = useState('');
+    const [newAnnouncement, setNewAnnouncement] = useState('');
+    const [newCanteenName, setNewCanteenName] = useState('');
+    const [id, setId] = useState(null);
 
-    const handleIntroChange = async () => {
-        // 调用接口更新简介信息
-        await CanteenApi.updateCanteenIntro(canteenName, newIntro);
+    // 处理餐厅名修改
+    const handleCanteenNameChange = async () => {
+        try {
+            // 更新食堂名称
+            await CanteenApi.updateCanteenName(id, newCanteenName);
+
+            // 更新完数据后重新获取食堂信息
+            const info = await CanteenApi.getCanteenInfoById(id);
+            setCanteenInfo(info);
+        } catch (error) {
+            // 处理错误
+            console.error('Error updating canteen name or fetching canteen info:', error);
+        }
     };
 
+    // 处理简介修改
+    const handleIntroChange = async () => {
+        await CanteenApi.updateCanteenIntro(canteenName, newIntro);
+        // 更新完数据后重新获取食堂信息
+        const info = await CanteenApi.getCanteenInfo(canteenName);
+        setCanteenInfo(info);
+    };
+
+    // 处理位置修改
     const handleLocationChange = async () => {
-        // 调用接口更新位置信息
         await CanteenApi.updateCanteenLocation(canteenName, newLocation);
+        // 更新完数据后重新获取食堂信息
+        const info = await CanteenApi.getCanteenInfo(canteenName);
+        setCanteenInfo(info);
+    };
+
+    // 处理营业时间修改
+    const handleBusinessHoursChange = async () => {
+        await CanteenApi.updateCanteenBusinessHour(canteenName, newBusinessHour);
+        // 更新完数据后重新获取食堂信息
+        const info = await CanteenApi.getCanteenInfo(canteenName);
+        setCanteenInfo(info);
+    };
+
+    // 处理公告修改
+    const handleAnnouncementChange = async () => {
+        await CanteenApi.updateCanteenAnnouncement(canteenName, newAnnouncement);
+        // 更新完数据后重新获取食堂信息
+        const info = await CanteenApi.getCanteenInfo(canteenName);
+        setCanteenInfo(info);
     };
 
     useEffect(() => {
         const fetchCanteenInfo = async () => {
-            const info = await CanteenApi.getCanteenInfo(canteenName); // 使用您的获取食堂信息的方法
-            setCanteenInfo(info);
+            try {
+                const info = await CanteenApi.getCanteenInfo(canteenName);
+                setCanteenInfo(info);
+                setNewIntro(info.intro);
+                setNewLocation(info.location);
+                setNewBusinessHour(info.businessHour);
+                setNewAnnouncement(info.announcement);
+                setId(info.id);
+                setNewCanteenName(info.canteenName);
+            } catch (error) {
+                // 处理错误
+                console.error('Error fetching canteen info:', error);
+            }
         };
-
         fetchCanteenInfo();
     }, [canteenName]);
 
@@ -39,21 +89,37 @@ const ModifyCanteenInfo = () => {
                     <div>
                         {canteenInfo ? (
                             <div>
-                                <h2>{canteenInfo.canteenName}</h2>
-                                <p>简介: {canteenInfo.intro}</p>
-                                <p>位置: {canteenInfo.location}</p>
-                                <p>营业时间: {canteenInfo.businessHour}</p>
-                                <p>公告: {canteenInfo.announcement}</p>
+
+                                <p>餐厅名:</p>
+                                <input className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                                       type="text" value={newCanteenName} onChange={(e) => setNewCanteenName(e.target.value)} />
+                                <button className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
+                                        onClick={handleCanteenNameChange}>修改餐厅名</button>
+                                <p>简介:</p>
+                                <input className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                                       type="text" value={newIntro} onChange={(e) => setNewIntro(e.target.value)} />
+                                <button className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
+                                        onClick={handleIntroChange}>修改简介</button>
+                                <p>位置:</p>
+                                <input className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                                       type="text" value={newLocation} onChange={(e) => setNewLocation(e.target.value)}/>
+                                <button className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
+                                        onClick={handleLocationChange}>修改位置</button>
+                                <p>营业时间:</p>
+                                <input className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                                       type="text" value={newBusinessHour} onChange={(e) => setNewBusinessHour(e.target.value)} />
+                                <button className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
+                                        onClick={handleBusinessHoursChange}>修改营业时间</button>
+                                <p>公告:</p>
+                                <input className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                                       type="text" value={newAnnouncement} onChange={(e) => setNewAnnouncement(e.target.value)} />
+                                <button className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
+                                        onClick={handleAnnouncementChange}>修改公告</button>
                             </div>
                         ) : (
                             <p>loading...</p>
                         )}
                         <br/>
-                        <input value={newIntro} onChange={(e) => setNewIntro(e.target.value)} />
-                        <button onClick={handleIntroChange}>更新简介</button>
-
-                        <input value={newLocation} onChange={(e) => setNewLocation(e.target.value)} />
-                        <button onClick={handleLocationChange}>更新位置</button>
                         <Link to={`/canteen-info`}>
                             <button
                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
