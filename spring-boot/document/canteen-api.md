@@ -4,6 +4,8 @@
 
 ## GET: canteen/info?canteenName=一餐厅
 
+## GET canteen/info-id?canteenId=1
+
 ## POST: canteen/create
 
 ```json
@@ -60,8 +62,6 @@
 
 ## DELETE: canteen/delete
 
-```json
-{
-  "canteenName": "四餐厅"
-}
+```
+canteen/delete?canteenName="迷你餐厅"
 ```
