@@ -2,7 +2,7 @@
 
 ## GET: user/info
 
-## GET: user/all-name
+## GET: user/all
 
 ## POST: user/signin (no token)
 

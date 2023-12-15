@@ -22,10 +22,10 @@ public class CanteenController {
         canteenLogic = new CanteenLogic();
     }
 
-    @GetMapping("/all-name")
+    @GetMapping("/all")
     public ResponseEntity<List<Canteen>> getAllName(@RequestHeader("Authorization") String token) {
         try {
-            List<Canteen> canteenList = canteenLogic.getAllName(token);
+            List<Canteen> canteenList = canteenLogic.getAll(token);
             if (canteenList != null) {
                 return ResponseEntity.ok(canteenList);
             } else {

@@ -1,6 +1,6 @@
 # Canteen API
 
-## GET: canteen/all-name
+## GET: canteen/all
 
 ## GET: canteen/info?canteenName=一餐厅
 

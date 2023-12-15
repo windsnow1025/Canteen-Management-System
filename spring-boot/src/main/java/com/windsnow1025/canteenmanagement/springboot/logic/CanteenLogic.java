@@ -6,7 +6,6 @@ import com.windsnow1025.canteenmanagement.springboot.model.Canteen;
 import com.windsnow1025.canteenmanagement.springboot.util.JwtUtil;
 
 import java.util.List;
-import java.util.Objects;
 
 public class CanteenLogic {
     private final CanteenDAO canteenDAO;
@@ -33,7 +32,7 @@ public class CanteenLogic {
         }
     }
 
-    public List<Canteen> getAllName(String token) {
+    public List<Canteen> getAll(String token) {
         if (JwtUtil.parseJWT(token) != null) {
             return canteenDAO.getAllCanteen();
         } else {
