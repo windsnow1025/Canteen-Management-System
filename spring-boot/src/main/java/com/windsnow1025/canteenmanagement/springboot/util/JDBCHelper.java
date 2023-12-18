@@ -43,7 +43,7 @@ public class JDBCHelper extends DatabaseHelper {
                 cuisine VARCHAR(255) NOT NULL,
                 picture BLOB,
                 PRIMARY KEY (id),
-                FOREIGN KEY (canteen_id) REFERENCES canteen(id) ON DELETE SET NULL
+                FOREIGN KEY (canteen_id) REFERENCES canteen(id) ON DELETE CASCADE
             )
             """;
 
@@ -185,7 +185,7 @@ public class JDBCHelper extends DatabaseHelper {
             dbUsername = jsonObject.getString("database_username");
             dbPassword = jsonObject.getString("database_password");
             dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-            dbVersion = "1.3.2";
+            dbVersion = "1.3.3";
         } catch (IOException e) {
             logger.error("Database config failed", e);
         }
@@ -193,7 +193,7 @@ public class JDBCHelper extends DatabaseHelper {
 //        dbUsername = System.getenv("MYSQL_USER");
 //        dbPassword = System.getenv("MYSQL_PASSWORD");
 //        dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-//        dbVersion = "1.3.1";
+//        dbVersion = "1.3.3";
     }
 
     @Override

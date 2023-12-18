@@ -171,7 +171,11 @@ public class DishDAO {
 
     public boolean updateCanteenIdById(int id, int canteenId){
         String sql = "UPDATE dish SET canteen_id = ? WHERE id = ?";
+        String selectCanteenIsExist = "SELECT * FROM canteen WHERE id = ?";
         try {
+            if ( jdbcHelper.select(selectCanteenIsExist, canteenId).isEmpty()){
+                return false;
+            }
             int rowsAffected = jdbcHelper.executeUpdate(sql, canteenId, id);
             return rowsAffected > 0;
         } catch (SQLException e) {

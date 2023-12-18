@@ -54,5 +54,68 @@ public class DishLogic {
             return false;
         }
     }
+
+    public boolean updateCanteenId(String token, int id, int canteenId){
+        String username = JwtUtil.parseJWT(token);
+        if (dishDAO.hasUpdatePermission(username, id)){
+            return  dishDAO.updateCanteenIdById(id, canteenId);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updateDishNameById(String token, int id, String dishName){
+        String username = JwtUtil.parseJWT(token);
+        if (dishDAO.hasUpdatePermission(username, id)){
+            return dishDAO.updateDishNameById(id, dishName);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updatePriceById(String token, int id, float price){
+        String username = JwtUtil.parseJWT(token);
+        if (dishDAO.hasUpdatePermission(username, id)){
+            return dishDAO.updatePriceById(id, price);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updateDiscountRateById(String token, int id, float discountRate){
+        String username = JwtUtil.parseJWT(token);
+        if (dishDAO.hasUpdatePermission(username, id)){
+            return dishDAO.updateDiscountRateById(id, discountRate);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updateCuisineById(String token, int id, String cuisine){
+        String username = JwtUtil.parseJWT(token);
+        if (dishDAO.hasUpdatePermission(username, id)){
+            return dishDAO.updateCuisineById(id, cuisine);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updatePictureById(String token, int id, String picture){
+        String username = JwtUtil.parseJWT(token);
+        if (dishDAO.hasUpdatePermission(username, id)){
+            return dishDAO.updatePictureById(id, picture);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean deleteById(String token, int id){
+        String username = JwtUtil.parseJWT(token);
+        if (dishDAO.hasUpdatePermission(username, id)){
+            return dishDAO.deleteById(id);
+        } else {
+            return false;
+        }
+    }
 }
 
