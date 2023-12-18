@@ -33,7 +33,7 @@ public class CanteenDAO {
         }
     }
 
-    public List<Canteen> getAllCanteen(){
+    public List<Canteen> selectAll(){
         List<Canteen> canteenNameList = new ArrayList<>();
         String sql = "SELECT * FROM canteen";
         try {
@@ -58,29 +58,7 @@ public class CanteenDAO {
         }
     }
 
-    public Canteen selectCanteenByCanteenName(String canteenName){
-        String sql = "SELECT * FROM canteen WHERE canteen_name = ?";
-        try {
-            List<Map<String, Object>> result = jdbcHelper.select(sql, canteenName);
-            if (! result.isEmpty()){
-                Map<String, Object> resultMap = result.getFirst();
-                int canteenId = (int) resultMap.get("id");
-                String canteen_name = (String) resultMap.get("canteen_name");
-                String intro = (String) resultMap.get("intro");
-                String location = (String) resultMap.get("location");
-                String businessHour = (String) resultMap.get("business_hours");
-                String announcement = (String) resultMap.get("announcement");
-                return new Canteen(canteenId, canteen_name, intro, location, businessHour, announcement);
-            }else {
-                return null;
-            }
-        } catch (SQLException e) {
-            logger.error("selectCanteenByCanteenName error");
-            throw new RuntimeException(e);
-        }
-    }
-
-    public Canteen selectCanteenById(int id){
+    public Canteen selectById(int id){
         String sql = "SELECT * FROM canteen WHERE id = ?";
         try {
             List<Map<String, Object>> result = jdbcHelper.select(sql, id);
@@ -157,10 +135,10 @@ public class CanteenDAO {
         }
     }
 
-    public boolean delete(String canteenName){
-        String sql = "DELETE FROM canteen WHERE canteen_name = ?";
+    public boolean delete(int id){
+        String sql = "DELETE FROM canteen WHERE id = ?";
         try {
-            int rowsAffected = jdbcHelper.executeUpdate(sql, canteenName);
+            int rowsAffected = jdbcHelper.executeUpdate(sql, id);
             return rowsAffected > 0;
         } catch (SQLException e) {
             logger.error("delete error", e);

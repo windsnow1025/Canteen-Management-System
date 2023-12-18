@@ -17,25 +17,17 @@ public class CanteenLogic {
         userDAO = new UserDAO();
     }
 
-    public Canteen getInfo(String token, String canteenName) {
-        if (JwtUtil.parseJWT(token) != null) {
-            return canteenDAO.selectCanteenByCanteenName(canteenName);
-        } else {
-            return null;
-        }
-    }
-
     public Canteen getInfoById(String token, int id) {
         if (JwtUtil.parseJWT(token) != null) {
-            return canteenDAO.selectCanteenById(id);
+            return canteenDAO.selectById(id);
         } else {
             return null;
         }
     }
 
-    public List<Canteen> getAll(String token) {
+    public List<Canteen> getInfos(String token) {
         if (JwtUtil.parseJWT(token) != null) {
-            return canteenDAO.getAllCanteen();
+            return canteenDAO.selectAll();
         } else {
             return null;
         }
@@ -75,7 +67,7 @@ public class CanteenLogic {
             return canteenDAO.updateIntro(canteenName, newIntro);
         } else if(userType.equals("canteen_admin")){
             int canteenId = userDAO.getCanteenIdByName(JwtUtil.parseJWT(token));
-            String ownCanteenName = canteenDAO.selectCanteenById(canteenId).getCanteenName();
+            String ownCanteenName = canteenDAO.selectById(canteenId).getCanteenName();
             if (Objects.equals(canteenName, ownCanteenName)) {
                 return canteenDAO.updateIntro(canteenName, newIntro);
             } else {
@@ -92,7 +84,7 @@ public class CanteenLogic {
             return canteenDAO.updateLocation(canteenName, newLocation);
         } else if(userType.equals("canteen_admin")){
             int canteenId = userDAO.getCanteenIdByName(JwtUtil.parseJWT(token));
-            String ownCanteenName = canteenDAO.selectCanteenById(canteenId).getCanteenName();
+            String ownCanteenName = canteenDAO.selectById(canteenId).getCanteenName();
             if (Objects.equals(canteenName, ownCanteenName)) {
                 return canteenDAO.updateLocation(canteenName, newLocation);
             } else {
@@ -110,7 +102,7 @@ public class CanteenLogic {
             return canteenDAO.updateBusinessHour(canteenName, newBusinessHour);
         } else if(userType.equals("canteen_admin")){
             int canteenId = userDAO.getCanteenIdByName(JwtUtil.parseJWT(token));
-            String ownCanteenName = canteenDAO.selectCanteenById(canteenId).getCanteenName();
+            String ownCanteenName = canteenDAO.selectById(canteenId).getCanteenName();
             if (Objects.equals(canteenName, ownCanteenName)) {
                 return canteenDAO.updateBusinessHour(canteenName, newBusinessHour);
             } else {
@@ -127,7 +119,7 @@ public class CanteenLogic {
             return canteenDAO.updateAnnouncement(canteenName, newAnnouncement);
         } else if(userType.equals("canteen_admin")){
             int canteenId = userDAO.getCanteenIdByName(JwtUtil.parseJWT(token));
-            String ownCanteenName = canteenDAO.selectCanteenById(canteenId).getCanteenName();
+            String ownCanteenName = canteenDAO.selectById(canteenId).getCanteenName();
             if (Objects.equals(canteenName, ownCanteenName)) {
                 return canteenDAO.updateAnnouncement(canteenName, newAnnouncement);
             } else {
@@ -138,10 +130,10 @@ public class CanteenLogic {
         }
     }
 
-    public boolean delete(String token, String canteenName) {
+    public boolean delete(String token, int id) {
         String userType = userDAO.getUserTypeByName(JwtUtil.parseJWT(token));
         if (userType.equals("master_admin")) {
-            return canteenDAO.delete(canteenName);
+            return canteenDAO.delete(id);
         } else {
             return false;
         }

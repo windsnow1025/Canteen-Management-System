@@ -1,6 +1,5 @@
 package com.windsnow1025.canteenmanagement.springboot.api;
 
-import com.windsnow1025.canteenmanagement.springboot.dao.CanteenDAO;
 import com.windsnow1025.canteenmanagement.springboot.logic.CanteenLogic;
 import com.windsnow1025.canteenmanagement.springboot.model.Canteen;
 import org.slf4j.Logger;
@@ -15,17 +14,17 @@ import java.util.Map;
 @RestController
 @RequestMapping("/canteen")
 public class CanteenController {
-    private static final Logger logger = LoggerFactory.getLogger(CanteenDAO.class);
+    private static final Logger logger = LoggerFactory.getLogger(CanteenController.class);
     private final CanteenLogic canteenLogic;
 
     public CanteenController() {
         canteenLogic = new CanteenLogic();
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Canteen>> getAllName(@RequestHeader("Authorization") String token) {
+    @GetMapping("/infos")
+    public ResponseEntity<List<Canteen>> getCanteens(@RequestHeader("Authorization") String token) {
         try {
-            List<Canteen> canteenList = canteenLogic.getAll(token);
+            List<Canteen> canteenList = canteenLogic.getInfos(token);
             if (canteenList != null) {
                 return ResponseEntity.ok(canteenList);
             } else {
@@ -37,23 +36,8 @@ public class CanteenController {
         }
     }
 
-    @GetMapping("/info")
-    public ResponseEntity<Canteen> getCanteen(@RequestHeader("Authorization") String token, @RequestParam("canteenName") String canteenName) {
-        try {
-            Canteen canteen = canteenLogic.getInfo(token, canteenName);
-            if (canteen != null) {
-                return ResponseEntity.ok(canteen);
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
-        } catch (Exception e) {
-            logger.error("Get canteen info error", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @GetMapping("/info-id")
-    public ResponseEntity<Canteen> getCanteenById(@RequestHeader("Authorization") String token, @RequestParam("canteenId") int id) {
+    @GetMapping("/info/{id}")
+    public ResponseEntity<Canteen> getCanteen(@RequestHeader("Authorization") String token, @PathVariable int id) {
         try {
             Canteen canteen = canteenLogic.getInfoById(token, id);
             if (canteen != null) {
@@ -67,8 +51,8 @@ public class CanteenController {
         }
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Map<String, Object>> create(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
+    @PostMapping("")
+    public ResponseEntity<Map<String, Object>> addCanteen(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String canteenName = request.get("canteenName");
             String intro = request.get("intro");
@@ -172,10 +156,10 @@ public class CanteenController {
         }
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<Map<String, Object>> delete(@RequestHeader("Authorization") String token, @RequestParam("canteenName") String canteenName) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> delete(@RequestHeader("Authorization") String token, @PathVariable int id) {
         try {
-            boolean isDelete = canteenLogic.delete(token, canteenName);
+            boolean isDelete = canteenLogic.delete(token, id);
             if (isDelete) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Delete successful"));
             } else {
