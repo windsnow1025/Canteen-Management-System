@@ -6,16 +6,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DishDAO {
     private static final Logger logger = LoggerFactory.getLogger(DishDAO.class);
     private final JDBCHelper jdbcHelper;
     public DishDAO(){
         jdbcHelper = new JDBCHelper();
+    }
+
+    public boolean hasPermission(String username, int dishId){
+        String sql = "SELECT * FROM user JOIN dish ON user.canteen_id = dish.canteen_id WHERE user.username = ? AND dish.id = ?";
+        try {
+            return ! jdbcHelper.select(sql, username, dishId).isEmpty();
+        } catch (SQLException e) {
+            logger.error("hasPermission error", e);
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean insert(Dish dish){
@@ -39,9 +46,28 @@ public class DishDAO {
         }
     }
 
+    public Set<String> getAllDishName(){
+        Set<String> dishNameSet = new HashSet<>();
+        String sql = "SELECT dish_name FROM dish";
+        try {
+            List<Map<String, Object>> results = jdbcHelper.select(sql);
+            if (! results.isEmpty()){
+                for (Map<String, Object> result : results){
+                    dishNameSet.add((String) result.get("dish_name"));
+                }
+                return dishNameSet;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            logger.error("selectDishName error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<Dish> getAllDish(){
         List<Dish> dishList = new ArrayList<>();
-        String sql = "SELECT * FORM dish";
+        String sql = "SELECT * FROM dish";
         try {
             List<Map<String, Object>> results = jdbcHelper.select(sql);
             if (! results.isEmpty()){
@@ -62,6 +88,33 @@ public class DishDAO {
             }
         } catch (SQLException e) {
             logger.error("getAllDish error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Dish> getDishByName(String name){
+        List<Dish> dishList = new ArrayList<>();
+        String sql = "SELECT * FROM dish WHERE dish_name = ?";
+        try {
+            List<Map<String, Object>> results = jdbcHelper.select(sql, name);
+            if (! results.isEmpty()){
+                for (Map<String, Object> result : results){
+                    int id = (int) result.get("id");
+                    int canteenId = (int) result.get("canteen_id");
+                    String dishName = (String) result.get("dish_name");
+                    float price = (float) result.get("price");
+                    float discount_rate = (float) result.get("discount_rate");
+                    String cuisine = (String) result.get("cuisine");
+                    byte[] pictureBytes = (byte[]) result.get("picture");
+                    String picture = ( pictureBytes != null) ? Base64.getEncoder().encodeToString(pictureBytes) :null;
+                    dishList.add(new Dish(id, canteenId, dishName, price, discount_rate, cuisine, picture));
+                }
+                return dishList;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            logger.error("getDishByName error", e);
             throw new RuntimeException(e);
         }
     }
@@ -89,16 +142,94 @@ public class DishDAO {
         }
     }
 
-    public boolean hasPermission(String username){
-        String sql = "SELECT * FROM user JOIN dish ON user.canteen_id = dish.canteen_id WHERE user.username = ?";
+    public boolean updateCanteenIdById(int id, int canteenId){
+        String sql = "UPDATE dish SET canteen_id = ? WHERE id = ?";
         try {
-            if (! jdbcHelper.select(sql, username).isEmpty()){
-                return true;
-            } else {
-                return false;
-            }
+            int rowsAffected = jdbcHelper.executeUpdate(sql, canteenId, id);
+            return rowsAffected > 0;
         } catch (SQLException e) {
-            logger.error("hasPermission error", e);
+            logger.error("updateCanteenIdById error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updateDishNameById(int id, String dishName){
+        String sql = "UPDATE dish SET dish_name = ? WHERE id = ?";
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql, dishName, id);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("updateDishNameById error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updatePriceById(int id, float price){
+        String sql = "UPDATE dish SET price = ? WHERE id = ?";
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql, price, id);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("updatePriceById error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updateDiscountRateById(int id, float discountRate){
+        String sql = "UPDATE dish SET discount_rate = ? WHERE id = ?";
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql, discountRate, id);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("updateDiscountRateById error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updateCuisineById(int id, String cuisine){
+        String sql = "UPDATE dish SET cuisine = ? WHERE id = ?";
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql, cuisine, id);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("updateCuisineById error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updatePictureById(int id, String picture){
+        String sql = "UPDATE dish SET picture = ? WHERE id = ?";
+        byte[] pictureBytes = null;
+        if (picture != null && !picture.isEmpty()){
+            pictureBytes = Base64.getDecoder().decode(picture);
+        }
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql, pictureBytes, id);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("updatePictureById error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean deleteById(int id){
+        String sql = "DELETE FROM dish WHERE id = ?";
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql, id);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("deleteById error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean deleteByName(String name){
+        String sql = "DELETE FROM dish WHERE dish_name = ?";
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql, name);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("deleteById error", e);
             throw new RuntimeException(e);
         }
     }
