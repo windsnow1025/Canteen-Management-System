@@ -5,7 +5,6 @@ import com.windsnow1025.canteenmanagement.springboot.model.User;
 import com.windsnow1025.canteenmanagement.springboot.util.JwtUtil;
 
 import java.util.List;
-import java.util.Objects;
 
 public class UserLogic {
 
@@ -20,10 +19,10 @@ public class UserLogic {
         return userDao.selectByUsername(username);
     }
 
-    public List<User> getAllUser(String token) {
+    public List<User> getInfos(String token) {
         String userType = userDao.getUserTypeByName(JwtUtil.parseJWT(token));
         if (userType.equals("master_admin") || userType.equals("canteen_admin")) {
-            return userDao.getAllUser();
+            return userDao.selectAll();
         } else {
             return null;
         }
@@ -58,10 +57,10 @@ public class UserLogic {
         return userDao.updateLevel(oldUsername, newLevel);
     }
 
-    public boolean delete(String token, String username) {
+    public boolean delete(String token, int id) {
         String userType = userDao.getUserTypeByName(JwtUtil.parseJWT(token));
         if (userType.equals("master_admin") || userType.equals("canteen_admin")) {
-            return userDao.delete(username);
+            return userDao.delete(id);
         } else {
             return false;
         }

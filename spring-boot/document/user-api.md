@@ -2,9 +2,9 @@
 
 ## GET: user/info
 
-## GET: user/all
+## GET: user/infos
 
-## DELETE user/delete?username="consumer"
+## DELETE: user/{id}
 
 ## POST: user/signin (no token)
 

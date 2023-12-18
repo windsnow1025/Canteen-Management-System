@@ -37,10 +37,10 @@ public class UserController {
         }
     }
 
-    @GetMapping("/all")
+    @GetMapping("/infos")
     public ResponseEntity<List<User>> getAllUser(@RequestHeader("Authorization") String token){
         try {
-            List<User> userList = userLogic.getAllUser(token);
+            List<User> userList = userLogic.getInfos(token);
             if (userList != null ){
                 return ResponseEntity.ok(userList);
             }else {
@@ -142,10 +142,10 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<Map<String, Object>> delete(@RequestHeader("Authorization") String token, @RequestParam("username") String username){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> delete(@RequestHeader("Authorization") String token, @PathVariable int id) {
         try {
-            boolean result = userLogic.delete(token, username);
+            boolean result = userLogic.delete(token, id);
             if (result) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Delete successful"));
             } else {

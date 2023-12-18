@@ -36,7 +36,7 @@ public class UserDAO {
         }
     }
 
-    public List<User> getAllUser(){
+    public List<User> selectAll(){
         List<User> userList = new ArrayList<>();
         String sql = "SELECT * FROM user";
         try {
@@ -167,10 +167,10 @@ public class UserDAO {
         }
     }
 
-    public boolean delete(String username){
-        String sql = "DELETE FROM user WHERE username = ?";
+    public boolean delete(int id){
+        String sql = "DELETE FROM user WHERE id = ?";
         try {
-            int rowsAffected = jdbcHelper.executeUpdate(sql, username);
+            int rowsAffected = jdbcHelper.executeUpdate(sql, id);
             return rowsAffected > 0;
         } catch (SQLException e) {
             logger.error("Delete error", e);
