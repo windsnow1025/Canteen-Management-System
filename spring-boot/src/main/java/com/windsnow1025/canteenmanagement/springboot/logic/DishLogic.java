@@ -45,5 +45,14 @@ public class DishLogic {
             return null;
         }
     }
+
+    public boolean addDish(String token, Dish dish){
+        String username = JwtUtil.parseJWT(token);
+        if ( dishDAO.hasCreatePermission(username, dish.getCanteen_id())){
+            return  dishDAO.insert(dish);
+        } else {
+            return false;
+        }
+    }
 }
 

@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -25,7 +26,7 @@ public class DishController {
         dishLogic = new DishLogic();
     }
 
-    @GetMapping("/all")
+    @GetMapping("/infos")
     public ResponseEntity<List<Dish>> getAllDish(@RequestHeader("Authorization") String token){
         try {
             List<Dish> dishList = dishLogic.getAllDish(token);
@@ -40,7 +41,7 @@ public class DishController {
         }
     }
 
-    @GetMapping("/all-name")
+    @GetMapping("/names")
     public ResponseEntity<Set<String>> getAllName(@RequestHeader("Authorization") String token){
         try {
             Set<String> dishList = dishLogic.getAllName(token);
@@ -70,8 +71,8 @@ public class DishController {
         }
     }
 
-    @GetMapping("/info-id")
-    public ResponseEntity<Dish> getDishById(@RequestHeader("Authorization") String token, @RequestParam("id") int id){
+    @GetMapping("/info/{id}")
+    public ResponseEntity<Dish> getDishById(@RequestHeader("Authorization") String token, @PathVariable int id){
         try {
             Dish dish = dishLogic.getDishById(token, id);
             if (dish != null) {
@@ -83,5 +84,34 @@ public class DishController {
             logger.error("Get dish info by id error", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @PostMapping("")
+    public ResponseEntity<Map<String, Object>> addDish(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
+        try {
+            String picture = null;
+            int canteenId = Integer.parseInt(request.get("canteenId"));
+            String dishName = request.get("dishName");
+            float price = Float.parseFloat(request.get("price"));
+            float discountRate = Float.parseFloat(request.get("discountRate"));
+            String cuisine = request.get("cuisine");
+            if (request.get("picture") != null) {
+                picture = request.get("picture");
+            }
+            Dish dish = new Dish(canteenId, dishName, price, discountRate, cuisine, picture);
+            if (dishLogic.addDish(token, dish)){
+                return ResponseEntity.ok(Map.of("status", "Success", "message", "Create successful"));
+            } else {
+                return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Create failed"));
+            }
+        }catch (Exception e){
+            logger.error("add dish error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PutMapping("/canteen-id")
+    public ResponseEntity<Map<String, Object>> updateCanteenIdById(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
+
     }
 }

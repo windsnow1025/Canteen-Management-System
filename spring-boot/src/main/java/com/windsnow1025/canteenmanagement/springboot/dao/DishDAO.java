@@ -15,12 +15,36 @@ public class DishDAO {
         jdbcHelper = new JDBCHelper();
     }
 
-    public boolean hasPermission(String username, int dishId){
-        String sql = "SELECT * FROM user JOIN dish ON user.canteen_id = dish.canteen_id WHERE user.username = ? AND dish.id = ?";
+    public boolean hasCreatePermission(String username, int canteenId){
+        String sql = "SELECT * FROM user JOIN dish ON user.canteen_id = dish.canteen_id WHERE user.username = ? AND dish.canteen_id = ?";
+        String sqlMaster = "SELECT * FROM user WHERE username = ?";
         try {
+            List<Map<String, Object>> results = jdbcHelper.select(sqlMaster, username);
+            Map<String,Object> result = results.getFirst();
+            String userType = (String) result.get("user_type");
+            if (Objects.equals(userType, "master_admin")){
+                return true;
+            }
+            return ! jdbcHelper.select(sql, username, canteenId).isEmpty();
+        } catch (SQLException e) {
+            logger.error("hasCreatePermission error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean hasUpdatePermission(String username, int dishId){
+        String sql = "SELECT * FROM user JOIN dish ON user.canteen_id = dish.canteen_id WHERE user.username = ? AND dish.id = ?";
+        String sqlMaster = "SELECT * FROM user WHERE username = ?";
+        try {
+            List<Map<String, Object>> results = jdbcHelper.select(sqlMaster, username);
+            Map<String,Object> result = results.getFirst();
+            String userType = (String) result.get("user_type");
+            if (Objects.equals(userType, "master_admin")){
+                return true;
+            }
             return ! jdbcHelper.select(sql, username, dishId).isEmpty();
         } catch (SQLException e) {
-            logger.error("hasPermission error", e);
+            logger.error("hasUpdatePermission error", e);
             throw new RuntimeException(e);
         }
     }
@@ -32,6 +56,9 @@ public class DishDAO {
         String dishName = dish.getDishName();
         float price = dish.getPrice();
         float discountRate = 1;
+        if (dish.getDiscount_rate() != 0){
+            discountRate = dish.getDiscount_rate();
+        }
         String cuisine = dish.getCuisine();
         byte[] pictureBytes = null;
         if (base64String != null && !base64String.isEmpty()){

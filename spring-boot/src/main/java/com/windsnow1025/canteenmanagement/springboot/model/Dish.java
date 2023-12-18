@@ -7,7 +7,7 @@ public class Dish implements Serializable {
     private int canteen_id;
     private String dishName;
     private float price;
-    private float discount_rate;
+    private float discount_rate = 0;
     private String cuisine;
     private String picture;
 
