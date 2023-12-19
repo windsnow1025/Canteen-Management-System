@@ -17,6 +17,16 @@ public class CanteenDAO {
         this.jdbcHelper = new JDBCHelper();
     }
 
+    public boolean hasCanteen(int canteenId){
+        String sql = "SELECT * FROM canteen WHERE id = ?";
+        try {
+            return ! jdbcHelper.select(sql, canteenId).isEmpty();
+        } catch (SQLException e) {
+            logger.error("hasCanteen error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
     public boolean insert(Canteen canteen){
         String sql = "INSERT INTO canteen (canteen_name, intro, location, business_hours, announcement) VALUES (?, ?, ?, ?, ?)";
         String canteenName = canteen.getCanteenName();

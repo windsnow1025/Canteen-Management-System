@@ -16,7 +16,7 @@ public class DishDAO {
     }
 
     public boolean hasCreatePermission(String username, int canteenId){
-        String sql = "SELECT * FROM user JOIN dish ON user.canteen_id = dish.canteen_id WHERE user.username = ? AND dish.canteen_id = ?";
+        String sql = "SELECT * FROM user JOIN canteen ON user.canteen_id = canteen.id WHERE user.username = ? AND canteen.id = ?";
         String sqlMaster = "SELECT * FROM user WHERE username = ?";
         try {
             List<Map<String, Object>> results = jdbcHelper.select(sqlMaster, username);

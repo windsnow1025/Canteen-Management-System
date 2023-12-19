@@ -193,7 +193,7 @@ public class JDBCHelper extends DatabaseHelper {
         dbUsername = System.getenv("MYSQL_USER");
         dbPassword = System.getenv("MYSQL_PASSWORD");
         dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-        dbVersion = "1.3.3";
+        dbVersion = "1.3.4";
     }
 
     @Override
