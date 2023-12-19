@@ -20,6 +20,9 @@ public class DishDAO {
         String sqlMaster = "SELECT * FROM user WHERE username = ?";
         try {
             List<Map<String, Object>> results = jdbcHelper.select(sqlMaster, username);
+            if (results.isEmpty()){
+                return false;
+            }
             Map<String,Object> result = results.getFirst();
             String userType = (String) result.get("user_type");
             if (Objects.equals(userType, "master_admin")){
@@ -37,6 +40,9 @@ public class DishDAO {
         String sqlMaster = "SELECT * FROM user WHERE username = ?";
         try {
             List<Map<String, Object>> results = jdbcHelper.select(sqlMaster, username);
+            if (results.isEmpty()){
+                return false;
+            }
             Map<String,Object> result = results.getFirst();
             String userType = (String) result.get("user_type");
             if (Objects.equals(userType, "master_admin")){

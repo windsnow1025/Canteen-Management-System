@@ -1,3 +1,5 @@
+# dish API
+
 # 餐厅删除后，菜品会随之删除
 
 ## GET: dish/infos
