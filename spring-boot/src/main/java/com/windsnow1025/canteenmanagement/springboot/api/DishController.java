@@ -21,12 +21,12 @@ public class DishController {
 
     private final DishLogic dishLogic;
 
-    public DishController(){
+    public DishController() {
         dishLogic = new DishLogic();
     }
 
     @GetMapping("/infos")
-    public ResponseEntity<List<Dish>> getAllDish(@RequestHeader("Authorization") String token){
+    public ResponseEntity<List<Dish>> getAllDish(@RequestHeader("Authorization") String token) {
         try {
             List<Dish> dishList = dishLogic.getAllDish(token);
             if (dishList != null) {
@@ -41,7 +41,7 @@ public class DishController {
     }
 
     @GetMapping("/names")
-    public ResponseEntity<Set<String>> getAllName(@RequestHeader("Authorization") String token){
+    public ResponseEntity<Set<String>> getAllName(@RequestHeader("Authorization") String token) {
         try {
             Set<String> dishList = dishLogic.getAllName(token);
             if (dishList != null) {
@@ -56,7 +56,7 @@ public class DishController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<List<Dish>> getDishByName(@RequestHeader("Authorization") String token, @RequestParam("dishName") String dishName){
+    public ResponseEntity<List<Dish>> getDishByName(@RequestHeader("Authorization") String token, @RequestParam("dishName") String dishName) {
         try {
             List<Dish> dishList = dishLogic.getDishByName(token, dishName);
             if (dishList != null) {
@@ -71,7 +71,7 @@ public class DishController {
     }
 
     @GetMapping("/info/{id}")
-    public ResponseEntity<Dish> getDishById(@RequestHeader("Authorization") String token, @PathVariable int id){
+    public ResponseEntity<Dish> getDishById(@RequestHeader("Authorization") String token, @PathVariable int id) {
         try {
             Dish dish = dishLogic.getDishById(token, id);
             if (dish != null) {
@@ -86,7 +86,7 @@ public class DishController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Map<String, Object>> addDish(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
+    public ResponseEntity<Map<String, Object>> addDish(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             String picture = null;
             int canteenId = Integer.parseInt(request.get("canteenId"));
@@ -98,123 +98,123 @@ public class DishController {
                 picture = request.get("picture");
             }
             Dish dish = new Dish(canteenId, dishName, price, discountRate, cuisine, picture);
-            if (dishLogic.addDish(token, dish)){
+            if (dishLogic.addDish(token, dish)) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Create successful"));
             } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Create failed"));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("add dish error", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PutMapping("/canteen-id")
-    public ResponseEntity<Map<String, Object>> updateCanteenIdById(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
+    public ResponseEntity<Map<String, Object>> updateCanteenIdById(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             int id = Integer.parseInt(request.get("id"));
             int canteenId = Integer.parseInt(request.get("canteenId"));
-            if (dishLogic.updateCanteenId(token, id, canteenId)){
+            if (dishLogic.updateCanteenId(token, id, canteenId)) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Update successful"));
             } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Update failed"));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Update canteenId error", e);
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
     }
 
     @PutMapping("/dish-name")
-    public ResponseEntity<Map<String, Object>> updateDishNameById(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
+    public ResponseEntity<Map<String, Object>> updateDishNameById(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             int id = Integer.parseInt(request.get("id"));
             String dishName = request.get("dishName");
-            if (dishLogic.updateDishNameById(token, id, dishName)){
+            if (dishLogic.updateDishNameById(token, id, dishName)) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Update successful"));
             } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Update failed"));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Update dishName error", e);
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
     }
 
     @PutMapping("/price")
-    public ResponseEntity<Map<String, Object>> updatePriceById(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
+    public ResponseEntity<Map<String, Object>> updatePriceById(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             int id = Integer.parseInt(request.get("id"));
             float price = Float.parseFloat(request.get("price"));
-            if (dishLogic.updatePriceById(token, id, price)){
+            if (dishLogic.updatePriceById(token, id, price)) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Update successful"));
             } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Update failed"));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Update price error", e);
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
     }
 
     @PutMapping("/discount-rate")
-    public ResponseEntity<Map<String, Object>> updateDiscountRateById(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
+    public ResponseEntity<Map<String, Object>> updateDiscountRateById(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             int id = Integer.parseInt(request.get("id"));
             float discountRate = Float.parseFloat(request.get("discountRate"));
-            if (dishLogic.updateDiscountRateById(token, id, discountRate)){
+            if (dishLogic.updateDiscountRateById(token, id, discountRate)) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Update successful"));
             } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Update failed"));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Update discount rate error", e);
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
     }
 
     @PutMapping("/cuisine")
-    public ResponseEntity<Map<String, Object>> updateCuisineById(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
+    public ResponseEntity<Map<String, Object>> updateCuisineById(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             int id = Integer.parseInt(request.get("id"));
             String cuisine = request.get("cuisine");
-            if (dishLogic.updateCuisineById(token, id, cuisine)){
+            if (dishLogic.updateCuisineById(token, id, cuisine)) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Update successful"));
             } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Update failed"));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Update cuisine error", e);
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
     }
 
     @PutMapping("/picture")
-    public ResponseEntity<Map<String, Object>> updatePictureById(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request){
+    public ResponseEntity<Map<String, Object>> updatePictureById(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
             int id = Integer.parseInt(request.get("id"));
             String picture = request.get("picture");
-            if (dishLogic.updatePictureById(token, id, picture)){
+            if (dishLogic.updatePictureById(token, id, picture)) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "Update successful"));
             } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Update failed"));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Update picture error", e);
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> delete(@RequestHeader("Authorization") String token, @PathVariable int id){
+    public ResponseEntity<Map<String, Object>> delete(@RequestHeader("Authorization") String token, @PathVariable int id) {
         try {
-            if (dishLogic.deleteById(token, id)){
+            if (dishLogic.deleteById(token, id)) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "delete successful"));
             } else {
                 return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "delete failed"));
             }
-        }catch (Exception e){
-            logger.error("Delete  error", e);
+        } catch (Exception e) {
+            logger.error("Delete error", e);
             return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
         }
     }
