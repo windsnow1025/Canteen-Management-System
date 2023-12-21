@@ -171,5 +171,15 @@ export default class CanteenApi{
         return res.data.message;
     }
 
+    static async updateAnnouncement(canteenName, announcement) {
+        const token = localStorage.getItem('token');
+        const res = await axios.put("https://www.windsnow1025.com/learn/api/canteen/canteen/announcement", {
+            canteenName: canteenName,
+            announcement: announcement
+        }, {
+            headers: { Authorization: `${token}` }
+        });
+        return res.data.message;
+    }
 
 }
