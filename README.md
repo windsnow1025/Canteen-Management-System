@@ -6,7 +6,8 @@ A Canteen Management Fullstack Web App
 
 - Node 21
 - JAVA 21
-- MySQL 8
+- MySQL 8.2
+- Nginx 1.18
 
 ## 功能特点
 
