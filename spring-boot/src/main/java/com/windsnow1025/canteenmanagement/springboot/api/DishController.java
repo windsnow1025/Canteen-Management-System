@@ -92,7 +92,7 @@ public class DishController {
             int canteenId = Integer.parseInt(request.get("canteenId"));
             String dishName = request.get("dishName");
             float price = Float.parseFloat(request.get("price"));
-            float discountRate = Float.parseFloat(request.get("discountRate"));
+            float discountRate = (request.get("discountRate") == null) ? 1 : Float.parseFloat(request.get("discountRate"));
             String cuisine = request.get("cuisine");
             if (request.get("picture") != null) {
                 picture = request.get("picture");
