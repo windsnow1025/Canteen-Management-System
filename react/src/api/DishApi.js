@@ -34,11 +34,12 @@ export default class DishApi{
         return res.data;
     }
 
-    static async createDish(dishName, price, discountRate, cuisine, picture) {
+    static async createDish(canteenId,dishName, price, discountRate, cuisine, picture) {
         const token = localStorage.getItem('token');
         const res = await axios.post(
             "https://www.windsnow1025.com/learn/api/canteen/dish",
             {
+                canteenId,
                 dishName,
                 price,
                 discountRate,

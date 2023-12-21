@@ -32,7 +32,7 @@ function App() {
                     <Route path="/modify-canteen-info" element={<ModifyCanteenInfo />} />
                     <Route path="/canteen-add" element={<AddCanteen />} />
                     <Route path="/dish" element={<DishPage />} />
-                    <Route path="/dish-maintenance" element={<DishMaintenance />} />
+                    <Route path="/dish-maintenance/:canteenId" element={<DishMaintenance />} />
                 </Routes>
             </div>
         </Router>

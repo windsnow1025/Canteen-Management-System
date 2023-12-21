@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import DishApi from "../api/DishApi";
 import NavBar from "../components/NavBar";
 
 const DishMaintenance = () => {
+    const { canteenId } = useParams();
     const [dishes, setDishes] = useState([]);
     const [newDish, setNewDish] = useState({
         dishName: '',
@@ -41,7 +42,7 @@ const DishMaintenance = () => {
         try {
             const { dishName, price, discountRate, cuisine, picture } = newDish;
 
-            await DishApi.createDish(dishName, price, discountRate, cuisine, picture);
+            await DishApi.createDish(canteenId,dishName, price, discountRate, cuisine, picture);
 
             // 其他逻辑，例如清空表单或刷新数据
         } catch (error) {
@@ -59,6 +60,12 @@ const DishMaintenance = () => {
                     <div>
                         <h1 className="mb-4 text-xl text-center">菜品维护</h1>
                         <div>
+                            <p>餐厅ID:</p>
+                            <input
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                                type="text"
+                                value={canteenId}
+                            />
                             <p>菜品名:</p>
                             <input
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"

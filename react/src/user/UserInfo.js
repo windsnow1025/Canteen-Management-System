@@ -1,6 +1,7 @@
 import NavBar from "../components/NavBar";
 import React, {useEffect, useState} from "react";
 import UserApi from "../api/UserApi";
+import {Link} from "react-router-dom";
 
 const UserInfo = () => {
     const [userInfo, setUserInfo] = useState(null);
@@ -58,7 +59,7 @@ const UserInfo = () => {
                                 )}
                                 {userInfo.userType === 'canteen_admin' && (
                                     <div className="flex flex-col space-y-4 items-center justify-center mt-4">
-                                        <a href="/dish-maintenance">
+                                        <a href={`/dish-maintenance/${userInfo.canteenId}`}>
                                             <button
                                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">菜品维护
                                             </button>
