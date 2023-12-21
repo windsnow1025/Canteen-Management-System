@@ -16,6 +16,7 @@ import DishPage from "./dish/DishPage";
 import DishMaintenance from "./dish/DishMaintenance";
 import ModifyDishInfo from "./dish/ModifyDishInfo";
 import Announcement from "./canteen/Announcement";
+import ChatComponent from "./chat/ChatComponent";
 
 function App() {
     return (
@@ -37,6 +38,7 @@ function App() {
                     <Route path="/dish-maintenance/:canteenId" element={<DishMaintenance />} />
                     <Route path="/modify-dish-info" element={<ModifyDishInfo />} />
                     <Route path="/announcement" element={<Announcement />} />
+                    <Route path="/chat" element={<ChatComponent />} />
                 </Routes>
             </div>
         </Router>
