@@ -15,8 +15,17 @@ const UserInfo = () => {
                 console.error("Error fetching user info:", error);
             }
         };
+        const timer = setTimeout(() => {
+            if (!userInfo) {
+                // 如果3秒内没有获取到用户信息，则执行退出登录操作
+                UserApi.deleteToken();
+                window.location.href = `/login`;
+            }
+        }, 3000);
 
         fetchUserInfo();
+
+        return () => clearTimeout(timer); // 清除定时器
     }, []);
 
     return (
@@ -102,7 +111,7 @@ const UserInfo = () => {
                                     <a href="/change-password">
                                         <button
                                             className="bg-green-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
-                                            type="button" >
+                                            type="button">
                                             修改密码
                                         </button>
                                     </a>
