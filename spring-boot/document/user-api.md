@@ -2,6 +2,11 @@
 
 ## GET: user/info
 
+## GET: user/info/{id}
+
+### RETURN: 
+    master
+
 ## GET: user/infos
 
 ## DELETE: user/{id}

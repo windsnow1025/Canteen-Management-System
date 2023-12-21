@@ -19,6 +19,11 @@ public class UserLogic {
         return userDao.selectByUsername(username);
     }
 
+    public User getInfoById(String token, int id){
+        String username = JwtUtil.parseJWT(token);
+        return userDao.selectById(id);
+    }
+
     public List<User> getInfos(String token) {
         String userType = userDao.getUserTypeByName(JwtUtil.parseJWT(token));
         if (userType.equals("master_admin") || userType.equals("canteen_admin")) {
