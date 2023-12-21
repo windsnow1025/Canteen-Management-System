@@ -56,7 +56,7 @@ const UserInfo = () => {
                                         </a>
                                     </div>
                                 )}
-                                {userInfo.userType === 'admin' && (
+                                {userInfo.userType === 'canteen_admin' && (
                                     <div className="flex flex-col space-y-4 items-center justify-center mt-4">
                                         <a>
                                             <button
@@ -83,7 +83,7 @@ const UserInfo = () => {
                                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">投诉信息处理
                                             </button>
                                         </a>
-                                        <a>>
+                                        <a>
                                             <button
                                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">发布最新推荐菜品
                                             </button>

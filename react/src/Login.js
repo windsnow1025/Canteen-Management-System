@@ -12,8 +12,9 @@ const Login = () => {
         try {
             const token = await UserApi.signIn(username, password);
             // 在这里处理登录成功后的逻辑，比如保存token到本地存储或进行页面跳转等操作
-            setMessage(token);
+            //setMessage(token);
             localStorage.setItem('token', token);
+            window.location.href = "/";
         } catch (error) {
             // 在这里处理登录失败后的逻辑，比如显示错误信息等操作
             setMessage("登录失败");

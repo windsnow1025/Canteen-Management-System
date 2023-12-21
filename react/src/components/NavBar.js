@@ -8,6 +8,7 @@ class NavBar extends Component {
     iconUrl = this.messageAlertFlag ? messageIconAlert : messageIcon;
 
     render() {
+        const token = localStorage.getItem('token');
         return (
             <nav className="bg-gray-100 shadow flex justify-between items-center">
                 <div className="w-1/6">
@@ -28,18 +29,21 @@ class NavBar extends Component {
                     <a href="/canteen" className="px-4 py-2 block font-bold">食堂信息</a>
                 </div>
                 <div className="w-1/6 flex text-center items-center">
-                    <a href="/login">
-                        登录
-                    </a>
-                    <a className="px-4 py-2 block">
-                        |
-                    </a>
-                    <a href="/register">
-                        注册
-                    </a>
-                    <a href="/messages" className="px-4 py-2 block">
-                        <img src={this.iconUrl} alt="User" className="w-6 h-6" />
-                    </a>
+                    {token ? (
+                        <>
+                            <a href="/user-info">我的</a>
+                            <a className="px-4 py-2 block">|</a>
+                            <a href="/messages">
+                                <img src={this.iconUrl} alt="User" className="w-6 h-6" />
+                            </a>
+                        </>
+                    ) : (
+                        <>
+                            <a href="/login">登录</a>
+                            <a className="px-4 py-2 block">|</a>
+                            <a href="/register">注册</a>
+                        </>
+                    )}
                 </div>
 
             </nav>
