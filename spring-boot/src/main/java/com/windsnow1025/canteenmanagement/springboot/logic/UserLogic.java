@@ -35,6 +35,9 @@ public class UserLogic {
 
     public String signIn(String username, String password) {
         User user = userDao.selectByUsernamePassword(username, password);
+        if (user == null) {
+            return null;
+        }
         return JwtUtil.createJWT(user.getUsername());
     }
 
