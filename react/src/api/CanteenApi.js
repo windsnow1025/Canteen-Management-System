@@ -46,22 +46,15 @@ export default class CanteenApi{
     }
 ]
      */
-    static async showAllCanteen() {
+    static async getCanteenInfos() {
         const token = localStorage.getItem('token');
-        const res = await axios.get("https://www.windsnow1025.com/learn/api/canteen/canteen/all", {
-            headers: {Authorization: `${token}`}
-        });
-        return res.data;
-    }
-
-    static async showAllCanteenNames() {
-        const token = localStorage.getItem('token');
-        const res = await axios.get("https://www.windsnow1025.com/learn/api/canteen/canteen/all", {
-            headers: {Authorization: `${token}`}
+        const res = await axios.get("https://www.windsnow1025.com/learn/api/canteen/canteen/infos", {
+            headers: { Authorization: `${token}` }
         });
         const canteens = res.data;
-        return canteens.map(canteen => canteen.canteenName);
+        return canteens.map(canteen => ({ id: canteen.id, name: canteen.canteenName }));
     }
+
 
 
     /*
@@ -74,12 +67,9 @@ export default class CanteenApi{
         "announcement": "一食堂禁止携带酒水"
     }
     */
-    static async getCanteenInfo(canteenName) {
+    static async getCanteenInfoById(canteenId) {
         const token = localStorage.getItem('token');
-        const res = await axios.get("https://www.windsnow1025.com/learn/api/canteen/canteen/info", {
-            params: {
-                canteenName: canteenName
-            },
+        const res = await axios.get(`https://www.windsnow1025.com/learn/api/canteen/canteen/info/${canteenId}`, {
             headers: {
                 Authorization: `${token}`
             }
@@ -87,18 +77,6 @@ export default class CanteenApi{
         return res.data;
     }
 
-    static async getCanteenInfoById(canteenId) {
-        const token = localStorage.getItem('token');
-        const res = await axios.get("https://www.windsnow1025.com/learn/api/canteen/canteen/info-id", {
-            params: {
-                canteenId: canteenId
-            },
-            headers: {
-                Authorization: `${token}`
-            }
-        });
-        return res.data;
-    }
 
     /*
     {
@@ -106,16 +84,20 @@ export default class CanteenApi{
     "status": "Success"
     }
      */
-    static async createCanteen(canteenName,location) {
+    static async createCanteen(canteenName, location, intro, businessHours, announcement) {
         const token = localStorage.getItem('token');
-        const res = await axios.post("https://www.windsnow1025.com/learn/api/canteen/canteen/create", {
+        const res = await axios.post("https://www.windsnow1025.com/learn/api/canteen/canteen", {
             canteenName: canteenName,
-            location:location
+            location: location,
+            intro: intro,
+            businessHour: businessHours,
+            announcement: announcement
         }, {
-            headers: {Authorization: `${token}`}
+            headers: { Authorization: `${token}` }
         });
         return res.data.message;
     }
+
 
     /*
 {
@@ -157,7 +139,7 @@ export default class CanteenApi{
         return res.data.message;
     }
 
-    static async updateCanteenBusinessHour(canteenName,businessHour) {
+    static async updateCanteenBusinessHours(canteenName, businessHour) {
         const token = localStorage.getItem('token');
         const res = await axios.put("https://www.windsnow1025.com/learn/api/canteen/canteen/business-hours", {
             canteenName:canteenName,
@@ -179,12 +161,9 @@ export default class CanteenApi{
         return res.data.message;
     }
 
-    static async deleteCanteen(canteenName) {
+    static async deleteCanteen(canteenId) {
         const token = localStorage.getItem('token');
-        const res = await axios.delete("https://www.windsnow1025.com/learn/api/canteen/canteen/delete", {
-            params: {
-                canteenName: canteenName
-            },
+        const res = await axios.delete(`https://www.windsnow1025.com/learn/api/canteen/canteen/${canteenId}`, {
             headers: {
                 Authorization: `${token}`
             }

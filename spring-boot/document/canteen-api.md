@@ -13,7 +13,7 @@
   "canteenName": "四餐厅",
   "intro": "我才是基础学院学生的唯二选择",
   "location": "杨浦区军工路516号上海理工大学内",
-  "businessHours": "06:00 - 22:00",
+  "businessHour": "06:00 - 22:00",
   "announcement": "基础学院的荣耀就由我来守护"
 }
 ```
@@ -50,7 +50,7 @@
 ```json
 {
   "canteenName": "四餐厅",
-  "businessHours": "06:00 - 22:00"
+  "businessHour": "06:00 - 22:00"
 }
 ```
 

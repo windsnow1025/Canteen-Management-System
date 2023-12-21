@@ -5,21 +5,19 @@ import NavBar from "./components/NavBar";
 
 const ModifyCanteenInfo = () => {
     const location = useLocation();
-    const canteenName = new URLSearchParams(location.search).get('name');
+    const id = new URLSearchParams(location.search).get('id');
     const [canteenInfo, setCanteenInfo] = useState(null);
     const [newIntro, setNewIntro] = useState('');
     const [newLocation, setNewLocation] = useState('');
-    const [newBusinessHour, setNewBusinessHour] = useState('');
+    const [newBusinessHours, setNewBusinessHours] = useState('');
     const [newAnnouncement, setNewAnnouncement] = useState('');
     const [newCanteenName, setNewCanteenName] = useState('');
-    const [id, setId] = useState(null);
 
     // 处理餐厅名修改
     const handleCanteenNameChange = async () => {
         try {
             // 更新食堂名称
             await CanteenApi.updateCanteenName(id, newCanteenName);
-
             // 更新完数据后重新获取食堂信息
             const info = await CanteenApi.getCanteenInfoById(id);
             setCanteenInfo(info);
@@ -31,52 +29,64 @@ const ModifyCanteenInfo = () => {
 
     // 处理简介修改
     const handleIntroChange = async () => {
-        await CanteenApi.updateCanteenIntro(canteenName, newIntro);
+        await CanteenApi.updateCanteenIntro(newCanteenName, newIntro);
         // 更新完数据后重新获取食堂信息
-        const info = await CanteenApi.getCanteenInfo(canteenName);
+        const info = await CanteenApi.getCanteenInfoById(id);
         setCanteenInfo(info);
     };
 
     // 处理位置修改
     const handleLocationChange = async () => {
-        await CanteenApi.updateCanteenLocation(canteenName, newLocation);
+        await CanteenApi.updateCanteenLocation(newCanteenName, newLocation);
         // 更新完数据后重新获取食堂信息
-        const info = await CanteenApi.getCanteenInfo(canteenName);
+        const info = await CanteenApi.getCanteenInfoById(id);
         setCanteenInfo(info);
     };
 
     // 处理营业时间修改
     const handleBusinessHoursChange = async () => {
-        await CanteenApi.updateCanteenBusinessHour(canteenName, newBusinessHour);
+        await CanteenApi.updateCanteenBusinessHours(newCanteenName, newBusinessHours);
         // 更新完数据后重新获取食堂信息
-        const info = await CanteenApi.getCanteenInfo(canteenName);
+        const info = await CanteenApi.getCanteenInfoById(id);
         setCanteenInfo(info);
     };
 
     // 处理公告修改
     const handleAnnouncementChange = async () => {
-        await CanteenApi.updateCanteenAnnouncement(canteenName, newAnnouncement);
+        await CanteenApi.updateCanteenAnnouncement(newCanteenName, newAnnouncement);
         // 更新完数据后重新获取食堂信息
-        const info = await CanteenApi.getCanteenInfo(canteenName);
+        const info = await CanteenApi.getCanteenInfoById(id);
         setCanteenInfo(info);
     };
 
     // 处理删除
     const handleCanteenDelete = async () => {
-        await CanteenApi.deleteCanteen(canteenName);
+        try {
+            await CanteenApi.deleteCanteen(id);
+            // 处理删除成功的逻辑，例如重定向到餐厅列表页面
+            navigateTo('/canteen-info');
+        } catch (error) {
+            console.error('Error deleting canteen:', error);
+            // 处理删除失败的逻辑，例如显示错误消息
+        }
     };
+
+    const navigateTo = (path) => {
+        // 使用 window.location.href 导航到指定的路径
+        window.location.href = path;
+    };
+
 
 
     useEffect(() => {
         const fetchCanteenInfo = async () => {
             try {
-                const info = await CanteenApi.getCanteenInfo(canteenName);
+                const info = await CanteenApi.getCanteenInfoById(id);
                 setCanteenInfo(info);
                 setNewIntro(info.intro);
                 setNewLocation(info.location);
-                setNewBusinessHour(info.businessHour);
+                setNewBusinessHours(info.businessHour);
                 setNewAnnouncement(info.announcement);
-                setId(info.id);
                 setNewCanteenName(info.canteenName);
             } catch (error) {
                 // 处理错误
@@ -84,17 +94,18 @@ const ModifyCanteenInfo = () => {
             }
         };
         fetchCanteenInfo();
-    }, [canteenName]);
+    }, [id]);
 
     return (
         <>
             <NavBar/>
             <div className="flex items-center justify-center h-screen">
                 <div className="bg-white rounded-lg shadow-lg p-8 m-4 w-full max-w-xs items-center">
-                    <h1 className="mb-4 text-xl text-center">{canteenName}</h1>
+
                     <div>
                         {canteenInfo ? (
                             <div>
+                                <h1 className="mb-4 text-xl text-center">{newCanteenName}</h1>
 
                                 <p>餐厅名:</p>
                                 <input className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
@@ -113,7 +124,7 @@ const ModifyCanteenInfo = () => {
                                         onClick={handleLocationChange}>修改位置</button>
                                 <p>营业时间:</p>
                                 <input className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                                       type="text" value={newBusinessHour} onChange={(e) => setNewBusinessHour(e.target.value)} />
+                                       type="text" value={newBusinessHours} onChange={(e) => setNewBusinessHours(e.target.value)} />
                                 <button className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
                                         onClick={handleBusinessHoursChange}>修改营业时间</button>
                                 <p>公告:</p>
@@ -122,13 +133,11 @@ const ModifyCanteenInfo = () => {
                                 <button className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
                                         onClick={handleAnnouncementChange}>修改公告</button>
                                 <br/>
-                                <a href="/canteen-info">
                                     <button
                                         className="bg-red-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
                                         type="button" onClick={handleCanteenDelete}>
                                         删除餐厅
                                     </button>
-                                </a>
                             </div>
                         ) : (
                             <p>loading...</p>

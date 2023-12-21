@@ -5,27 +5,27 @@ import NavBar from "./components/NavBar";
 
 const CertainCanteenInfo = () => {
     const location = useLocation();
-    const canteenName = new URLSearchParams(location.search).get('name');
+    const canteenId = new URLSearchParams(location.search).get('id');
     const [canteenInfo, setCanteenInfo] = useState(null);
 
     useEffect(() => {
         const fetchCanteenInfo = async () => {
-            const info = await CanteenApi.getCanteenInfo(canteenName); // 使用您的获取食堂信息的方法
+            const info = await CanteenApi.getCanteenInfoById(canteenId); // 使用您的获取食堂信息的方法
             setCanteenInfo(info);
         };
 
         fetchCanteenInfo();
-    }, [canteenName]);
+    }, [canteenId]);
 
     return (
         <>
             <NavBar/>
             <div className="flex items-center justify-center h-screen">
                 <div className="bg-white rounded-lg shadow-lg p-8 m-4 w-full max-w-xs items-center">
-                    <h1 className="mb-4 text-xl text-center">{canteenName}</h1>
                     <div>
                         {canteenInfo ? (
                             <div>
+                                <h1 className="mb-4 text-xl text-center">{canteenInfo.canteenName}</h1>
                                 <h2>{canteenInfo.canteenName}</h2>
                                 <p>简介: {canteenInfo.intro}</p>
                                 <p>位置: {canteenInfo.location}</p>
