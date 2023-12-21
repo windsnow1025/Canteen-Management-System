@@ -1,7 +1,6 @@
 import NavBar from "../components/NavBar";
 import React, {useEffect, useState} from "react";
 import UserApi from "../api/UserApi";
-import {Link} from "react-router-dom";
 
 const UserInfo = () => {
     const [userInfo, setUserInfo] = useState(null);
@@ -15,28 +14,17 @@ const UserInfo = () => {
                 console.error("Error fetching user info:", error);
             }
         };
-        const timer = setTimeout(() => {
-            if (!userInfo) {
-                // 如果3秒内没有获取到用户信息，则执行退出登录操作
-                UserApi.deleteToken();
-                window.location.href = `/login`;
-            }
-        }, 3000);
 
         fetchUserInfo();
-
-        return () => clearTimeout(timer); // 清除定时器
     }, []);
 
-    return (
-        <>
+    return (<>
             <NavBar/>
             <div className="flex items-center justify-center h-screen">
                 <div className="bg-white rounded-lg shadow-lg p-8 m-4 w-full max-w-xs items-center">
                     <h1 className="mb-4 text-xl text-center">用户信息</h1>
                     <div>
-                        {userInfo ? (
-                            <div>
+                        {userInfo ? (<div>
                                 <p>ID: {userInfo.id}</p>
                                 <p>Username: {userInfo.username}</p>
                                 <p>User Type: {userInfo.userType}</p>
@@ -64,8 +52,7 @@ const UserInfo = () => {
                                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-56">交流社区信息管理
                                             </button>
                                         </a>
-                                    </div>
-                                )}
+                                    </div>)}
                                 {userInfo.userType === 'canteen_admin' && (
                                     <div className="flex flex-col space-y-4 items-center justify-center mt-4">
                                         <a href={`/dish-maintenance/${userInfo.canteenId}`}>
@@ -98,8 +85,7 @@ const UserInfo = () => {
                                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">发布最新推荐菜品
                                             </button>
                                         </a>
-                                    </div>
-                                )}
+                                    </div>)}
                                 <div className="flex flex-col space-y-4 items-center justify-center mt-4">
                                     <a href="/login">
                                         <button
@@ -116,15 +102,22 @@ const UserInfo = () => {
                                         </button>
                                     </a>
                                 </div>
+                            </div>) : (<div>
+                                <p>Loading user info...</p>
+                                <a href="/login">
+                                    <button
+                                        className="bg-red-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
+                                        type="button" onClick={UserApi.deleteToken}>
+                                        退出登录
+                                    </button>
+                                </a>
                             </div>
-                        ) : (
-                            <p>Loading user info...</p>
+
                         )}
                     </div>
                 </div>
             </div>
-        </>
-    );
+        </>);
 };
 
 export default UserInfo;
