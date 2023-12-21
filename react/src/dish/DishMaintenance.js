@@ -102,12 +102,15 @@ const DishMaintenance = () => {
                                     const reader = new FileReader();
 
                                     reader.onloadend = () => {
-                                        setNewDish({ ...newDish, picture: reader.result });
+                                        // 去掉前缀部分
+                                        const base64String = reader.result.split(",")[1];
+                                        setNewDish({ ...newDish, picture: base64String });
                                     };
 
                                     reader.readAsDataURL(file);
                                 }}
                             />
+
 
                             <button
                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
