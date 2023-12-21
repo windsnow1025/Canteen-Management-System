@@ -123,6 +123,43 @@ public class EvaluationDAO {
         }
     }
 
+    public boolean updateContentById(int id, String content){
+        String sql = "UPDATE evaluation SET content = ? WHERE id = ?";
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql, content, id);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("updateContentById error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updatePictureById(int id, String base64String){
+        String sql = "UPDATE evaluation SET picture = ? WHERE id = ?";
+        try {
+            byte[] pictureBytes = null;
+            if (base64String != null && !base64String.isEmpty()) {
+                pictureBytes = Base64.getDecoder().decode(base64String);
+            }
+            int rowsAffected = jdbcHelper.executeUpdate(sql, pictureBytes, id);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("updatePictureById error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updateRatingById(int id, float rating){
+        String sql = "UPDATE evaluation SET rating = ? WHERE id = ?";
+        try {
+            int rowsAffected = jdbcHelper.executeUpdate(sql, rating, id);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("updateRatingById error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
     public boolean delete(int id) {
         String sql = "DELETE FROM evaluation WHERE id = ?";
         try {

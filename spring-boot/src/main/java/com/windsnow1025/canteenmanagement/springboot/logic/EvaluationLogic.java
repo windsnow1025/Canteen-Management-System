@@ -51,6 +51,33 @@ public class EvaluationLogic {
         }
     }
 
+    public boolean updateContentById(String token, int id, String content) {
+        String username = JwtUtil.parseJWT(token);
+        if (evaluationDAO.hasPermission(username, id)) {
+            return evaluationDAO.updateContentById(id, content);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updatePictureById(String token, int id, String picture) {
+        String username = JwtUtil.parseJWT(token);
+        if (evaluationDAO.hasPermission(username, id)) {
+            return evaluationDAO.updatePictureById(id, picture);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean updateRatingById(String token, int id, float rating) {
+        String username = JwtUtil.parseJWT(token);
+        if (evaluationDAO.hasPermission(username, id)) {
+            return evaluationDAO.updateRatingById(id, rating);
+        } else {
+            return false;
+        }
+    }
+
     public boolean delete(String token, int id) {
         String username = JwtUtil.parseJWT(token);
         if (evaluationDAO.hasPermission(username, id)) {

@@ -86,6 +86,54 @@ public class EvaluationController {
         }
     }
 
+    @PutMapping("/content")
+    public ResponseEntity<Map<String, Object>> updateContentById(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
+        try {
+            int id = Integer.parseInt(request.get("id"));
+            String content = request.get("content");
+            if (evaluationLogic.updateContentById(token, id, content)) {
+                return ResponseEntity.ok(Map.of("status", "Success", "message", "Update successful"));
+            } else {
+                return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Update failed"));
+            }
+        } catch (Exception e) {
+            logger.error("Update Content error", e);
+            return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
+        }
+    }
+
+    @PutMapping("/picture")
+    public ResponseEntity<Map<String, Object>> updatePictureById(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
+        try {
+            int id = Integer.parseInt(request.get("id"));
+            String picture = request.get("picture");
+            if (evaluationLogic.updatePictureById(token, id, picture)) {
+                return ResponseEntity.ok(Map.of("status", "Success", "message", "Update successful"));
+            } else {
+                return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Update failed"));
+            }
+        } catch (Exception e) {
+            logger.error("Update Picture error", e);
+            return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
+        }
+    }
+
+    @PutMapping("/rating")
+    public ResponseEntity<Map<String, Object>> updateRatingById(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
+        try {
+            int id = Integer.parseInt(request.get("id"));
+            float rating = (request.get("rating") == null) ? 0 : Float.parseFloat(request.get("rating"));
+            if (evaluationLogic.updateRatingById(token, id, rating)) {
+                return ResponseEntity.ok(Map.of("status", "Success", "message", "Update successful"));
+            } else {
+                return ResponseEntity.badRequest().body(Map.of("status", "Failure", "message", "Update failed"));
+            }
+        } catch (Exception e) {
+            logger.error("Update Rating error", e);
+            return ResponseEntity.internalServerError().body(Map.of("status", "Error", "message", e.getMessage()));
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Object>> delete(@RequestHeader("Authorization") String token, @PathVariable int id) {
         try {
