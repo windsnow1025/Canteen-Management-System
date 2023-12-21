@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Pagination } from 'antd';
 import { Input } from 'antd';
-import NavBar from "./components/NavBar";
-import DishApi from "./api/DishApi";
-import base64StringToDataURL from "./Base64StringToDataURL";
+import NavBar from "../components/NavBar";
+import DishApi from "../api/DishApi";
+import base64StringToDataURL from "../utils/Base64StringToDataURL";
 
 const { Search } = Input;
 

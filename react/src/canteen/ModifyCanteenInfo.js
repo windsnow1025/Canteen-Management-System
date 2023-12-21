@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Link, useLocation} from 'react-router-dom';
-import CanteenApi from "./api/CanteenApi";
-import NavBar from "./components/NavBar";
+import CanteenApi from "../api/CanteenApi";
+import NavBar from "../components/NavBar";
 
 const ModifyCanteenInfo = () => {
     const location = useLocation();

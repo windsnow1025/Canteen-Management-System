@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import CanteenApi from "./api/CanteenApi";
+import CanteenApi from "../api/CanteenApi";
 import {Flex} from "antd";
 import {Link} from "react-router-dom";
-import AdditionIcon from "./images/addition.png";
-import NavBar from "./components/NavBar";
+import AdditionIcon from "../images/addition.png";
+import NavBar from "../components/NavBar";
 
 const Canteen =()=>{
     const [canteens, setCanteens] = useState([]);

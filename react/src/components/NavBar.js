@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import avataUrl1 from '../images/user_avatar.jpg';
 import messageIcon from '../images/message.png';
 import messageIconAlert from '../images/messageAlert.png';
-import UserInfo from "../UserInfo";
+import UserInfo from "../user/UserInfo";
 class NavBar extends Component {
     messageAlertFlag = false;
     iconUrl = this.messageAlertFlag ? messageIconAlert : messageIcon;

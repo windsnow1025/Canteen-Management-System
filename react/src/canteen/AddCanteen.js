@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import CanteenApi from "./api/CanteenApi";
-import NavBar from "./components/NavBar";
+import CanteenApi from "../api/CanteenApi";
+import NavBar from "../components/NavBar";
 
 const AddCanteen = () => {
     const [newLocation, setNewLocation] = useState('');

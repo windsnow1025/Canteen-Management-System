@@ -1,18 +1,18 @@
 import React from 'react';
 import './index.css';
-import Register from "./Register";
-import Login from "./Login";
+import Register from "./user/Register";
+import Login from "./user/Login";
 import FirstPage from "./FirstPage";
 import Community from "./Community";
-import ChangePassword from "./ChangePassword";
+import ChangePassword from "./user/ChangePassword";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import UserInfo from "./UserInfo";
-import CanteenInfo from "./CanteenInfo";
-import Canteen from "./Canteen"
-import CertainCanteenInfo from "./CertainCanteenInfo";
-import ModifyCanteenInfo from "./ModifyCanteenInfo";
-import AddCanteen from "./AddCanteen";
-import DishPage from "./DishPage";
+import UserInfo from "./user/UserInfo";
+import CanteenInfo from "./canteen/CanteenInfo";
+import Canteen from "./canteen/Canteen"
+import CertainCanteenInfo from "./canteen/CertainCanteenInfo";
+import ModifyCanteenInfo from "./canteen/ModifyCanteenInfo";
+import AddCanteen from "./canteen/AddCanteen";
+import DishPage from "./dish/DishPage";
 
 function App() {
     return (
