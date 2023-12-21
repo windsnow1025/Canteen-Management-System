@@ -3,12 +3,24 @@ import avataUrl1 from '../images/user_avatar.jpg';
 import messageIcon from '../images/message.png';
 import messageIconAlert from '../images/messageAlert.png';
 import UserInfo from "../user/UserInfo";
+
 class NavBar extends Component {
-    messageAlertFlag = false;
-    iconUrl = this.messageAlertFlag ? messageIconAlert : messageIcon;
+    state = {
+        userInfo: null
+    };
+
+    async componentDidMount() {
+        try {
+            const userInfo = await UserInfo.getUserInfo();
+            this.setState({ userInfo });
+        } catch (error) {
+            console.error('Error fetching user info:', error);
+        }
+    }
 
     render() {
-        const token = localStorage.getItem('token');
+        const { userInfo } = this.state;
+
         return (
             <nav className="bg-gray-100 shadow flex justify-between items-center">
                 <div className="w-1/6">
@@ -29,12 +41,12 @@ class NavBar extends Component {
                     <a href="/canteen" className="px-4 py-2 block font-bold">食堂信息</a>
                 </div>
                 <div className="w-1/6 flex text-center items-center">
-                    {token ? (
+                    {userInfo ? (
                         <>
                             <a href="/user-info">我的</a>
                             <a className="px-4 py-2 block">|</a>
                             <a href="/messages">
-                                <img src={this.iconUrl} alt="User" className="w-6 h-6" />
+                                <img src={messageIcon} alt="User" className="w-6 h-6" />
                             </a>
                         </>
                     ) : (
@@ -45,7 +57,6 @@ class NavBar extends Component {
                         </>
                     )}
                 </div>
-
             </nav>
         );
     }
