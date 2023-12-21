@@ -76,7 +76,7 @@ const DishPage = () => {
                                 <h2 className="text-2xl font-bold">{dish.dishName}</h2>
                                 <div className="flex justify-between items-center">
                                     <div className="flex space-x-4 items-center">
-                                        <img src={dish.picture} alt={dish.dishName} className="w-12 h-12" />
+                                        <img src={dish.picture} alt={dish.dishName} className="w-20 h-20" />
                                         <p className="text-gray-500">{dish.cuisine}</p>
                                     </div>
                                     <div className="text-gray-500 text-sm mt-2 text-right">
