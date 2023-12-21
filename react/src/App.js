@@ -14,7 +14,7 @@ import ModifyCanteenInfo from "./canteen/ModifyCanteenInfo";
 import AddCanteen from "./canteen/AddCanteen";
 import DishPage from "./dish/DishPage";
 import DishMaintenance from "./dish/DishMaintenance";
-import Announcement from "./Announcement";
+import Announcement from "./canteen/Announcement";
 
 function App() {
     return (

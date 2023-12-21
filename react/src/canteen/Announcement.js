@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import NavBar from "./components/NavBar";
+import NavBar from "../components/NavBar";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import CanteenApi from './api/CanteenApi';
-import UserApi from "./api/UserApi";
+import CanteenApi from '../api/CanteenApi';
+import UserApi from "../api/UserApi";
 import axios from "axios";
 
 const Announcement = () => {
@@ -19,7 +19,6 @@ const Announcement = () => {
 
                 const CanteenName = await CanteenApi.getCanteenInfoById(userInfo.canteenId);
                 setCanteenName(CanteenName.canteenName);
-                alert('修改成功')
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -60,7 +59,7 @@ const Announcement = () => {
                     >
                         确认发布
                     </button>
-                    <p>餐厅名: {canteenName}</p>
+                    <p className="text-center">餐厅名: {canteenName}</p>
                 </div>
             </div>
         </>
