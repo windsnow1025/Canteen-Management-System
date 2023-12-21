@@ -62,5 +62,22 @@ export default class UserApi {
         localStorage.removeItem('token');
     }
 
+    static async getAllUserInfos() {
+        const token = localStorage.getItem('token');
+        const res = await axios.get("https://www.windsnow1025.com/learn/api/canteen/user/infos", {
+            headers: { Authorization: `${token}` }
+        });
+        return res.data;
+    }
+
+    static async deleteUserById(userId) {
+        const token = localStorage.getItem('token');
+        const res = await axios.delete(`https://www.windsnow1025.com/learn/api/canteen/user/${userId}`, {
+            headers: { Authorization: `${token}` }
+        });
+        return res.data.message;
+    }
+
+
 
 }
