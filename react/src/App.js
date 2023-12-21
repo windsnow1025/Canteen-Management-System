@@ -14,6 +14,7 @@ import ModifyCanteenInfo from "./canteen/ModifyCanteenInfo";
 import AddCanteen from "./canteen/AddCanteen";
 import DishPage from "./dish/DishPage";
 import DishMaintenance from "./dish/DishMaintenance";
+import ModifyDishInfo from "./dish/ModifyDishInfo";
 import Announcement from "./canteen/Announcement";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
                     <Route path="/canteen-add" element={<AddCanteen />} />
                     <Route path="/dish" element={<DishPage />} />
                     <Route path="/dish-maintenance/:canteenId" element={<DishMaintenance />} />
+                    <Route path="/modify-dish-info" element={<ModifyDishInfo />} />
                     <Route path="/announcement" element={<Announcement />} />
                 </Routes>
             </div>

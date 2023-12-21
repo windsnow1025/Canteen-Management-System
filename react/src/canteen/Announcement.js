@@ -28,7 +28,7 @@ const Announcement = () => {
     }, []);
     const handleConfirm = async () => {
         try {
-            const message = await CanteenApi.updateAnnouncement(canteenName, inputValue);
+            const message = await CanteenApi.updateCanteenAnnouncement(canteenName, inputValue);
             toast.success(message); // Show a success message
             setInputValue(''); // Clear the input field
         } catch (error) {
