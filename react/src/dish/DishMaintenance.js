@@ -135,7 +135,7 @@ const DishMaintenance = () => {
                             </Panel>
 
                             {/*已有菜品列表*/}
-                            <Panel header="已有菜品列表" key="3">
+                            <Panel header="修改已有菜品" key="3">
                                 <ul>
                                     {dishes
                                         .filter((dish) => dish.canteen_id === parseInt(canteenId, 10))

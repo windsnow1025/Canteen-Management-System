@@ -21,6 +21,7 @@ const ModifyDishInfo = () => {
             // 更新完数据后重新获取菜品信息
             const info = await DishApi.getDishInfoById(dishId);
             setDishInfo(info);
+            alert('已成功修改！');
         } catch (error) {
             // 处理错误
             console.error('Error updating dish name or fetching dish info:', error);
@@ -33,6 +34,7 @@ const ModifyDishInfo = () => {
         // 更新完数据后重新获取菜品信息
         const info = await DishApi.getDishInfoById(dishId);
         setDishInfo(info);
+        alert('已成功修改！');
     };
 
     // 处理折扣率修改
@@ -41,6 +43,7 @@ const ModifyDishInfo = () => {
         // 更新完数据后重新获取菜品信息
         const info = await DishApi.getDishInfoById(dishId);
         setDishInfo(info);
+        alert('已成功修改！');
     };
 
     // 处理菜系修改
@@ -49,6 +52,7 @@ const ModifyDishInfo = () => {
         // 更新完数据后重新获取菜品信息
         const info = await DishApi.getDishInfoById(dishId);
         setDishInfo(info);
+        alert('已成功修改！');
     };
 
     // 处理图片修改
@@ -57,6 +61,7 @@ const ModifyDishInfo = () => {
         // 更新完数据后重新获取菜品信息
         const info = await DishApi.getDishInfoById(dishId);
         setDishInfo(info);
+        alert('已成功修改！');
     };
 
     // 处理删除
