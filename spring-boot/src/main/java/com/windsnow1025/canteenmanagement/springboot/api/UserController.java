@@ -37,6 +37,21 @@ public class UserController {
         }
     }
 
+    @GetMapping("/info/{id}")
+    public ResponseEntity<String> getUserById(@RequestHeader("Authorization") String token, @PathVariable int id){
+        try {
+            User user = userLogic.getInfoById(token, id);
+            if (user != null) {
+                return ResponseEntity.ok(user.getUsername());
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } catch (Exception e) {
+            logger.error("Get user info by id error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @GetMapping("/infos")
     public ResponseEntity<List<User>> getAllUser(@RequestHeader("Authorization") String token){
         try {

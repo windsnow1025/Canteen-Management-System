@@ -105,6 +105,25 @@ public class UserDAO {
         }
     }
 
+    public User selectById(int id) {
+        String sql = "SELECT * FROM user WHERE id = ?";
+        try {
+            List<Map<String, Object>> result = jdbcHelper.select(sql, id);
+            if (!result.isEmpty()) {
+                Map<String, Object> resultMap = result.getFirst();
+                User user = new User();
+                String username = (String) resultMap.get("username");
+                user.setUsername(username);
+                return user;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            logger.error("Select user by username error", e);
+            throw new RuntimeException(e);
+        }
+    }
+
     public String getUserTypeByName(String username){
         String sql = "SELECT user_type FROM user WHERE username = ?";
         try {

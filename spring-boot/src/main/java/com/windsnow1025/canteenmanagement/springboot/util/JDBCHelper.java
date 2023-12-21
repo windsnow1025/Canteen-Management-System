@@ -69,6 +69,7 @@ public class JDBCHelper extends DatabaseHelper {
             )
             """;
 
+    //菜品评价
     private static final String CREATE_TABLE_EVALUATION = """
             CREATE TABLE IF NOT EXISTS evaluation(
                 id INT AUTO_INCREMENT,
@@ -83,6 +84,7 @@ public class JDBCHelper extends DatabaseHelper {
             )
             """;
 
+    //帖子
     private static final String CREATE_TABLE_POST = """
             CREATE TABLE IF NOT EXISTS post(
                 id INT AUTO_INCREMENT,
@@ -97,6 +99,7 @@ public class JDBCHelper extends DatabaseHelper {
             )
             """;
 
+    //帖子的回复
     private static final String CREATE_TABLE_COMMENT = """
             CREATE TABLE IF NOT EXISTS post(
                 id INT AUTO_INCREMENT,
@@ -193,7 +196,7 @@ public class JDBCHelper extends DatabaseHelper {
         dbUsername = System.getenv("MYSQL_USER");
         dbPassword = System.getenv("MYSQL_PASSWORD");
         dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-        dbVersion = "1.3.4";
+        dbVersion = "1.3.5";
     }
 
     @Override
