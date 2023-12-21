@@ -58,7 +58,7 @@ const UserInfo = () => {
                                 )}
                                 {userInfo.userType === 'canteen_admin' && (
                                     <div className="flex flex-col space-y-4 items-center justify-center mt-4">
-                                        <a>
+                                        <a href="/dish-maintenance">
                                             <button
                                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">菜品维护
                                             </button>

@@ -34,21 +34,27 @@ export default class DishApi{
         return res.data;
     }
 
-
-    static async createDish(canteenId, dishName, price, discountRate, cuisine, picture) {
+    static async createDish(dishName, price, discountRate, cuisine, picture) {
         const token = localStorage.getItem('token');
-        const res = await axios.post("https://www.windsnow1025.com/learn/api/canteen/dish", {
-            canteenId: canteenId,
-            dishName: dishName,
-            price: price,
-            discountRate: discountRate,
-            cuisine: cuisine,
-            picture: picture
-        }, {
-            headers: { Authorization: `${token}` }
-        });
+        const res = await axios.post(
+            "https://www.windsnow1025.com/learn/api/canteen/dish",
+            {
+                dishName,
+                price,
+                discountRate,
+                cuisine,
+                picture,
+            },
+            {
+                headers: {
+                    Authorization: `${token}`,
+                    'Content-Type': 'application/json', // 设置 content type 为 application/json
+                },
+            }
+        );
         return res.data;
     }
+
 
     static async updateDishCanteenId(id, canteenId) {
         const token = localStorage.getItem('token');

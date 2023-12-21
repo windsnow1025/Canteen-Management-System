@@ -6,13 +6,13 @@ import NavBar from "../components/NavBar";
 const DishMaintenance = () => {
     const [dishes, setDishes] = useState([]);
     const [newDish, setNewDish] = useState({
-        canteenId: '', // Assuming you have a way to get the canteenId for the logged-in canteen admin
         dishName: '',
         price: '',
         discountRate: '',
         cuisine: '',
-        picture: '',
+        picture: null, // 添加一个新的字段用于保存 Base64 编码
     });
+
 
     useEffect(() => {
         fetchDishes();
@@ -27,29 +27,6 @@ const DishMaintenance = () => {
         }
     };
 
-    const handleAddDish = async () => {
-        try {
-            await DishApi.createDish(
-                newDish.canteenId,
-                newDish.dishName,
-                newDish.price,
-                newDish.discountRate,
-                newDish.cuisine,
-                newDish.picture
-            );
-            setNewDish({
-                canteenId: '',
-                dishName: '',
-                price: '',
-                discountRate: '',
-                cuisine: '',
-                picture: '',
-            });
-            fetchDishes();
-        } catch (error) {
-            console.error('Error adding dish:', error);
-        }
-    };
 
     const handleDeleteDish = async (id) => {
         try {
@@ -59,6 +36,20 @@ const DishMaintenance = () => {
             console.error('Error deleting dish:', error);
         }
     };
+
+    const handleAddDish = async () => {
+        try {
+            const { dishName, price, discountRate, cuisine, picture } = newDish;
+
+            await DishApi.createDish(dishName, price, discountRate, cuisine, picture);
+
+            // 其他逻辑，例如清空表单或刷新数据
+        } catch (error) {
+            console.error("Error adding dish:", error);
+            // 处理错误的逻辑
+        }
+    };
+
 
     return (
         <>
@@ -75,7 +66,42 @@ const DishMaintenance = () => {
                                 value={newDish.dishName}
                                 onChange={(e) => setNewDish({ ...newDish, dishName: e.target.value })}
                             />
-                            {/* Add other input fields for price, discountRate, cuisine, picture */}
+                            <p>价格:</p>
+                            <input
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                                type="text"
+                                value={newDish.price}
+                                onChange={(e) => setNewDish({ ...newDish, price: e.target.value })}
+                            />
+                            <p>折扣率:</p>
+                            <input
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                                type="text"
+                                value={newDish.discountRate}
+                                onChange={(e) => setNewDish({ ...newDish, discountRate: e.target.value })}
+                            />
+                            <p>菜系:</p>
+                            <input
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                                type="text"
+                                value={newDish.cuisine}
+                                onChange={(e) => setNewDish({ ...newDish, cuisine: e.target.value })}
+                            />
+                            <p>图片:</p>
+                            <input
+                                type="file"
+                                onChange={(e) => {
+                                    const file = e.target.files[0];
+                                    const reader = new FileReader();
+
+                                    reader.onloadend = () => {
+                                        setNewDish({ ...newDish, picture: reader.result });
+                                    };
+
+                                    reader.readAsDataURL(file);
+                                }}
+                            />
+
                             <button
                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
                                 onClick={handleAddDish}
@@ -83,6 +109,7 @@ const DishMaintenance = () => {
                                 添加菜品
                             </button>
                         </div>
+
                         <ul>
                             {dishes.map((dish) => (
                                 <li key={dish.id}>
@@ -92,7 +119,7 @@ const DishMaintenance = () => {
                             ))}
                         </ul>
                         <br />
-                        <Link to={`/canteen-info`}>
+                        <Link to={`/user-info`}>
                             <button
                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
                                 type="button"
