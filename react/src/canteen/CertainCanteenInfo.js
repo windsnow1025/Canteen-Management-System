@@ -10,7 +10,7 @@ const CertainCanteenInfo = () => {
 
     useEffect(() => {
         const fetchCanteenInfo = async () => {
-            const info = await CanteenApi.getCanteenInfoById(canteenId); // 使用您的获取食堂信息的方法
+            const info = await CanteenApi.getCanteenInfoById(canteenId);
             setCanteenInfo(info);
         };
 
