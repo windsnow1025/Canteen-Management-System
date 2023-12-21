@@ -21,6 +21,7 @@ const ModifyCanteenInfo = () => {
             // 更新完数据后重新获取食堂信息
             const info = await CanteenApi.getCanteenInfoById(id);
             setCanteenInfo(info);
+            alert('已成功修改！');
         } catch (error) {
             // 处理错误
             console.error('Error updating canteen name or fetching canteen info:', error);
@@ -33,6 +34,7 @@ const ModifyCanteenInfo = () => {
         // 更新完数据后重新获取食堂信息
         const info = await CanteenApi.getCanteenInfoById(id);
         setCanteenInfo(info);
+        alert('已成功修改！');
     };
 
     // 处理位置修改
@@ -41,6 +43,7 @@ const ModifyCanteenInfo = () => {
         // 更新完数据后重新获取食堂信息
         const info = await CanteenApi.getCanteenInfoById(id);
         setCanteenInfo(info);
+        alert('已成功修改！');
     };
 
     // 处理营业时间修改
@@ -49,6 +52,7 @@ const ModifyCanteenInfo = () => {
         // 更新完数据后重新获取食堂信息
         const info = await CanteenApi.getCanteenInfoById(id);
         setCanteenInfo(info);
+        alert('已成功修改！');
     };
 
     // 处理公告修改
@@ -57,6 +61,7 @@ const ModifyCanteenInfo = () => {
         // 更新完数据后重新获取食堂信息
         const info = await CanteenApi.getCanteenInfoById(id);
         setCanteenInfo(info);
+        alert('已成功修改！');
     };
 
     // 处理删除
