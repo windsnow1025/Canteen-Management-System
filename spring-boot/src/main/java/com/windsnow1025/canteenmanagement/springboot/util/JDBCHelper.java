@@ -93,7 +93,6 @@ public class JDBCHelper extends DatabaseHelper {
                 title VARCHAR(255) NOT NULL,
                 content TEXT,
                 picture BLOB,
-                upvote INT NOT NULL,
                 PRIMARY KEY (id),
                 FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE SET NULL
             )
@@ -108,6 +107,18 @@ public class JDBCHelper extends DatabaseHelper {
                 content TEXT NOT NULL,
                 PRIMARY KEY (id),
                 FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE SET NULL,
+                FOREIGN KEY (post_id) REFERENCES post(id) ON DELETE CASCADE
+            )
+            """;
+
+    private static final String CREATE_TABLE_USER_LIKE = """
+            CREATE TABLE IF NOT EXISTS user_like(
+                id INT AUTO_INCREMENT,
+                user_id INT NOT NULL,
+                post_id INT NOT NULL,
+                PRIMARY KEY (id),
+                UNIQUE KEY unique_user_post_like ( user_id, post_id),
+                FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
                 FOREIGN KEY (post_id) REFERENCES post(id) ON DELETE CASCADE
             )
             """;
@@ -181,22 +192,25 @@ public class JDBCHelper extends DatabaseHelper {
 
     @Override
     protected void setDatabaseConfig() {
-//        try (InputStream inputStream = JDBCHelper.class.getClassLoader().getResourceAsStream("config.json")) {
-//            String text = new String(inputStream.readAllBytes());
-//            JSONObject jsonObject = new JSONObject(text);
-//            dbUrl = jsonObject.getString("database_url");
-//            dbUsername = jsonObject.getString("database_username");
-//            dbPassword = jsonObject.getString("database_password");
-//            dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-//            dbVersion = "1.3.5";
-//        } catch (IOException e) {
-//            logger.error("Database config failed", e);
-//        }
-        dbUrl = "jdbc:mysql://learn-mysql:3306/" + System.getenv("MYSQL_DATABASE");
+        dbDriverClassName = "com.mysql.cj.jdbc.Driver";
+        dbVersion = "1.4.0";
+
+        String schemaName = System.getenv("MYSQL_DATABASE");
+        dbUrl = "jdbc:mysql://learn-mysql:3306/" + schemaName;
         dbUsername = System.getenv("MYSQL_USER");
         dbPassword = System.getenv("MYSQL_PASSWORD");
-        dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-        dbVersion = "1.3.6";
+
+        if (schemaName == null || dbUsername == null || dbPassword == null) {
+            try (InputStream inputStream = JDBCHelper.class.getClassLoader().getResourceAsStream("config.json")) {
+                String text = new String(inputStream.readAllBytes());
+                JSONObject jsonObject = new JSONObject(text);
+                dbUrl = jsonObject.getString("database_url");
+                dbUsername = jsonObject.getString("database_username");
+                dbPassword = jsonObject.getString("database_password");
+            } catch (IOException e) {
+                logger.error("Database config failed", e);
+            }
+        }
     }
 
     @Override
@@ -210,6 +224,7 @@ public class JDBCHelper extends DatabaseHelper {
             statement.executeUpdate(CREATE_TABLE_EVALUATION);
             statement.executeUpdate(CREATE_TABLE_POST);
             statement.executeUpdate(CREATE_TABLE_COMMENT);
+            statement.executeUpdate(CREATE_TABLE_USER_LIKE);
             statement.executeUpdate(INSERT_MASTER);
             statement.executeUpdate(INSERT_ADMIN);
             statement.executeUpdate(INSERT_CONSUMER);
@@ -234,6 +249,7 @@ public class JDBCHelper extends DatabaseHelper {
     public void onUpgrade() throws SQLException {
         try (Statement statement = getConnection().createStatement()) {
             // Drop all
+            statement.executeUpdate("DROP TABLE IF EXISTS user_like");
             statement.executeUpdate("DROP TABLE IF EXISTS comment");
             statement.executeUpdate("DROP TABLE IF EXISTS post");
             statement.executeUpdate("DROP TABLE IF EXISTS evaluation");

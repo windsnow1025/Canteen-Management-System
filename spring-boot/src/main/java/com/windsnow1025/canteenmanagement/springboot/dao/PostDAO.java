@@ -15,9 +15,11 @@ public class PostDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(PostDAO.class);
     private final JDBCHelper jdbcHelper;
+    private final UserLikeDAO userLikeDAO;
 
     public PostDAO() {
         jdbcHelper = new JDBCHelper();
+        userLikeDAO = new UserLikeDAO();
     }
 
     public boolean hasPermission(String username, int id) {
@@ -53,7 +55,7 @@ public class PostDAO {
                 String content = (result.get("content") == null) ? null : (String) result.get("content");
                 byte[] pictureBytes = (byte[]) result.get("picture");
                 String picture = (pictureBytes != null) ? Base64.getEncoder().encodeToString(pictureBytes) : null;
-                int upvote = (int) result.get("upvote");
+                long upvote = userLikeDAO.getLikesByPostId(id);
                 posts.add(new Post(id, userId, time, title, content, picture, upvote));
             }
             return posts;
@@ -75,7 +77,7 @@ public class PostDAO {
                 String content = (result.get("content") == null) ? null : (String) result.get("content");
                 byte[] pictureBytes = (byte[]) result.get("picture");
                 String picture = (pictureBytes != null) ? Base64.getEncoder().encodeToString(pictureBytes) : null;
-                int upvote = (int) result.get("upvote");
+                long upvote = userLikeDAO.getLikesByPostId(id);
                 posts.add(new Post(id, userId, time, title, content, picture, upvote));
             }
             return posts;
@@ -97,7 +99,7 @@ public class PostDAO {
                 String content = (result.get("content") == null) ? null : (String) result.get("content");
                 byte[] pictureBytes = (byte[]) result.get("picture");
                 String picture = (pictureBytes != null) ? Base64.getEncoder().encodeToString(pictureBytes) : null;
-                int upvote = (int) result.get("upvote");
+                long upvote = userLikeDAO.getLikesByPostId(id);
                 posts.add(new Post(id, userId, time, title, content, picture, upvote));
             }
             return posts;
@@ -119,7 +121,7 @@ public class PostDAO {
                 String content = (result.get("content") == null) ? null : (String) result.get("content");
                 byte[] pictureBytes = (byte[]) result.get("picture");
                 String picture = (pictureBytes != null) ? Base64.getEncoder().encodeToString(pictureBytes) : null;
-                int upvote = (int) result.get("upvote");
+                long upvote = userLikeDAO.getLikesByPostId(id);
                 return new Post(id, userId, time, title, content, picture, upvote);
             } else {
                 return null;
@@ -130,8 +132,8 @@ public class PostDAO {
         }
     }
 
-    public boolean insert(Post post){
-        String sql = "INSERT INTO post(user_id, time, title, content, picture, upvote) VALUES (?, ?, ?, ?, ?, ?)";
+    public boolean insert(Post post) {
+        String sql = "INSERT INTO post(user_id, time, title, content, picture) VALUES (?, ?, ?, ?, ?)";
         int userId = post.getUserId();
         String time = post.getTime();
         String title = post.getTitle();
@@ -141,9 +143,8 @@ public class PostDAO {
         if (base64String != null && !base64String.isEmpty()) {
             pictureBytes = Base64.getDecoder().decode(base64String);
         }
-        int upvote = 0;
         try {
-            int rowsAffected = jdbcHelper.executeUpdate(sql, userId, time, title, content, pictureBytes, upvote);
+            int rowsAffected = jdbcHelper.executeUpdate(sql, userId, time, title, content, pictureBytes);
             return rowsAffected > 0;
         } catch (SQLException e) {
             logger.error("insert error", e);
@@ -151,18 +152,8 @@ public class PostDAO {
         }
     }
 
-    public boolean updateUpvoteById(int id, int upvote){
-        String sql = "UPDATE post SET upvote = ? WHERE id = ?";
-        try {
-            int rowsAffected = jdbcHelper.executeUpdate(sql, upvote, id);
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            logger.error("updateUpvoteById error", e);
-            throw new RuntimeException(e);
-        }
-    }
 
-    public boolean delete(int id){
+    public boolean delete(int id) {
         String sql = "DELETE FROM post WHERE id = ?";
         try {
             int rowsAffected = jdbcHelper.executeUpdate(sql, id);
