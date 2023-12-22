@@ -181,22 +181,25 @@ public class JDBCHelper extends DatabaseHelper {
 
     @Override
     protected void setDatabaseConfig() {
-//        try (InputStream inputStream = JDBCHelper.class.getClassLoader().getResourceAsStream("config.json")) {
-//            String text = new String(inputStream.readAllBytes());
-//            JSONObject jsonObject = new JSONObject(text);
-//            dbUrl = jsonObject.getString("database_url");
-//            dbUsername = jsonObject.getString("database_username");
-//            dbPassword = jsonObject.getString("database_password");
-//            dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-//            dbVersion = "1.3.5";
-//        } catch (IOException e) {
-//            logger.error("Database config failed", e);
-//        }
-        dbUrl = "jdbc:mysql://learn-mysql:3306/" + System.getenv("MYSQL_DATABASE");
-        dbUsername = System.getenv("MYSQL_USER");
-        dbPassword = System.getenv("MYSQL_PASSWORD");
         dbDriverClassName = "com.mysql.cj.jdbc.Driver";
         dbVersion = "1.3.6";
+
+        String schemaName = System.getenv("MYSQL_DATABASE");
+        dbUrl = "jdbc:mysql://learn-mysql:3306/" + schemaName;
+        dbUsername = System.getenv("MYSQL_USER");
+        dbPassword = System.getenv("MYSQL_PASSWORD");
+
+        if (schemaName == null || dbUsername == null || dbPassword == null) {
+            try (InputStream inputStream = JDBCHelper.class.getClassLoader().getResourceAsStream("config.json")) {
+                String text = new String(inputStream.readAllBytes());
+                JSONObject jsonObject = new JSONObject(text);
+                dbUrl = jsonObject.getString("database_url");
+                dbUsername = jsonObject.getString("database_username");
+                dbPassword = jsonObject.getString("database_password");
+            } catch (IOException e) {
+                logger.error("Database config failed", e);
+            }
+        }
     }
 
     @Override
