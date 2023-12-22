@@ -203,7 +203,7 @@ public class JDBCHelper extends DatabaseHelper {
     @Override
     protected void setDatabaseConfig() {
         dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-        dbVersion = "1.5.1";
+        dbVersion = "1.5.2";
 
         String schemaName = System.getenv("MYSQL_DATABASE");
         dbUrl = "jdbc:mysql://learn-mysql:3306/" + schemaName;
@@ -236,6 +236,7 @@ public class JDBCHelper extends DatabaseHelper {
             statement.executeUpdate(CREATE_TABLE_POST);
             statement.executeUpdate(CREATE_TABLE_COMMENT);
             statement.executeUpdate(CREATE_TABLE_USER_LIKE);
+
             statement.executeUpdate(INSERT_MASTER);
             statement.executeUpdate(INSERT_ADMIN);
             statement.executeUpdate(INSERT_CONSUMER);
@@ -269,7 +270,6 @@ public class JDBCHelper extends DatabaseHelper {
             statement.executeUpdate("DROP TABLE IF EXISTS dish");
             statement.executeUpdate("DROP TABLE IF EXISTS canteen");
             statement.executeUpdate("DROP TABLE IF EXISTS user");
-
         }
 
         onCreate();
