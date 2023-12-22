@@ -136,7 +136,7 @@ const DishMaintenance = () => {
 
                             {/*已有菜品列表*/}
                             <Panel header="修改已有菜品" key="3">
-                                <ul>
+                                <ul className="overflow-y-auto max-h-60">
                                     {dishes
                                         .filter((dish) => dish.canteen_id === parseInt(canteenId, 10))
                                         .map((dish) => (

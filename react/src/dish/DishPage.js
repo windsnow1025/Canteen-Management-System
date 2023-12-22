@@ -9,7 +9,7 @@ const { Search } = Input;
 
 const DishPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(5);
+    const [pageSize, setPageSize] = useState(9);
     const [dishes, setDishes] = useState([]);
     const [totalDishes, setTotalDishes] = useState(0);
 
@@ -42,6 +42,7 @@ const DishPage = () => {
         setCurrentPage(pageNumber);
     };
 
+    const currentDishes = dishes.slice((currentPage - 1) * pageSize, currentPage * pageSize);
     const onSearch = async (value) => {
         try {
             const response = await DishApi.getDishInfoByDishName(value);
@@ -69,8 +70,8 @@ const DishPage = () => {
             <h1 className="text-center font-bold text-4xl mt-5 mb-10 my-auto">菜品列表</h1>
             <Search className="w-1/3 mx-32" placeholder="输入搜索条件（菜品名称、类型、描述）" onSearch={onSearch} enterButton />
             <div>
-                <div className="flex flex-wrap items-start justify-start bg-white rounded-lg shadow-lg mx-32 mt-4">
-                    {dishes.map((dish, index) => (
+                <div className="grid grid-cols-3 gap-4 items-start justify-start bg-white rounded-lg shadow-lg mx-32 mt-4"> {/* Change this line */}
+                    {currentDishes.map((dish, index) => (
                         <a href={`/dish/${dish.id}`} key={index}>
                             <div className="flex flex-col space-y-4 mb-5 m-4 w-full p-4">
                                 <h2 className="text-2xl font-bold">{dish.dishName}</h2>
@@ -92,5 +93,6 @@ const DishPage = () => {
         </>
     );
 };
+
 
 export default DishPage;
