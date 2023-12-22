@@ -164,10 +164,10 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
-    public boolean updateType(String username, String newType, int canteenId) {
-        String sql = "UPDATE user SET user_type = ?, canteen_id = ? WHERE username = ?";
+    public boolean updateType(int id, String newType, int canteenId) {
+        String sql = "UPDATE user SET user_type = ?, canteen_id = ? WHERE id = ?";
         try {
-            int rowsAffected = jdbcHelper.executeUpdate(sql, newType, canteenId, username);
+            int rowsAffected = jdbcHelper.executeUpdate(sql, newType, canteenId, id);
             return rowsAffected > 0;
         } catch (SQLException e) {
             logger.error("Update type error", e);

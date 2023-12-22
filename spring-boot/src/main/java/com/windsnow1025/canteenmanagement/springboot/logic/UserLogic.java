@@ -51,10 +51,10 @@ public class UserLogic {
         return userDao.updatePassword(oldUsername, newPassword);
     }
 
-    public boolean updateType(String token, String username, String newType, int canteenId) {
+    public boolean updateType(String token, int id, String newType, int canteenId) {
         String userType = userDao.getUserTypeByName(JwtUtil.parseJWT(token));
         if (userType.equals("master_admin") || userType.equals("canteen_admin")) {
-            return userDao.updateType(username, newType, canteenId);
+            return userDao.updateType(id, newType, canteenId);
         } else {
             return false;
         }

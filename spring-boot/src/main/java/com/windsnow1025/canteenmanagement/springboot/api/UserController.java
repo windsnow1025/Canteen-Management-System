@@ -123,13 +123,12 @@ public class UserController {
         }
     }
 
-    @PutMapping("/type")
-    public ResponseEntity<Map<String, Object>> updateType(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
+    @PutMapping("/type/{id}")
+    public ResponseEntity<Map<String, Object>> updateType(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request, @PathVariable int id) {
         try {
             String userType = request.get("userType");
-            String username = request.get("username");
             int canteenId = Integer.parseInt(request.get("canteenId"));
-            boolean result = userLogic.updateType(token, username, userType, canteenId);
+            boolean result = userLogic.updateType(token, id, userType, canteenId);
             if (result) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "UpdateType successful"));
             } else {

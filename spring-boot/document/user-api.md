@@ -37,20 +37,11 @@
 }
 ```
 
-## PUT: user/type
+## PUT: user/type/{id}
 
 ```json
 {
-  "username": "consumer",
   "userType": "admin",
   "canteenId": "1"
-}
-```
-
-## PUT: user/level
-
-```json
-{
-  "userLevel": "2"
 }
 ```
