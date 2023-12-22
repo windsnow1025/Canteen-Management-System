@@ -41,7 +41,7 @@
 
 ```json
 {
-  "userType": "admin",
-  "canteenId": "1"
+  "userType": "canteen_admin",
+  "canteenId": "2"
 }
 ```
