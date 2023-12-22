@@ -35,10 +35,9 @@ export default class UserApi {
         return res.data;
     }
 
-    static async updateUserType(username,userType,canteenId) {
+    static async updateUserType(userId,userType,canteenId) {
         const token = localStorage.getItem('token');
-        const res = await axios.put("https://www.windsnow1025.com/learn/api/canteen/user/type", {
-            username:username,
+        const res = await axios.put(`https://www.windsnow1025.com/learn/api/canteen/user/type/${userId}`, {
             userType: userType,
             canteenId:canteenId
         }, {
