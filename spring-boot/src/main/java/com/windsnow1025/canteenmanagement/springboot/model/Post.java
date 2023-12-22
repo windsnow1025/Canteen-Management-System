@@ -9,26 +9,33 @@ public class Post implements Serializable {
     private String title;
     private String content;
     private String picture;
-    private int upvote;
+    private long upvote;
 
     public Post() {
     }
 
-    public Post(String time, String title, int upvote) {
+    public Post(String time, String title) {
         this.time = time;
         this.title = title;
-        this.upvote = upvote;
     }
 
-    public Post(String time, String title, String content, String picture, int upvote) {
+    public Post(String title, String content, String picture) {
+        this.title = title;
+        this.content = content;
+        this.picture = picture;
+    }
+
+
+    public Post(int id, int userId, String time, String title, String content, String picture) {
+        this.id = id;
+        this.userId = userId;
         this.time = time;
         this.title = title;
         this.content = content;
         this.picture = picture;
-        this.upvote = upvote;
     }
 
-    public Post(int id, int userId, String time, String title, String content, String picture, int upvote) {
+    public Post(int id, int userId, String time, String title, String content, String picture, long upvote) {
         this.id = id;
         this.userId = userId;
         this.time = time;
@@ -86,11 +93,11 @@ public class Post implements Serializable {
         this.picture = picture;
     }
 
-    public int getUpvote() {
+    public long getUpvote() {
         return upvote;
     }
 
-    public void setUpvote(int upvote) {
+    public void setUpvote(long upvote) {
         this.upvote = upvote;
     }
 }
