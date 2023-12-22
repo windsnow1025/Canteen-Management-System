@@ -18,7 +18,7 @@ public class PostDAO {
     private final UserLikeDAO userLikeDAO;
 
     public PostDAO() {
-        jdbcHelper = new JDBCHelper();
+        jdbcHelper = JDBCHelper.getInstance();
         userLikeDAO = new UserLikeDAO();
     }
 

@@ -16,7 +16,7 @@ public class CommentDAO {
     private final JDBCHelper jdbcHelper;
 
     public CommentDAO() {
-        jdbcHelper = new JDBCHelper();
+        jdbcHelper = JDBCHelper.getInstance();
     }
 
     public boolean hasDeletePermission(String username, int id){

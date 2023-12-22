@@ -14,7 +14,7 @@ public class CanteenDAO {
     private static final Logger logger = LoggerFactory.getLogger(CanteenDAO.class);
     private final JDBCHelper jdbcHelper;
     public CanteenDAO() {
-        this.jdbcHelper = new JDBCHelper();
+        jdbcHelper = JDBCHelper.getInstance();
     }
 
     public boolean hasCanteen(int canteenId){

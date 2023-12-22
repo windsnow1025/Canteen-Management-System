@@ -17,7 +17,7 @@ public class UserDAO {
     private final JDBCHelper jdbcHelper;
 
     public UserDAO() {
-        this.jdbcHelper = new JDBCHelper();
+        jdbcHelper = JDBCHelper.getInstance();
     }
 
     public boolean insert(User user) {

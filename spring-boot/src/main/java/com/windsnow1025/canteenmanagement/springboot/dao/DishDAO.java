@@ -13,7 +13,7 @@ public class DishDAO {
     private final JDBCHelper jdbcHelper;
 
     public DishDAO() {
-        jdbcHelper = new JDBCHelper();
+        jdbcHelper = JDBCHelper.getInstance();
     }
 
     public boolean hasCreatePermission(String username, int canteenId) {

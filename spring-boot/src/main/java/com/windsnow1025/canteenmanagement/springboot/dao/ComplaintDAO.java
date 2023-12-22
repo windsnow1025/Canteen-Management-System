@@ -16,7 +16,7 @@ public class ComplaintDAO {
     private final JDBCHelper jdbcHelper;
 
     public ComplaintDAO(){
-        jdbcHelper = new JDBCHelper();
+        jdbcHelper = JDBCHelper.getInstance();
     }
 
     public boolean hasResponsePermission(String username, int id){

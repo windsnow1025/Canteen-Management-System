@@ -16,7 +16,7 @@ public class VoteDAO {
     private final JDBCHelper jdbcHelper;
 
     public VoteDAO() {
-        jdbcHelper = new JDBCHelper();
+        jdbcHelper = JDBCHelper.getInstance();
     }
 
     public boolean hasCreatePermission(String username, int canteenId){

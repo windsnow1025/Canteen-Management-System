@@ -13,7 +13,7 @@ public class UserLikeDAO {
     private final JDBCHelper jdbcHelper;
 
     public UserLikeDAO() {
-        jdbcHelper = new JDBCHelper();
+        jdbcHelper = JDBCHelper.getInstance();
     }
 
     public boolean hasLiked(int userId, int postId) {

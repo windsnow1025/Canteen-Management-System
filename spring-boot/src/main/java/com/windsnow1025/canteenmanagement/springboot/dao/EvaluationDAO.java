@@ -17,7 +17,7 @@ public class EvaluationDAO {
     private final JDBCHelper jdbcHelper;
 
     public EvaluationDAO() {
-        jdbcHelper = new JDBCHelper();
+        jdbcHelper = JDBCHelper.getInstance();
     }
 
     public boolean hasPermission(String username, int id) {

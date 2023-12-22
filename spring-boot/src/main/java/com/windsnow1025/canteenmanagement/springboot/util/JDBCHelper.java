@@ -186,8 +186,18 @@ public class JDBCHelper extends DatabaseHelper {
             INSERT INTO dish (canteen_id, dish_name, price, discount_rate, cuisine, picture)
             VALUES ("5", "重辣苦锅", "20", "1.5", "一食堂菜", NULL)
             """;
+
+    private static JDBCHelper instance;
+
     public JDBCHelper() {
         super();
+    }
+
+    public static synchronized JDBCHelper getInstance() {
+        if (instance == null) {
+            instance = new JDBCHelper();
+        }
+        return instance;
     }
 
     @Override
