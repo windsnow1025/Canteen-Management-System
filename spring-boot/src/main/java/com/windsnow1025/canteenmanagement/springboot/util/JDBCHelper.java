@@ -193,7 +193,7 @@ public class JDBCHelper extends DatabaseHelper {
     @Override
     protected void setDatabaseConfig() {
         dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-        dbVersion = "1.5.0";
+        dbVersion = "1.5.1";
 
         String schemaName = System.getenv("MYSQL_DATABASE");
         dbUrl = "jdbc:mysql://learn-mysql:3306/" + schemaName;
@@ -215,7 +215,8 @@ public class JDBCHelper extends DatabaseHelper {
 
     @Override
     public void onCreate() throws SQLException {
-        try (Statement statement = getConnection().createStatement()) {
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(CREATE_TABLE_USER);
             statement.executeUpdate(CREATE_TABLE_CANTEEN);
             statement.executeUpdate(CREATE_TABLE_DISH);
@@ -240,15 +241,15 @@ public class JDBCHelper extends DatabaseHelper {
             statement.executeUpdate(INSERT_DISH_5);
         }
 
-        createMetadata();
-        insertVersion();
-        logger.info("Database created");
+        super.onCreate();
     }
 
     @Override
     public void onUpgrade() throws SQLException {
-        try (Statement statement = getConnection().createStatement()) {
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement()) {
             // Drop all
+            statement.executeUpdate("DROP TABLE IF EXISTS metadata");
             statement.executeUpdate("DROP TABLE IF EXISTS user_like");
             statement.executeUpdate("DROP TABLE IF EXISTS comment");
             statement.executeUpdate("DROP TABLE IF EXISTS post");
@@ -261,8 +262,7 @@ public class JDBCHelper extends DatabaseHelper {
 
         }
 
-        updateVersion();
         onCreate();
-        logger.info("Database upgraded");
+        super.onUpgrade();
     }
 }
