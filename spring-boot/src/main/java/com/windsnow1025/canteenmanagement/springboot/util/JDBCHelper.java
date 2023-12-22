@@ -100,7 +100,7 @@ public class JDBCHelper extends DatabaseHelper {
 
     //帖子的回复
     private static final String CREATE_TABLE_COMMENT = """
-            CREATE TABLE IF NOT EXISTS post(
+            CREATE TABLE IF NOT EXISTS comment(
                 id INT AUTO_INCREMENT,
                 user_id INT,
                 post_id INT NOT NULL,
@@ -193,7 +193,7 @@ public class JDBCHelper extends DatabaseHelper {
     @Override
     protected void setDatabaseConfig() {
         dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-        dbVersion = "1.4.0";
+        dbVersion = "1.5.0";
 
         String schemaName = System.getenv("MYSQL_DATABASE");
         dbUrl = "jdbc:mysql://learn-mysql:3306/" + schemaName;
