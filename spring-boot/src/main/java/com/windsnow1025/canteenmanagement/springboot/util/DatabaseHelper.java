@@ -110,7 +110,6 @@ public abstract class DatabaseHelper {
                 return null;
             }
         } catch (SQLException e) {
-            logger.error("Error selecting version", e);
             return null;
         }
     }
