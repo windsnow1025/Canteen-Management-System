@@ -217,9 +217,13 @@ public class JDBCHelper extends DatabaseHelper {
                 dbUrl = jsonObject.getString("database_url");
                 dbUsername = jsonObject.getString("database_username");
                 dbPassword = jsonObject.getString("database_password");
+
+                logger.info("Using development setting.");
             } catch (IOException e) {
                 logger.error("Database config failed", e);
             }
+        } else {
+            logger.info("Using production setting.");
         }
     }
 
