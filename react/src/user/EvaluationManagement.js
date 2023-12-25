@@ -1,24 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import DishApi from '../api/DishApi';
+import React, {useEffect, useState} from 'react';
 import EvaluationApi from "../api/EvaluationApi";
 import NavBar from "../components/NavBar";
 import base64StringToDataURL from "../utils/Base64StringToDataURL";
 import {Collapse} from "antd";
-import {cropToSquareAndCompress} from "../utils/imageUtils";
 import UserApi from "../api/UserApi";
 
 const {Panel} = Collapse;
 
 const EvaluationManagement = () => {
-    const { dishId } = useParams();
     const [evaluationInfos, setEvaluationInfos] = useState([]);
     const [evaluationId, setEvaluationId] = useState([]);
-    const [newEvaluation, setNewEvaluation] = useState({
-        content: '',
-        rating: 0,
-        picture: null,
-    });
     const [userInfo, setUserInfo] = useState(null);
 
     useEffect(() => {
@@ -31,8 +22,7 @@ const EvaluationManagement = () => {
                     const imageUrl = await base64StringToDataURL(evaluation.picture);
 
                     return {
-                        ...evaluation,
-                        picture: imageUrl,
+                        ...evaluation, picture: imageUrl,
                     };
                 }));
                 setEvaluationInfos(evaluationsWithImages);
@@ -64,42 +54,38 @@ const EvaluationManagement = () => {
     };
 
 
-    return (
-        <>
+    return (<>
             <NavBar/>
             <div>
-                {evaluationInfos && (
-                    <div>
+                {evaluationInfos && (<div>
                         <Collapse accordion>
-                            <Panel header="评价列表" key="1" className="bg-white hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">
+                            <Panel header="评价列表" key="1"
+                                   className="bg-white hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">
                                 {/* 评价列表 */}
                                 <ul>
-                                    {evaluationInfos.map((evaluation) => (
-                                        <li key={evaluation.id}>
+                                    {evaluationInfos.map((evaluation) => (<li key={evaluation.id}>
                                             <p>评价ID: {evaluation.id}</p>
                                             <p>菜品ID: {evaluation.dishId}</p>
                                             <p>用户ID: {evaluation.userId}</p>
                                             <p>评价内容: {evaluation.content}</p>
                                             <p>评分: {evaluation.rating}</p>
-                                            {evaluation.picture && (
-                                                <img src={evaluation.picture} alt={"用户未上传图片"} className="w-40 h-40" />
-                                            )}
+                                            {evaluation.picture && (<img src={evaluation.picture} alt={"用户未上传图片"}
+                                                                         className="w-40 h-40"/>)}
 
-                                            {(userInfo.userType === 'canteen_admin' || userInfo.userType === 'master_admin')&& (
+                                            {(userInfo.userType === 'canteen_admin' || userInfo.userType === 'master_admin') && (
                                                 <button
                                                     className="bg-red-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
                                                     onClick={() => handleDeleteEvaluation(evaluation.id)}
                                                 >
                                                     删除
-                                                </button>
-                                            )}
+                                                </button>)}
                                             {/* 其他评价信息... */}
-                                        </li>
-                                    ))}
+                                        </li>))}
                                 </ul>
                             </Panel>
 
-                            <Panel header="删除评价" key="2" className="bg-white hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">
+                            <Panel header="删除评价" key="2"
+                                   className="bg-white hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">
                                 {/* 删除评价 */}
                                 <p>评价ID:</p>
                                 <input
@@ -116,11 +102,9 @@ const EvaluationManagement = () => {
                                 </button>
                             </Panel>
                         </Collapse>
-                    </div>
-                )}
+                    </div>)}
             </div>
-        </>
-    );
+        </>);
 };
 
 export default EvaluationManagement;
