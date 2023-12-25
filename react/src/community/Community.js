@@ -5,6 +5,7 @@ import NavBar from "../components/NavBar";
 import PostApi from "../api/PostApi";
 import base64StringToDataURL from "../utils/Base64StringToDataURL";
 import {Link} from "react-router-dom";
+import UserApi from "../api/UserApi";
 
 const { Search } = Input;
 const onSearch = (value, _e, info) => console.log(info?.source, value);
@@ -53,6 +54,43 @@ const Community = () => {
         }
     };
 
+    const PostComponent = ({ post }) => {
+        const [username, setUsername] = useState('');
+
+        useEffect(() => {
+            // 获取帖子作者的用户名
+            const fetchUsername = async () => {
+                try {
+                    const username = await UserApi.getUserInfoById(post.userId);
+                    setUsername(username);
+                } catch (error) {
+                    console.error('Error fetching user info:', error);
+                }
+            };
+
+            fetchUsername();
+        }, [post.userId]);
+
+        return (
+            <div className="flex flex-col space-y-4 mb-5 m-4 w-full p-4">
+                <h2 className="text-2xl font-bold">
+                    <Link to={`/post/${post.id}`}>{post.title}</Link>
+                </h2>
+                <div className="flex justify-between items-center">
+                    <div className="flex space-x-4 items-center">
+                        <img src={post.picture} alt={post.title} className="w-20 h-20"/>
+                        <p className="text-gray-500">{post.content}</p>
+                    </div>
+                    <div className="text-gray-500 text-sm mt-2 text-right">
+                        <p>{username}</p>
+                        <p>{post.time}</p>
+                        <button onClick={() => handleLikeClick(post.id)}>{post.upvote} 点赞</button>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
 
     return (
         <>
@@ -63,24 +101,11 @@ const Community = () => {
                 <button className="text-right text-sm bg-blue-400 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">发帖</button>
             </a>
             <div >
-                <div className="flex flex-wrap items-start justify-start bg-white rounded-lg shadow-lg mx-32 mt-4">
+                <div className="bg-white rounded-lg shadow-lg mx-32 mt-4">
                     {postInfos.map((post, index) => (
-                            <div key={index} className="flex flex-col space-y-4 mb-5 m-4 w-full p-4">
-                                <h2 className="text-2xl font-bold">
-                                    <Link to={`/post/${post.id}`}>{post.title}</Link>
-                                </h2>
-                                <div className="flex justify-between items-center">
-                                    <div className="flex space-x-4 items-center">
-                                        <img src={post.picture} alt={post.title} className="w-12 h-12"/>
-                                        <p className="text-gray-500">{post.content}</p>
-                                    </div>
-                                    <div className="text-gray-500 text-sm mt-2 text-right">
-                                        <p>{post.username}</p>
-                                        <p>{post.time}</p>
-                                        <button onClick={() => handleLikeClick(post.id)}>{post.upvote} 点赞</button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div key={index} className="mb-4">
+                            <PostComponent post={post} />
+                        </div>
                     ))}
                 </div>
                 <Pagination className="text-center mt-4 mb-16" showQuickJumper defaultPageSize={pageSize} total={postInfos.length} onChange={onChange}/>
