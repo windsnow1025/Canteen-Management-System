@@ -42,7 +42,7 @@ const EvaluationManagement = () => {
 
         fetchEvaluationInfos();
         fetchUserInfo();
-    }, [evaluationInfos]);
+    }, []);
 
     const handleDeleteEvaluation = async (evaluationId) => {
         try {

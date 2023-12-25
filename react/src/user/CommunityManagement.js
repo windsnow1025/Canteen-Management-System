@@ -36,7 +36,7 @@ const CommunityManagement = () => {
         };
 
         fetchPostInfos();
-    }, [postInfos]);
+    }, []);
 
     const handlePostIdClick = async (postId) => {
         try {
