@@ -39,11 +39,11 @@ const PostDetail = () => {
                 const response = await CommentApi.getCommentInfosByPostId(postId);
                 setComments(response);
 
-                // 新增的代码，获取每个评论的用户信息
+                // 新增的代码，获取所有用户信息
+                const allUserInfos = await UserApi.getAllUserInfos();
                 const newUserNames = {};
-                for (const comment of response) {
-                    const userInfo = await UserApi.getUserInfoById(comment.userId);
-                    newUserNames[comment.userId] = userInfo.userName;
+                for (const userInfo of allUserInfos) {
+                    newUserNames[userInfo.id] = userInfo.username;
                 }
                 setUserNames(newUserNames);
             } catch (error) {
@@ -70,46 +70,46 @@ const PostDetail = () => {
 
     return (
         <>
-        <NavBar/>
-        <div>
-            {post && (
-                <div>
-                    <Collapse accordion>
-                        <Panel header="帖子" key="1" className="bg-white hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">
-                    <h1>{post.title}</h1>
-                    <p>{post.content}</p>
-                            {post.picture && (
-                                <img src={post.picture} alt={"用户未上传图片"} className="w-40 h-40" />
-                            )}
-                        </Panel>
-                        <Panel header="评论列表" key="2" className="bg-white hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">
-                    {/* 评论列表 */}
-                    <ul>
-                        {comments.map((comment) => (
-                            <li key={comment.id}>
-                                <p>用户名: {userNames[comment.userId]}</p>
-                                <p>评论内容: {comment.content}</p>
-                                {/* 其他评论信息... */}
-                            </li>
-                        ))}
-                    </ul>
-                        </Panel>
+            <NavBar/>
+            <div>
+                {post && (
+                    <div>
+                        <Collapse accordion>
+                            <Panel header="帖子" key="1" className="bg-white hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">
+                                <h1>{post.title}</h1>
+                                <p>{post.content}</p>
+                                {post.picture && (
+                                    <img src={post.picture} alt={"用户未上传图片"} className="w-40 h-40" />
+                                )}
+                            </Panel>
+                            <Panel header="评论列表" key="2" className="bg-white hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">
+                                {/* 评论列表 */}
+                                <ul>
+                                    {comments.map((comment) => (
+                                        <li key={comment.id}>
+                                            <p>用户名: {userNames[comment.userId]}</p>
+                                            <p>评论内容: {comment.content}</p>
+                                            {/* 其他评论信息... */}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </Panel>
 
-                        <Panel header="添加评论" key="3" className="bg-white hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">
-                    {/* 添加评论表单 */}
-                    <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                        type="text"
-                        placeholder="评论内容"
-                        value={newComment}
-                        onChange={(e) => setNewComment(e.target.value)}
-                    />
-                    <button className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" onClick={handleAddComment}>添加评论</button>
-                        </Panel>
-                    </Collapse>
-                </div>
-            )}
-        </div>
+                            <Panel header="添加评论" key="3" className="bg-white hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">
+                                {/* 添加评论表单 */}
+                                <input
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                                    type="text"
+                                    placeholder="评论内容"
+                                    value={newComment}
+                                    onChange={(e) => setNewComment(e.target.value)}
+                                />
+                                <button className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" onClick={handleAddComment}>添加评论</button>
+                            </Panel>
+                        </Collapse>
+                    </div>
+                )}
+            </div>
         </>
     );
 };
