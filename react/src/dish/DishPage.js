@@ -72,20 +72,21 @@ const DishPage = () => {
             <div>
                 <div className="grid grid-cols-3 gap-4 items-start justify-start bg-white rounded-lg shadow-lg mx-32 mt-4"> {/* Change this line */}
                     {currentDishes.map((dish, index) => (
-                        <a href={`/dish/${dish.id}`} key={index}>
+
                             <div className="flex flex-col space-y-4 mb-5 m-4 w-full p-4">
-                                <h2 className="text-2xl font-bold">{dish.dishName}</h2>
+                                <a href={`/dish/${dish.id}`} key={index}><h2 className="text-2xl font-bold">{dish.dishName}</h2></a>
                                 <div className="flex justify-between items-center">
                                     <div className="flex space-x-4 items-center">
                                         <img src={dish.picture} alt={"未上传菜品图片"} className="w-20 h-20" />
-                                        <p className="text-gray-500">{dish.cuisine}</p>
+
                                     </div>
                                     <div className="text-gray-500 text-sm mt-2 text-right">
+                                        <p className="text-gray-500">{dish.cuisine}</p>
                                         <p>{dish.price} 元</p>
                                     </div>
                                 </div>
                             </div>
-                        </a>
+
                     ))}
                 </div>
                 <Pagination className="text-center mt-4 mb-16" showQuickJumper defaultPageSize={pageSize} total={totalDishes} onChange={onChange} />
