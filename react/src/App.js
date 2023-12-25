@@ -18,6 +18,9 @@ import ModifyDishInfo from "./dish/ModifyDishInfo";
 import Announcement from "./canteen/Announcement";
 import ChatComponent from "./chat/ChatComponent";
 import AccountManagement from "./user/AccountManagement";
+import DishDetail from "./dish/DishDetail";
+import EvaluationManagement from "./user/EvaluationManagement";
+import CommunityManagement from "./user/CommunityManagement";
 
 function App() {
     return (
@@ -41,6 +44,9 @@ function App() {
                     <Route path="/announcement" element={<Announcement />} />
                     <Route path="/chat" element={<ChatComponent />} />
                     <Route path="/account-management" element={<AccountManagement />} />
+                    <Route path="/dish/:dishId" element={<DishDetail/>} />
+                    <Route path="/evaluation-management" element={<EvaluationManagement/>} />
+                    <Route path="/community-management" element={<CommunityManagement/>} />
                 </Routes>
             </div>
         </Router>

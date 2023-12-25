@@ -3,6 +3,7 @@ import {Link, useParams} from 'react-router-dom';
 import DishApi from "../api/DishApi";
 import NavBar from "../components/NavBar";
 import {Collapse} from 'antd';
+import {cropToSquareAndCompress} from "../utils/imageUtils";
 
 const {Panel} = Collapse;
 
@@ -112,16 +113,10 @@ const DishMaintenance = () => {
                                 <p>图片:</p>
                                 <input
                                     type="file"
-                                    onChange={(e) => {
+                                    onChange={async (e) => {
                                         const file = e.target.files[0];
-                                        const reader = new FileReader();
-
-                                        reader.onloadend = () => {
-                                            const base64String = reader.result.split(",")[1];
-                                            setNewDish({...newDish, picture: base64String});
-                                        };
-
-                                        reader.readAsDataURL(file);
+                                        const compressedBase64 = await cropToSquareAndCompress(file, 60);
+                                        setNewDish({...newDish, picture: compressedBase64});
                                     }}
                                 />
 

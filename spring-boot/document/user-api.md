@@ -1,13 +1,11 @@
 # User API
 
-## GET: user/info
+## GET: user/infos
 
 ## GET: user/info/{id}
 
 ### RETURN: 
     master
-
-## GET: user/infos
 
 ## DELETE: user/{id}
 
