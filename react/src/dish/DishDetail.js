@@ -87,7 +87,7 @@ const DishDetail = () => {
                     <p>价格: {dishInfo.price}</p>
                     <p>折扣率: {dishInfo.discount_rate}</p>
                     <p>菜系: {dishInfo.cuisine}</p>
-                    <img src={dishInfo.picture} alt={dishInfo.dishName} className="w-20 h-20" />
+                    <img src={dishInfo.picture} alt={"未上传菜品图片"} className="w-20 h-20" />
                     {/* 其他菜品信息... */}
                         </Panel>
 
