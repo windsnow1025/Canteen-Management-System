@@ -53,7 +53,7 @@ const ComplaintHandlingPage = () => {
             <div className="flex items-center justify-center h-screen">
         <div className="bg-white rounded-lg shadow-lg p-8 m-4 max-w-md">
             <h1 className="text-2xl font-bold mb-4">投诉信息处理</h1>
-            <div className="overflow-y-auto max-h-60">
+            <div className="overflow-y-auto max-h-80">
             <ul>
                 {complaintInfos.map((complaint) => (
                     <li key={complaint.id} className="mb-4">
