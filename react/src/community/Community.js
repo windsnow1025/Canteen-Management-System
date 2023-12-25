@@ -81,7 +81,7 @@ const Community = () => {
                         <img src={post.picture} alt={post.title} className="w-20 h-20"/>
                         <p className="text-gray-500">{post.content}</p>
                     </div>
-                    <div className="text-gray-500 text-sm mt-2 text-right">
+                    <div className="text-gray-500 text-sm mt-2 text-right mr-10">
                         <p>{username}</p>
                         <p>{post.time}</p>
                         <button onClick={() => handleLikeClick(post.id)}>{post.upvote} 点赞</button>
