@@ -187,6 +187,11 @@ public class JDBCHelper extends DatabaseHelper {
             VALUES ("5", "重辣苦锅", "20", "1.5", "一食堂菜", NULL)
             """;
 
+    private static final String INSERT_POST_1 = """
+            INSERT INTO post (user_id, time, title, content, picture)
+            VALUES ("2", "2023-12-25-12:20", "test", "this is a test", null)
+            """;
+
     private static JDBCHelper instance;
 
     private JDBCHelper() {
@@ -203,7 +208,7 @@ public class JDBCHelper extends DatabaseHelper {
     @Override
     protected void setDatabaseConfig() {
         dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-        dbVersion = "1.5.2";
+        dbVersion = "1.5.3";
 
         String schemaName = System.getenv("MYSQL_DATABASE");
         dbUrl = "jdbc:mysql://learn-mysql:3306/" + schemaName;
@@ -250,6 +255,7 @@ public class JDBCHelper extends DatabaseHelper {
             statement.executeUpdate(INSERT_DISH_3);
             statement.executeUpdate(INSERT_DISH_4);
             statement.executeUpdate(INSERT_DISH_5);
+            statement.executeUpdate(INSERT_POST_1);
         }
 
         super.onCreate();
