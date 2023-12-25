@@ -66,19 +66,12 @@ const DishDetail = () => {
             await EvaluationApi.addEvaluation(dishId, content, rating, picture);
             // 评价添加成功后，重新获取评价信息
             alert("评价成功");
-            const response = await EvaluationApi.getEvaluationInfosByDishId(dishId);
-            setEvaluationInfos(response);
             // 清空新评价的数据
             setNewEvaluation({ content: '', rating: 0, picture: null });
+            window.location.reload()
         } catch (error) {
             console.error('Error adding evaluation:', error);
         }
-    };
-
-    const handleFileChange = async (e) => {
-        const file = e.target.files[0];
-        const compressedBase64 = await cropToSquareAndCompress(file, 50);
-        setNewEvaluation({ ...newEvaluation, picture: compressedBase64 });
     };
 
     return (
@@ -135,7 +128,15 @@ const DishDetail = () => {
                     />
                     {/* 图片上传 */}
                     <p>图片:</p>
-                            <input type="file" onChange={handleFileChange} />
+                            <input
+                                type="file"
+                                onChange={async (e) => {
+                                    const file = e.target.files[0];
+                                    const compressedBase64 = await cropToSquareAndCompress(file, 30);
+                                    setNewEvaluation({ ...newEvaluation, picture: compressedBase64 });
+                                    alert("图片添加成功");
+                                }}
+                            />
                     {/* 图片上传等其他表单元素... */}
                     <button className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
                             onClick={handleAddEvaluation}>添加评价</button>
