@@ -48,7 +48,7 @@ export default class CanteenApi{
      */
     static async getCanteenInfos() {
         const token = localStorage.getItem('token');
-        const res = await axios.get("https://www.windsnow1025.com/learn/api/canteen/canteen/infos", {
+        const res = await axios.get(`${process.env.REACT_APP_HTTP_API_BASE_URL}/canteen/infos`, {
             headers: { Authorization: `${token}` }
         });
         const canteens = res.data;
@@ -69,7 +69,7 @@ export default class CanteenApi{
     */
     static async getCanteenInfoById(canteenId) {
         const token = localStorage.getItem('token');
-        const res = await axios.get(`https://www.windsnow1025.com/learn/api/canteen/canteen/info/${canteenId}`, {
+        const res = await axios.get(`${process.env.REACT_APP_HTTP_API_BASE_URL}/canteen/info/${canteenId}`, {
             headers: {
                 Authorization: `${token}`
             }
@@ -86,7 +86,7 @@ export default class CanteenApi{
      */
     static async createCanteen(canteenName, location, intro, businessHours, announcement) {
         const token = localStorage.getItem('token');
-        const res = await axios.post("https://www.windsnow1025.com/learn/api/canteen/canteen", {
+        const res = await axios.post(`${process.env.REACT_APP_HTTP_API_BASE_URL}/canteen`, {
             canteenName: canteenName,
             location: location,
             intro: intro,
@@ -107,7 +107,7 @@ export default class CanteenApi{
      */
     static async updateCanteenName(id,canteenName) {
         const token = localStorage.getItem('token');
-        const res = await axios.put("https://www.windsnow1025.com/learn/api/canteen/canteen/canteen-name", {
+        const res = await axios.put(`${process.env.REACT_APP_HTTP_API_BASE_URL}/canteen/canteen-name`, {
             id:id,
             canteenName: canteenName
         }, {
@@ -119,7 +119,7 @@ export default class CanteenApi{
 
     static async updateCanteenIntro(canteenName,intro) {
         const token = localStorage.getItem('token');
-        const res = await axios.put("https://www.windsnow1025.com/learn/api/canteen/canteen/intro", {
+        const res = await axios.put(`${process.env.REACT_APP_HTTP_API_BASE_URL}/canteen/intro`, {
             canteenName:canteenName,
             intro: intro
         }, {
@@ -130,7 +130,7 @@ export default class CanteenApi{
 
     static async updateCanteenLocation(canteenName,location) {
         const token = localStorage.getItem('token');
-        const res = await axios.put("https://www.windsnow1025.com/learn/api/canteen/canteen/location", {
+        const res = await axios.put(`${process.env.REACT_APP_HTTP_API_BASE_URL}/canteen/location`, {
             canteenName:canteenName,
             location: location
         }, {
@@ -141,7 +141,7 @@ export default class CanteenApi{
 
     static async updateCanteenBusinessHours(canteenName, businessHour) {
         const token = localStorage.getItem('token');
-        const res = await axios.put("https://www.windsnow1025.com/learn/api/canteen/canteen/business-hours", {
+        const res = await axios.put(`${process.env.REACT_APP_HTTP_API_BASE_URL}/canteen/business-hours`, {
             canteenName:canteenName,
             businessHour: businessHour
         }, {
@@ -152,7 +152,7 @@ export default class CanteenApi{
 
     static async updateCanteenAnnouncement(canteenName,announcement) {
         const token = localStorage.getItem('token');
-        const res = await axios.put("https://www.windsnow1025.com/learn/api/canteen/canteen/announcement", {
+        const res = await axios.put(`${process.env.REACT_APP_HTTP_API_BASE_URL}/canteen/announcement`, {
             canteenName:canteenName,
             announcement: announcement
         }, {
@@ -163,7 +163,7 @@ export default class CanteenApi{
 
     static async deleteCanteen(canteenId) {
         const token = localStorage.getItem('token');
-        const res = await axios.delete(`https://www.windsnow1025.com/learn/api/canteen/canteen/${canteenId}`, {
+        const res = await axios.delete(`${process.env.REACT_APP_HTTP_API_BASE_URL}/canteen/${canteenId}`, {
             headers: {
                 Authorization: `${token}`
             }

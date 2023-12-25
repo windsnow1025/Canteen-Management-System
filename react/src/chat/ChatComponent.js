@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react';
 import useWebSocket from './useWebSocket';
 import NavBar from "../components/NavBar";
 import UserApi from "../api/UserApi";
+
 const ChatComponent = () => {
   const [input, setInput] = useState('');
-  const { messages, sendMessage, connected } = useWebSocket('ws://www.windsnow1025.com:8082/chatroom');
+  const { messages, sendMessage, connected } = useWebSocket(`${process.env.REACT_APP_WEBSOCKET_API_BASE_URL}/chatroom`);
   const [userName, setUserName] = useState('');
   const handleSend = () => {
     const message = {
