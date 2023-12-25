@@ -75,7 +75,7 @@ const UserInfo = () => {
                                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">发布投票调查
                                             </button>
                                         </a>
-                                        <a>
+                                        <a href="/complaint-handling">
                                             <button
                                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">投诉信息处理
                                             </button>
