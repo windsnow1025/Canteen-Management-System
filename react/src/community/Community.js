@@ -4,6 +4,7 @@ import { Input, Space } from 'antd';
 import NavBar from "../components/NavBar";
 import PostApi from "../api/PostApi";
 import base64StringToDataURL from "../utils/Base64StringToDataURL";
+import {Link} from "react-router-dom";
 
 const { Search } = Input;
 const onSearch = (value, _e, info) => console.log(info?.source, value);
@@ -65,7 +66,9 @@ const Community = () => {
                 <div className="flex flex-wrap items-start justify-start bg-white rounded-lg shadow-lg mx-32 mt-4">
                     {postInfos.map((post, index) => (
                             <div key={index} className="flex flex-col space-y-4 mb-5 m-4 w-full p-4">
-                                <h2 className="text-2xl font-bold">{post.title}</h2>
+                                <h2 className="text-2xl font-bold">
+                                    <Link to={`/post/${post.id}`}>{post.title}</Link>
+                                </h2>
                                 <div className="flex justify-between items-center">
                                     <div className="flex space-x-4 items-center">
                                         <img src={post.picture} alt={post.title} className="w-12 h-12"/>

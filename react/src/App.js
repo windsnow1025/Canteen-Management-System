@@ -22,6 +22,7 @@ import DishDetail from "./dish/DishDetail";
 import EvaluationManagement from "./user/EvaluationManagement";
 import CommunityManagement from "./user/CommunityManagement";
 import CreatePost from "./community/CreatePost";
+import PostDetail from "./community/PostDetail";
 
 function App() {
     return (
@@ -49,6 +50,7 @@ function App() {
                     <Route path="/evaluation-management" element={<EvaluationManagement/>} />
                     <Route path="/community-management" element={<CommunityManagement/>} />
                     <Route path="/create-post" element={<CreatePost/>} />
+                    <Route path="/post/:postId" element={<PostDetail/>} />
                 </Routes>
             </div>
         </Router>
