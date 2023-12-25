@@ -24,6 +24,7 @@ import CommunityManagement from "./user/CommunityManagement";
 import CreatePost from "./community/CreatePost";
 import PostDetail from "./community/PostDetail";
 import ComplaintForm from "./user/ComplaintForm";
+import ComplaintHandlingPage from "./user/ComplaintHandlingPage";
 
 function App() {
     return (
@@ -53,6 +54,7 @@ function App() {
                     <Route path="/create-post" element={<CreatePost/>} />
                     <Route path="/post/:postId" element={<PostDetail/>} />
                     <Route path="/complaint-form" element={<ComplaintForm/>} />
+                    <Route path="/complaint-handling" element={<ComplaintHandlingPage/>} />
                 </Routes>
             </div>
         </Router>
