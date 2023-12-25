@@ -3,7 +3,7 @@ import axios from "axios";
 export default class DishApi{
     static async getAllDishInfos() {
         const token = localStorage.getItem('token');
-        const res = await axios.get("https://www.windsnow1025.com/learn/api/canteen/dish/infos", {
+        const res = await axios.get(`${process.env.REACT_APP_HTTP_API_BASE_URL}/dish/infos`, {
             headers: { Authorization: `${token}` }
         });
         return res.data;
@@ -11,7 +11,7 @@ export default class DishApi{
 
     static async getAllDishNames() {
         const token = localStorage.getItem('token');
-        const res = await axios.get("https://www.windsnow1025.com/learn/api/canteen/dish/names", {
+        const res = await axios.get(`${process.env.REACT_APP_HTTP_API_BASE_URL}/dish/names`, {
             headers: { Authorization: `${token}` }
         });
         return res.data;
@@ -20,7 +20,7 @@ export default class DishApi{
 
     static async getDishInfoByDishName(dishName) {
         const token = localStorage.getItem('token');
-        const res = await axios.get(`https://www.windsnow1025.com/learn/api/canteen/dish/info?dishName=${dishName}`, {
+        const res = await axios.get(`${process.env.REACT_APP_HTTP_API_BASE_URL}/dish/info?dishName=${dishName}`, {
             headers: { Authorization: `${token}` }
         });
         return res.data;
@@ -28,7 +28,7 @@ export default class DishApi{
 
     static async getDishInfoById(id) {
         const token = localStorage.getItem('token');
-        const res = await axios.get(`https://www.windsnow1025.com/learn/api/canteen/dish/info/${id}`, {
+        const res = await axios.get(`${process.env.REACT_APP_HTTP_API_BASE_URL}/dish/info/${id}`, {
             headers: { Authorization: `${token}` }
         });
         return res.data;
@@ -37,7 +37,7 @@ export default class DishApi{
     static async createDish(canteenId,dishName, price, discountRate, cuisine, picture) {
         const token = localStorage.getItem('token');
         const res = await axios.post(
-            "https://www.windsnow1025.com/learn/api/canteen/dish",
+            `${process.env.REACT_APP_HTTP_API_BASE_URL}/dish`,
             {
                 canteenId,
                 dishName,
@@ -59,7 +59,7 @@ export default class DishApi{
 
     static async updateDishCanteenId(id, canteenId) {
         const token = localStorage.getItem('token');
-        const res = await axios.put(`https://www.windsnow1025.com/learn/api/canteen/dish/canteen-id`, {
+        const res = await axios.put(`${process.env.REACT_APP_HTTP_API_BASE_URL}/dish/canteen-id`, {
             id:id,
             canteenId: canteenId
         }, {
@@ -70,7 +70,7 @@ export default class DishApi{
 
     static async updateDishName(id, dishName) {
         const token = localStorage.getItem('token');
-        const res = await axios.put(`https://www.windsnow1025.com/learn/api/canteen/dish/dish-name`, {
+        const res = await axios.put(`${process.env.REACT_APP_HTTP_API_BASE_URL}/dish/dish-name`, {
             id:id,
             dishName: dishName
         }, {
@@ -81,7 +81,7 @@ export default class DishApi{
 
     static async updateDishPrice(id, price) {
         const token = localStorage.getItem('token');
-        const res = await axios.put(`https://www.windsnow1025.com/learn/api/canteen/dish/price`, {
+        const res = await axios.put(`${process.env.REACT_APP_HTTP_API_BASE_URL}/dish/price`, {
             id:id,
             price: price
         }, {
@@ -92,7 +92,7 @@ export default class DishApi{
 
     static async updateDishDiscountRate(id, discountRate) {
         const token = localStorage.getItem('token');
-        const res = await axios.put(`https://www.windsnow1025.com/learn/api/canteen/dish/discount-rate`, {
+        const res = await axios.put(`${process.env.REACT_APP_HTTP_API_BASE_URL}/dish/discount-rate`, {
             id:id,
             discountRate: discountRate
         }, {
@@ -103,7 +103,7 @@ export default class DishApi{
 
     static async updateDishCuisine(id, cuisine) {
         const token = localStorage.getItem('token');
-        const res = await axios.put(`https://www.windsnow1025.com/learn/api/canteen/dish/cuisine`, {
+        const res = await axios.put(`${process.env.REACT_APP_HTTP_API_BASE_URL}/dish/cuisine`, {
             id:id,
             cuisine: cuisine
         }, {
@@ -114,7 +114,7 @@ export default class DishApi{
 
     static async updateDishPicture(id, picture) {
         const token = localStorage.getItem('token');
-        const res = await axios.put(`https://www.windsnow1025.com/learn/api/canteen/dish/picture`, {
+        const res = await axios.put(`${process.env.REACT_APP_HTTP_API_BASE_URL}/dish/picture`, {
             id:id,
             picture: picture
         }, {
@@ -125,7 +125,7 @@ export default class DishApi{
 
     static async deleteDish(id) {
         const token = localStorage.getItem('token');
-        const res = await axios.delete(`https://www.windsnow1025.com/learn/api/canteen/dish/${id}`, {
+        const res = await axios.delete(`${process.env.REACT_APP_HTTP_API_BASE_URL}/dish/${id}`, {
             headers: { Authorization: `${token}` }
         });
         return res.data;
