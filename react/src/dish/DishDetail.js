@@ -6,6 +6,7 @@ import NavBar from "../components/NavBar";
 import base64StringToDataURL from "../utils/Base64StringToDataURL";
 import {Collapse} from "antd";
 import {cropToSquareAndCompress} from "../utils/imageUtils";
+import UserApi from "../api/UserApi";
 
 const {Panel} = Collapse;
 
@@ -18,6 +19,7 @@ const DishDetail = () => {
         rating: 0,
         picture: null,
     });
+    const [userInfo, setUserInfo] = useState(null);
 
     useEffect(() => {
         // 获取菜品信息
@@ -55,9 +57,19 @@ const DishDetail = () => {
                 console.error('Error fetching evaluation infos:', error);
             }
         };
+        const fetchUserInfo = async () => {
+            try {
+                const userInfo = await UserApi.getUserInfo();
+                setUserInfo(userInfo);
+            } catch (error) {
+                console.error("Error fetching user info:", error);
+            }
+        };
+
 
         fetchDishInfo();
         fetchEvaluationInfos();
+        fetchUserInfo();
     }, [dishId]);
 
     const handleAddEvaluation = async () => {
@@ -74,6 +86,16 @@ const DishDetail = () => {
         }
     };
 
+    const handleDeleteEvaluation = async (evaluationId) => {
+        try {
+            await EvaluationApi.deleteEvaluationById(evaluationId);
+            window.location.reload()
+        } catch (error) {
+            console.error('Error adding evaluation:', error);
+        }
+    };
+
+
     return (
         <>
             <NavBar/>
@@ -84,6 +106,7 @@ const DishDetail = () => {
                         <Panel header="菜品" key="1" className="bg-white hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">
 
                         <h1>{dishInfo.dishName}</h1>
+                            <p>归属餐厅ID: {dishInfo.canteen_id}</p>
                     <p>价格: {dishInfo.price}</p>
                     <p>折扣率: {dishInfo.discount_rate}</p>
                     <p>菜系: {dishInfo.cuisine}</p>
@@ -94,10 +117,10 @@ const DishDetail = () => {
 
                         <Panel header="评价列表" key="2" className="bg-white hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">
                     {/* 评价列表 */}
-                    <h2>评价列表</h2>
                     <ul>
                         {evaluationInfos.map((evaluation) => (
                             <li key={evaluation.id}>
+                                <p>评价ID: {evaluation.id}</p>
                                 <p>用户ID: {evaluation.userId}</p>
                                 <p>评价内容: {evaluation.content}</p>
                                 <p>评分: {evaluation.rating}</p>
@@ -105,6 +128,14 @@ const DishDetail = () => {
                                     <img src={evaluation.picture} alt={"用户未上传图片"} className="w-40 h-40" />
                                 )}
 
+                                {(userInfo.userType === 'canteen_admin' || userInfo.userType === 'master_admin')&& (
+                                    <button
+                                        className="bg-red-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+                                        onClick={() => handleDeleteEvaluation(evaluation.id)}
+                                    >
+                                        删除
+                                    </button>
+                                )}
                                 {/* 其他评价信息... */}
                             </li>
                         ))}
