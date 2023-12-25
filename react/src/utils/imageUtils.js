@@ -26,15 +26,16 @@ const cropToSquareAndCompress = (file, targetSizeKB) => {
 
                 // 压缩
                 let quality = 1;
-                let compressedBase64 = canvas.toDataURL('image/jpeg', quality).split(',')[1];
+                let compressedBase64 = canvas.toDataURL('image/jpeg', quality);
 
                 // 限制最大大小
                 const maxSize = targetSizeKB * 1024;
                 while (compressedBase64.length > maxSize && quality > 0.1) {
                     // 根据需要调整质量或其他逻辑
                     quality -= 0.1;
-                    compressedBase64 = canvas.toDataURL('image/jpeg', quality).split(',')[1];
+                    compressedBase64 = canvas.toDataURL('image/jpeg', quality);
                 }
+                compressedBase64 = canvas.toDataURL('image/jpeg', quality).split(',')[1];
 
                 resolve(compressedBase64);
             };

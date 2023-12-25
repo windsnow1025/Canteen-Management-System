@@ -132,9 +132,8 @@ const DishDetail = () => {
                                 type="file"
                                 onChange={async (e) => {
                                     const file = e.target.files[0];
-                                    const compressedBase64 = await cropToSquareAndCompress(file, 30);
+                                    const compressedBase64 = await cropToSquareAndCompress(file, 60);
                                     setNewEvaluation({ ...newEvaluation, picture: compressedBase64 });
-                                    alert("图片添加成功");
                                 }}
                             />
                     {/* 图片上传等其他表单元素... */}
