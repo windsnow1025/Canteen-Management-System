@@ -26,7 +26,6 @@ const CommentComponent = ({ comment }) => {
     return (
         <div>
             {/* 显示用户ID和名字 */}
-            <p>用户ID: {comment.userId}</p>
             <p>用户名: {userName}</p>
             <p>评论内容: {comment.content}</p>
             {/* 其他评论信息... */}
