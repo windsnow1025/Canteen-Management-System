@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PostApi from '../api/PostApi';
 import CommentApi from '../api/CommentApi';
+import UserApi from '../api/UserApi';
 import NavBar from "../components/NavBar";
 import {Collapse} from "antd";
 import base64StringToDataURL from "../utils/Base64StringToDataURL";
@@ -13,6 +14,7 @@ const PostDetail = () => {
     const [post, setPost] = useState(null);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
+    const [userNames, setUserNames] = useState({});
 
     useEffect(() => {
         // 获取帖子信息
@@ -36,6 +38,14 @@ const PostDetail = () => {
             try {
                 const response = await CommentApi.getCommentInfosByPostId(postId);
                 setComments(response);
+
+                // 新增的代码，获取每个评论的用户信息
+                const newUserNames = {};
+                for (const comment of response) {
+                    const userInfo = await UserApi.getUserInfoById(comment.userId);
+                    newUserNames[comment.userId] = userInfo.userName;
+                }
+                setUserNames(newUserNames);
             } catch (error) {
                 console.error('Error fetching comment infos:', error);
             }
@@ -77,7 +87,7 @@ const PostDetail = () => {
                     <ul>
                         {comments.map((comment) => (
                             <li key={comment.id}>
-                                <p>用户ID: {comment.userId}</p>
+                                <p>用户名: {userNames[comment.userId]}</p>
                                 <p>评论内容: {comment.content}</p>
                                 {/* 其他评论信息... */}
                             </li>
