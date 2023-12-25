@@ -86,20 +86,22 @@ const UserInfo = () => {
                                             </button>
                                         </a>
                                     </div>)}
-                            <a href="/complaint-form">
-                                <div>
-                                    <br/>
-                                    <button
-                                        className="bg-red-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">投诉
-                                    </button>
-                                </div>
 
-                            </a>
-                                <div className="flex flex-col space-y-4 items-center justify-center mt-4">
-                                    <a href="/login">
+                            {userInfo.userType === 'consumer' && (
+                                <a href="/complaint-form">
+                                    <div>
+                                        <br/>
                                         <button
-                                            className="bg-red-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
-                                            type="button" onClick={UserApi.deleteToken}>
+                                            className="bg-red-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">投诉
+                                        </button>
+                                    </div>
+                                </a>
+                            )}
+                            <div className="flex flex-col space-y-4 items-center justify-center mt-4">
+                                <a href="/login">
+                                    <button
+                                        className="bg-red-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
+                                        type="button" onClick={UserApi.deleteToken}>
                                             退出登录
                                         </button>
                                     </a>
