@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import { Pagination } from 'antd';
 import { Input, Space } from 'antd';
-import NavBar from "./components/NavBar";
-import PostApi from "./api/PostApi";
-import base64StringToDataURL from "./utils/Base64StringToDataURL";
+import NavBar from "../components/NavBar";
+import PostApi from "../api/PostApi";
+import base64StringToDataURL from "../utils/Base64StringToDataURL";
 
 const { Search } = Input;
 const onSearch = (value, _e, info) => console.log(info?.source, value);
@@ -42,6 +42,7 @@ const Community = () => {
         try {
             // 调用 likePost 方法
             const response = await PostApi.likePost(postId);
+            alert("点赞成功");
 
             // 处理成功的情况，例如刷新界面等
             console.log(response);
@@ -57,6 +58,9 @@ const Community = () => {
             <NavBar/>
             <h1 className="text-center font-bold text-4xl mt-5 mb-10 my-auto">社区内容</h1>
             <Search className="w-1/3 mx-32" placeholder="输入搜索条件（帖子标题、内容、用户名）" onSearch={onSearch} enterButton />
+            <a href="/create-post">
+                <button className="text-right text-sm bg-blue-400 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">发帖</button>
+            </a>
             <div >
                 <div className="flex flex-wrap items-start justify-start bg-white rounded-lg shadow-lg mx-32 mt-4">
                     {postInfos.map((post, index) => (

@@ -3,7 +3,7 @@ import './index.css';
 import Register from "./user/Register";
 import Login from "./user/Login";
 import FirstPage from "./FirstPage";
-import Community from "./Community";
+import Community from "./community/Community";
 import ChangePassword from "./user/ChangePassword";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import UserInfo from "./user/UserInfo";
@@ -21,6 +21,7 @@ import AccountManagement from "./user/AccountManagement";
 import DishDetail from "./dish/DishDetail";
 import EvaluationManagement from "./user/EvaluationManagement";
 import CommunityManagement from "./user/CommunityManagement";
+import CreatePost from "./community/CreatePost";
 
 function App() {
     return (
@@ -47,6 +48,7 @@ function App() {
                     <Route path="/dish/:dishId" element={<DishDetail/>} />
                     <Route path="/evaluation-management" element={<EvaluationManagement/>} />
                     <Route path="/community-management" element={<CommunityManagement/>} />
+                    <Route path="/create-post" element={<CreatePost/>} />
                 </Routes>
             </div>
         </Router>
