@@ -42,7 +42,7 @@ const UserInfo = () => {
                                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-56">账号管理
                                             </button>
                                         </a>
-                                        <a>
+                                        <a href="/evaluation-management">
                                             <button
                                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-56">评价信息管理
                                             </button>

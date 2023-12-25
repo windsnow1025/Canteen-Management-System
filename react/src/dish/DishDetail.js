@@ -146,17 +146,24 @@ const DishDetail = () => {
                     {/* 添加评价表单 */}
                     <h2>添加评价</h2>
                     <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                         type="text"
                         placeholder="评价内容"
                         value={newEvaluation.content}
                         onChange={(e) => setNewEvaluation({ ...newEvaluation, content: e.target.value })}
                     />
-                    <input
-                        type="number"
-                        placeholder="评分（1-5）"
-                        value={newEvaluation.rating}
-                        onChange={(e) => setNewEvaluation({ ...newEvaluation, rating: parseInt(e.target.value, 10) })}
-                    />
+                            <select
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                                value={newEvaluation.rating}
+                                onChange={(e) => setNewEvaluation({ ...newEvaluation, rating: parseInt(e.target.value, 10) })}
+                            >
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+
                     {/* 图片上传 */}
                     <p>图片:</p>
                             <input

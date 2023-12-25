@@ -19,6 +19,7 @@ import Announcement from "./canteen/Announcement";
 import ChatComponent from "./chat/ChatComponent";
 import AccountManagement from "./user/AccountManagement";
 import DishDetail from "./dish/DishDetail";
+import EvaluationManagement from "./user/EvaluationManagement";
 
 function App() {
     return (
@@ -43,6 +44,7 @@ function App() {
                     <Route path="/chat" element={<ChatComponent />} />
                     <Route path="/account-management" element={<AccountManagement />} />
                     <Route path="/dish/:dishId" element={<DishDetail/>} />
+                    <Route path="/evaluation-management" element={<EvaluationManagement/>} />
                 </Routes>
             </div>
         </Router>
