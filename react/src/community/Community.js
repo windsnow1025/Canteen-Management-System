@@ -78,7 +78,7 @@ const Community = () => {
         useEffect(() => {
             const fetchUsername = async () => {
                 try {
-                    const username = await UserApi.getUserInfoById(post.userId);
+                    const username = await UserApi.getUserNameById(post.userId);
                     setUsername(username);
                 } catch (error) {
                     console.error('Error fetching user info:', error);
@@ -98,7 +98,7 @@ const Community = () => {
                         <p className="text-gray-500">{post.content}</p>
                     </div>
                     <div className="text-gray-500 text-sm mt-2 text-right mr-10">
-                        <p>{username}</p>
+                        <Link to={`/user/${post.userId}`}>{username}</Link>
                         <p>{post.time}</p>
                         <button onClick={() => handleLikeClick(post.id)}>{post.upvote} 点赞</button>
                     </div>

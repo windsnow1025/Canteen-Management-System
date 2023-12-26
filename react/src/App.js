@@ -25,6 +25,7 @@ import CreatePost from "./community/CreatePost";
 import PostDetail from "./community/PostDetail";
 import ComplaintForm from "./user/ComplaintForm";
 import ComplaintHandlingPage from "./user/ComplaintHandlingPage";
+import UserProfile from "./user/UserProfile";
 
 function App() {
     return (
@@ -55,6 +56,7 @@ function App() {
                     <Route path="/post/:postId" element={<PostDetail/>} />
                     <Route path="/complaint-form" element={<ComplaintForm/>} />
                     <Route path="/complaint-handling" element={<ComplaintHandlingPage/>} />
+                    <Route path="/user/:userId" element={<UserProfile />} />
                 </Routes>
             </div>
         </Router>

@@ -14,7 +14,7 @@ const CommentComponent = ({ comment }) => {
         // 获取用户信息
         const fetchUserInfo = async () => {
             try {
-                const username = await UserApi.getUserInfoById(comment.userId);
+                const username = await UserApi.getUserNameById(comment.userId);
                 setUserName(username);
             } catch (error) {
                 console.error('Error fetching user info:', error);
