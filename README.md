@@ -37,10 +37,11 @@ A Canteen Management Fullstack Web App
 
 ## Tech Stack
 
-- 前端：React (Create-React-App)
-- 后端: Spring-Boot (RESTFul API + WebSocket), MySQL
+- Front End：React (Create-React-App), Tailwind CSS
+- Back End: Spring-Boot (RESTFul API + WebSocket), Servlet (Listener, Filter), MySQL
+- Deployment: Docker Compose
 
-## 文件结构
+## File Structure
 
 ```
 ├── react/                # react
@@ -57,7 +58,7 @@ A Canteen Management Fullstack Web App
 ## Source Code & Demo
 
 - Source Code: [https://github.com/windsnow1025/Canteen-Management-System](https://github.com/windsnow1025/Canteen-Management-System)
-- Demo:
+- Demo: [https://learn.windsnow1025.com](https://learn.windsnow1025.com)
 
 ## API文档
 
@@ -100,11 +101,7 @@ API文档请参考：`/sprint-boot/document/`
     - 更新投票结果
     - 删除投票活动
 
-## Reference
+## References
 
 - React Docs：[https://react.dev/](https://react.dev/)
 - Spring-Boot Docs：[https://spring.io/](https://spring.io/)
-
-## Team
-
-- 
