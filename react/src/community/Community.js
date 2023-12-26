@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import { Pagination } from 'antd';
-import { Input, Space } from 'antd';
+import { Pagination, Button } from 'antd';
+import { Input } from 'antd';
 import NavBar from "../components/NavBar";
 import PostApi from "../api/PostApi";
 import base64StringToDataURL from "../utils/Base64StringToDataURL";
@@ -12,6 +12,8 @@ const Community = () => {
     const [postInfos, setPostInfos] = useState([]);
     const [filteredPostInfos, setFilteredPostInfos] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [sortTime, setSortTime] = useState(true); // true for ascending, false for descending
+    const [sortLikes, setSortLikes] = useState(true); // true for ascending, false for descending
     const pageSize = 5;
 
     useEffect(() => {
@@ -37,6 +39,22 @@ const Community = () => {
         const lowerCaseValue = value.toLowerCase();
         const filtered = postInfos.filter(post => post.title.toLowerCase().includes(lowerCaseValue) || post.content.toLowerCase().includes(lowerCaseValue));
         setFilteredPostInfos(filtered);
+    };
+
+    const sortByTime = () => {
+        const sorted = [...filteredPostInfos].sort((a, b) => {
+            const aTime = new Date(a.time.replace(/-/g, '/'));
+            const bTime = new Date(b.time.replace(/-/g, '/'));
+            return sortTime ? aTime - bTime : bTime - aTime;
+        });
+        setFilteredPostInfos(sorted);
+        setSortTime(!sortTime); // reverse the sort direction
+    };
+
+    const sortByLikes = () => {
+        const sorted = [...filteredPostInfos].sort((a, b) => sortLikes ? a.upvote - b.upvote : b.upvote - a.upvote);
+        setFilteredPostInfos(sorted);
+        setSortLikes(!sortLikes); // reverse the sort direction
     };
 
     const onChange = (pageNumber) => {
@@ -93,19 +111,30 @@ const Community = () => {
         <>
             <NavBar/>
             <h1 className="text-center font-bold text-4xl mt-5 mb-10 my-auto">社区内容</h1>
-            <Search className="w-1/3 mx-32" placeholder="输入搜索条件（帖子标题、内容、用户名）" onSearch={onSearch} enterButton />
-            <a href="/create-post">
-                <button className="text-right text-sm bg-blue-400 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">发帖</button>
-            </a>
-            <div >
+            <div className="flex justify-between items-center mx-32">
+                <Search className="w-1/3" placeholder="输入搜索条件（帖子标题、内容、用户名）" onSearch={onSearch}
+                        enterButton/>
+                <div className="flex space-x-4">
+                    <Button onClick={sortByTime}>按时间{sortTime ? "升序" : "降序"}</Button>
+                    <Button onClick={sortByLikes}>按点赞数{sortLikes ? "升序" : "降序"}</Button>
+                    <a href="/create-post" className="mr-10">
+                        <button
+                            className="text-sm bg-blue-400 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">发帖
+                        </button>
+                    </a>
+                </div>
+            </div>
+
+            <div>
                 <div className="bg-white rounded-lg shadow-lg mx-32 mt-4">
                     {filteredPostInfos.map((post, index) => (
                         <div key={index} className="mb-4">
-                            <PostComponent post={post} />
+                        <PostComponent post={post}/>
                         </div>
                     ))}
                 </div>
-                <Pagination className="text-center mt-4 mb-16" showQuickJumper defaultPageSize={pageSize} total={filteredPostInfos.length} onChange={onChange}/>
+                <Pagination className="text-center mt-4 mb-16" showQuickJumper defaultPageSize={pageSize}
+                            total={filteredPostInfos.length} onChange={onChange}/>
             </div>
         </>
     )
