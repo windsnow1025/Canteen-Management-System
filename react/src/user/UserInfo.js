@@ -65,7 +65,7 @@ const UserInfo = () => {
                                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">活动公告发布
                                             </button>
                                         </a>
-                                        <a>
+                                        <a href="/vote-management">
                                             <button
                                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">发布投票调查
                                             </button>
