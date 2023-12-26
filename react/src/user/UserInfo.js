@@ -60,11 +60,6 @@ const UserInfo = () => {
                                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">菜品维护
                                             </button>
                                         </a>
-                                        <a>
-                                            <button
-                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">食堂评价处理
-                                            </button>
-                                        </a>
                                         <a href="/announcement">
                                             <button
                                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">活动公告发布
@@ -78,11 +73,6 @@ const UserInfo = () => {
                                         <a href="/complaint-handling">
                                             <button
                                                 className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">投诉信息处理
-                                            </button>
-                                        </a>
-                                        <a>
-                                            <button
-                                                className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full">发布最新推荐菜品
                                             </button>
                                         </a>
                                     </div>)}
