@@ -27,6 +27,7 @@ import ComplaintForm from "./user/ComplaintForm";
 import ComplaintHandlingPage from "./user/ComplaintHandlingPage";
 import UserProfile from "./user/UserProfile";
 import VoteManagement from "./vote/VoteManagement";
+import Vote from "./vote/Vote";
 
 function App() {
     return (
@@ -57,6 +58,7 @@ function App() {
                     <Route path="/complaint-form" element={<ComplaintForm/>} />
                     <Route path="/complaint-handling" element={<ComplaintHandlingPage/>} />
                     <Route path="/vote-management" element={<VoteManagement/>} />
+                    <Route path="/vote/" element={<Vote/>} />
                     <Route path="/user/:userId" element={<UserProfile />} />
                     <Route path="/chat/:userName" element={<ChatComponent />} />
                 </Routes>

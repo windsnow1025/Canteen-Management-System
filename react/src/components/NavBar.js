@@ -26,6 +26,7 @@ class NavBar extends Component {
                     <a href="/" className="px-4 py-2 block font-bold">首页</a>
                     <a href="/community" className="px-4 py-2 block font-bold">社区</a>
                     <a href="/dish" className="px-4 py-2 block font-bold">菜品</a>
+                    <a href="/vote" className="px-4 py-2 block font-bold">投票</a>
                     <a href="/canteen" className="px-4 py-2 block font-bold">食堂信息</a>
                 </div>
                 <div className="w-1/6 flex text-center items-center">
