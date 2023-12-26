@@ -39,8 +39,8 @@ function App() {
                     <Route path="/community" element={<Community />} />
                     <Route path="/" element={<FirstPage />} />
                     <Route path="/user-info" element={<UserInfo />} />
-                    <Route path="canteen-info" element={<CanteenInfo />} />
-                    <Route path="canteen" element={<Canteen />} />
+                    <Route path="/canteen-info" element={<CanteenInfo />} />
+                    <Route path="/canteen" element={<Canteen />} />
                     <Route path="/certain-canteen-info" element={<CertainCanteenInfo />} />
                     <Route path="/modify-canteen-info" element={<ModifyCanteenInfo />} />
                     <Route path="/canteen-add" element={<AddCanteen />} />
