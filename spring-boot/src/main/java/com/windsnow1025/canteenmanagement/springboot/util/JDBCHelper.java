@@ -15,7 +15,7 @@ public class JDBCHelper extends DatabaseHelper {
                 username VARCHAR(255) NOT NULL UNIQUE,
                 password VARCHAR(255) NOT NULL,
                 user_type VARCHAR(255) NOT NULL,
-                user_level VARCHAR(255),
+                user_level FLOAT,
                 canteen_id INT,
                 PRIMARY KEY (id)
             )
@@ -125,16 +125,16 @@ public class JDBCHelper extends DatabaseHelper {
 
     private static final String INSERT_MASTER = """
             INSERT INTO user (username, password, user_type, user_level, canteen_id)
-            VALUES ("master","mpassword","master_admin","MAX","-1")
+            VALUES ("master","mpassword","master_admin",100,-1)
             """;
 
     private static final String INSERT_ADMIN = """
             INSERT INTO user (username, password, user_type, user_level, canteen_id)
-            VALUES ("admin","apassword","canteen_admin","99","1")
+            VALUES ("admin","apassword","canteen_admin",99,1)
             """;
     private static final String INSERT_CONSUMER = """
             INSERT INTO user (username, password, user_type, user_level, canteen_id)
-            VALUES ("consumer","cpassword","consumer","0","0")
+            VALUES ("consumer","cpassword","consumer",0,0)
             """;
 
     private static final String INSERT_CANTEEN_1 = """
@@ -164,32 +164,32 @@ public class JDBCHelper extends DatabaseHelper {
 
     private static final String INSERT_DISH_1 = """
             INSERT INTO dish (canteen_id, dish_name, price, discount_rate, cuisine, picture)
-            VALUES ("1", "麻辣香锅(甜辣)", "200", "1", "本帮菜", NULL)
+            VALUES (1, "麻辣香锅(甜辣)", 200, 1, "本帮菜", NULL)
             """;
 
     private static final String INSERT_DISH_2 = """
             INSERT INTO dish (canteen_id, dish_name, price, discount_rate, cuisine, picture)
-            VALUES ("2", "不辣臭锅", "2", "0.5", "地府菜", NULL)
+            VALUES (2, "不辣臭锅", 2, 0.5, "地府菜", NULL)
             """;
 
     private static final String INSERT_DISH_3 = """
             INSERT INTO dish (canteen_id, dish_name, price, discount_rate, cuisine, picture)
-            VALUES ("3", "微辣酸锅", "20", "0.7", "天府菜", NULL)
+            VALUES (3, "微辣酸锅", 20, 0.7, "天府菜", NULL)
             """;
 
     private static final String INSERT_DISH_4 = """
             INSERT INTO dish (canteen_id, dish_name, price, discount_rate, cuisine, picture)
-            VALUES ("4", "中辣甜锅", "30", "0.8", "火星菜", NULL)
+            VALUES (4, "中辣甜锅", 30, 0.8, "火星菜", NULL)
             """;
 
     private static final String INSERT_DISH_5 = """
             INSERT INTO dish (canteen_id, dish_name, price, discount_rate, cuisine, picture)
-            VALUES ("5", "重辣苦锅", "20", "1.5", "一食堂菜", NULL)
+            VALUES (5, "重辣苦锅", 20, 1.5, "一食堂菜", NULL)
             """;
 
     private static final String INSERT_POST_1 = """
             INSERT INTO post (user_id, time, title, content, picture)
-            VALUES ("2", "2023-12-25-12:20", "test", "this is a test", null)
+            VALUES (2, "2023-12-25-12:20", "test", "this is a test", null)
             """;
 
     private static JDBCHelper instance;
@@ -208,7 +208,7 @@ public class JDBCHelper extends DatabaseHelper {
     @Override
     protected void setDatabaseConfig() {
         dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-        dbVersion = "1.5.3";
+        dbVersion = "1.6.0";
 
         String schemaName = System.getenv("MYSQL_DATABASE");
         dbUrl = "jdbc:mysql://learn-mysql:3306/" + schemaName;

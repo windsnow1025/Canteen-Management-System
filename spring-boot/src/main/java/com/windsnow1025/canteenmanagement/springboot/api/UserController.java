@@ -88,10 +88,13 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> signupUser(@RequestBody Map<String, String> request) {
         try {
             int canteenId = 0;
+            float userLevel = 0;
             String username = request.get("username");
             String password = request.get("password");
             String userType = request.get("userType");
-            String userLevel = request.get("userLevel");
+            if (request.get("userLevel") != null) {
+                userLevel = Float.parseFloat(request.get("userLevel"));
+            }
             if (request.get("canteenId") != null) {
                 canteenId = Integer.parseInt(request.get("canteenId"));
             }
@@ -143,7 +146,10 @@ public class UserController {
     @PutMapping("/level")
     public ResponseEntity<Map<String, Object>> updateLevel(@RequestHeader("Authorization") String token, @RequestBody Map<String, String> request) {
         try {
-            String userLevel = request.get("userLevel");
+            float userLevel = 0;
+            if (request.get("userLevel") != null) {
+                userLevel = Float.parseFloat(request.get("userLevel"));
+            }
             boolean result = userLogic.updateLevel(token, userLevel);
             if (result) {
                 return ResponseEntity.ok(Map.of("status", "Success", "message", "UpdateLevel successful"));

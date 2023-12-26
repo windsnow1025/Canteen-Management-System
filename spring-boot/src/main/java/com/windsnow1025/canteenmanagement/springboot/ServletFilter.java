@@ -10,7 +10,7 @@ import java.util.*;
 
 import static com.windsnow1025.canteenmanagement.springboot.util.RequestUtil.*;
 
-//@WebFilter(filterName = "ServletFilter", urlPatterns = "/*")
+@WebFilter(filterName = "ServletFilter", urlPatterns = "/*")
 public class ServletFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
         System.out.println("ServletFilter init.");
@@ -55,8 +55,6 @@ public class ServletFilter implements Filter {
                 chain.doFilter(wrappedRequest, response);
                 return;
             }
-
-            chain.doFilter(request, response);
         }
 
         chain.doFilter(request, response);
