@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
-import DishApi from "../../service/DishApi";
+import DishAPI from "../../service/DishAPI";
 import NavBar from "../../components/NavBar";
 import {Collapse} from 'antd';
 import {cropToSquareAndCompress} from "../../utils/imageUtils";
@@ -22,7 +22,7 @@ const DishMaintenance = () => {
 
     const fetchDishes = async () => {
         try {
-            const response = await DishApi.getAllDishInfos();
+            const response = await DishAPI.getAllDishInfos();
             setDishes(response);
         } catch (error) {
             console.error('Error fetching dishes:', error);
@@ -32,7 +32,7 @@ const DishMaintenance = () => {
 
     const handleDeleteDish = async (id) => {
         try {
-            await DishApi.deleteDish(id);
+            await DishAPI.deleteDish(id);
             fetchDishes();
         } catch (error) {
             console.error('Error deleting dish:', error);
@@ -43,7 +43,7 @@ const DishMaintenance = () => {
         try {
             const {dishName, price, discountRate, cuisine, picture} = newDish;
 
-            await DishApi.createDish(canteenId, dishName, price, discountRate, cuisine, picture);
+            await DishAPI.createDish(canteenId, dishName, price, discountRate, cuisine, picture);
 
             // 其他逻辑，例如清空表单或刷新数据
         } catch (error) {

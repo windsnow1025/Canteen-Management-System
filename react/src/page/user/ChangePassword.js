@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import NavBar from "../../components/NavBar";
-import UserApi from "../../service/UserApi";
+import UserAPI from "../../service/UserAPI";
 
 const ChangePassword = () => {
     const [password, setPassword] = useState('');
@@ -8,7 +8,7 @@ const ChangePassword = () => {
 
     const handleSignIn = async () => {
         try {
-            const message = await UserApi.updatePassword(password);
+            const message = await UserAPI.updatePassword(password);
             // 在这里处理修改成功后的逻辑
             setMessage(message);
         } catch (error) {

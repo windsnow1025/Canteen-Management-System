@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ComplaintApi from '../../service/ComplaintApi';
+import ComplaintAPI from '../../service/ComplaintAPI';
 import NavBar from "../../components/NavBar";
 
 const ComplaintForm = () => {
@@ -9,7 +9,7 @@ const ComplaintForm = () => {
     const handleAddComplaint = async () => {
         try {
             // 调用 API 提交新的投诉
-            await ComplaintApi.addComplaint(canteenId, detail);
+            await ComplaintAPI.addComplaint(canteenId, detail);
             alert('投诉提交成功！');
             // 清空表单数据
             setCanteenId('');

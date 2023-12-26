@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from "../../components/NavBar";
-import VoteApi from "../../service/VoteApi";
+import VoteAPI from "../../service/VoteAPI";
 
 const VoteManagement = () => {
     const [votes, setVotes] = useState([]);
@@ -9,7 +9,7 @@ const VoteManagement = () => {
     useEffect(() => {
         const fetchVotes = async () => {
             try {
-                const response = await VoteApi.getAllVoteInfos();
+                const response = await VoteAPI.getAllVoteInfos();
                 setVotes(response);
             } catch (error) {
                 console.error('Error fetching votes:', error);
@@ -20,8 +20,8 @@ const VoteManagement = () => {
 
     const handleDelete = async (id) => {
         try {
-            await VoteApi.deleteVoteById(id);
-            const response = await VoteApi.getAllVoteInfos();
+            await VoteAPI.deleteVoteById(id);
+            const response = await VoteAPI.getAllVoteInfos();
             setVotes(response);
         } catch (error) {
             console.error('Error deleting vote:', error);
@@ -31,8 +31,8 @@ const VoteManagement = () => {
     const handleAdd = async (event) => {
         event.preventDefault();
         try {
-            await VoteApi.addVote(newVote.canteenId, newVote.title);
-            const response = await VoteApi.getAllVoteInfos();
+            await VoteAPI.addVote(newVote.canteenId, newVote.title);
+            const response = await VoteAPI.getAllVoteInfos();
             setVotes(response);
             setNewVote({ canteenId: '', title: '' });
         } catch (error) {

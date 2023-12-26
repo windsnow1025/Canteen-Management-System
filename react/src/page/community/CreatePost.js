@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Input, Button } from 'antd';
-import PostApi from '../../service/PostApi';
+import PostAPI from '../../service/PostAPI';
 import NavBar from '../../components/NavBar';
 import {cropToSquareAndCompress} from "../../utils/imageUtils";
 
@@ -11,7 +11,7 @@ const CreatePost = () => {
 
     const onFinish = async (values) => {
         try {
-            await PostApi.createPost(values);
+            await PostAPI.createPost(values);
             // 发帖成功后，跳转到帖子列表页面或其他目标页面
             window.location.href='/community';
         } catch (error) {

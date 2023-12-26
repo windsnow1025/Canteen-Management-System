@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default class EvaluationApi {
+export default class EvaluationAPI {
     // 获取所有评价信息
     static async getAllEvaluationInfos() {
         const token = localStorage.getItem('token');

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default class VoteApi {
+export default class VoteAPI {
     static async getAllVoteInfos() {
         const token = localStorage.getItem('token');
         const res = await axios.get(`${process.env.REACT_APP_HTTP_API_BASE_URL}/vote/infos`, {

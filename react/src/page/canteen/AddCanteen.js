@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import CanteenApi from "../../service/CanteenApi";
+import CanteenAPI from "../../service/CanteenAPI";
 import NavBar from "../../components/NavBar";
 
 const AddCanteen = () => {
@@ -13,7 +13,7 @@ const AddCanteen = () => {
     // 处理添加餐厅
     const handleCanteenAdd = async () => {
         try {
-            await CanteenApi.createCanteen(newCanteenName, newLocation,newIntro,newBusinessHours,newAnnouncement);
+            await CanteenAPI.createCanteen(newCanteenName, newLocation,newIntro,newBusinessHours,newAnnouncement);
             navigateTo('/canteen-info');
         } catch (error) {
             console.error("Error adding canteen:", error);

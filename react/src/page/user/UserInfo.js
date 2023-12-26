@@ -1,6 +1,6 @@
 import NavBar from "../../components/NavBar";
 import React, {useEffect, useState} from "react";
-import UserApi from "../../service/UserApi";
+import UserAPI from "../../service/UserAPI";
 
 const UserInfo = () => {
     const [userInfo, setUserInfo] = useState(null);
@@ -8,7 +8,7 @@ const UserInfo = () => {
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                const userInfo = await UserApi.getUserInfo();
+                const userInfo = await UserAPI.getUserInfo();
                 setUserInfo(userInfo);
             } catch (error) {
                 console.error("Error fetching user info:", error);
@@ -91,7 +91,7 @@ const UserInfo = () => {
                                 <a href="/login">
                                     <button
                                         className="bg-red-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
-                                        type="button" onClick={UserApi.deleteToken}>
+                                        type="button" onClick={UserAPI.deleteToken}>
                                             退出登录
                                         </button>
                                     </a>
@@ -108,7 +108,7 @@ const UserInfo = () => {
                                 <a href="/login">
                                     <button
                                         className="bg-red-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded w-full"
-                                        type="button" onClick={UserApi.deleteToken}>
+                                        type="button" onClick={UserAPI.deleteToken}>
                                         退出登录
                                     </button>
                                 </a>

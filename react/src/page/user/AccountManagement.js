@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import UserApi from "../../service/UserApi";
+import UserAPI from "../../service/UserAPI";
 import NavBar from "../../components/NavBar";
 import { Collapse } from 'antd';
 
@@ -20,7 +20,7 @@ const AccountManagement = () => {
 
     const fetchUsers = async () => {
         try {
-            const response = await UserApi.getAllUserInfos();
+            const response = await UserAPI.getAllUserInfos();
             setUsers(response);
         } catch (error) {
             console.error('Error fetching users:', error);
@@ -29,7 +29,7 @@ const AccountManagement = () => {
 
     const handleUpdateUserType = async () => {
         try {
-            await UserApi.updateUserType(newUserId, newUserType, newCanteenId);
+            await UserAPI.updateUserType(newUserId, newUserType, newCanteenId);
             fetchUsers();
             alert("更新成功");
         } catch (error) {
@@ -39,7 +39,7 @@ const AccountManagement = () => {
 
     const handleDeleteUser = async () => {
         try {
-            await UserApi.deleteUserById(deleteUserId);
+            await UserAPI.deleteUserById(deleteUserId);
             fetchUsers();
             alert("删除成功");
         } catch (error) {

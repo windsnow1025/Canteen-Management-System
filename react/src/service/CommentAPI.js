@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default class CommentApi {
+export default class CommentAPI {
     // 获取帖子的所有评论信息
     static async getCommentInfosByPostId(postId) {
         const token = localStorage.getItem('token');

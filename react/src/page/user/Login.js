@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import NavBar from "../../components/NavBar";
-import UserApi from "../../service/UserApi";
+import UserAPI from "../../service/UserAPI";
 
 
 const Login = () => {
@@ -10,7 +10,7 @@ const Login = () => {
 
     const handleSignIn = async () => {
         try {
-            const token = await UserApi.signIn(username, password);
+            const token = await UserAPI.signIn(username, password);
             // 在这里处理登录成功后的逻辑，比如保存token到本地存储或进行页面跳转等操作
             //setMessage(token);
             localStorage.setItem('token', token);

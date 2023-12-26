@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default class UserApi {
+export default class UserAPI {
     static async signIn(username, password) {
         const res = await axios.post(`${process.env.REACT_APP_HTTP_API_BASE_URL}/user/signin`, {
             username:username,

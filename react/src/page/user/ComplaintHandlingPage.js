@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ComplaintApi from '../../service/ComplaintApi';
+import ComplaintAPI from '../../service/ComplaintAPI';
 import NavBar from "../../components/NavBar";
 
 const ComplaintHandlingPage = () => {
@@ -9,7 +9,7 @@ const ComplaintHandlingPage = () => {
         // 获取所有投诉信息
         const fetchComplaintInfos = async () => {
             try {
-                const response = await ComplaintApi.getAllComplaintInfos();
+                const response = await ComplaintAPI.getAllComplaintInfos();
                 setComplaintInfos(response);
             } catch (error) {
                 console.error('Error fetching complaint infos:', error);
@@ -22,10 +22,10 @@ const ComplaintHandlingPage = () => {
     const handleUpdateComplaintResult = async (complaintId, result) => {
         try {
             // 更新投诉结果
-            await ComplaintApi.updateComplaintResult(complaintId, result);
+            await ComplaintAPI.updateComplaintResult(complaintId, result);
             alert('投诉结果更新成功！');
             // 重新获取投诉信息列表
-            const response = await ComplaintApi.getAllComplaintInfos();
+            const response = await ComplaintAPI.getAllComplaintInfos();
             setComplaintInfos(response);
         } catch (error) {
             console.error('Error updating complaint result:', error);
@@ -36,10 +36,10 @@ const ComplaintHandlingPage = () => {
     const handleDeleteComplaint = async (complaintId) => {
         try {
             // 删除投诉信息
-            await ComplaintApi.deleteComplaintById(complaintId);
+            await ComplaintAPI.deleteComplaintById(complaintId);
             alert('投诉信息删除成功！');
             // 重新获取投诉信息列表
-            const response = await ComplaintApi.getAllComplaintInfos();
+            const response = await ComplaintAPI.getAllComplaintInfos();
             setComplaintInfos(response);
         } catch (error) {
             console.error('Error deleting complaint:', error);

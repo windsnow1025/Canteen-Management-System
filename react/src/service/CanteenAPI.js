@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default class CanteenApi {
+export default class CanteenAPI {
 
     /*
 [

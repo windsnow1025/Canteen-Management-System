@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import CanteenApi from "../../service/CanteenApi";
+import CanteenAPI from "../../service/CanteenAPI";
 import {Flex} from "antd";
 import {Link} from "react-router-dom";
 import NavBar from "../../components/NavBar";
@@ -10,7 +10,7 @@ const Canteen =()=>{
     useEffect(() => {
         const fetchCanteenNames = async () => {
             try {
-                const canteens = await CanteenApi.getCanteenInfos();
+                const canteens = await CanteenAPI.getCanteenInfos();
                 setCanteens(canteens);
             } catch (error) {
                 console.error("Error fetching canteen names:", error);

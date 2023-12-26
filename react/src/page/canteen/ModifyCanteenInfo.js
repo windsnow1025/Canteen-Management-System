@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Link, useLocation} from 'react-router-dom';
-import CanteenApi from "../../service/CanteenApi";
+import CanteenAPI from "../../service/CanteenAPI";
 import NavBar from "../../components/NavBar";
 
 const ModifyCanteenInfo = () => {
@@ -17,9 +17,9 @@ const ModifyCanteenInfo = () => {
     const handleCanteenNameChange = async () => {
         try {
             // 更新食堂名称
-            await CanteenApi.updateCanteenName(id, newCanteenName);
+            await CanteenAPI.updateCanteenName(id, newCanteenName);
             // 更新完数据后重新获取食堂信息
-            const info = await CanteenApi.getCanteenInfoById(id);
+            const info = await CanteenAPI.getCanteenInfoById(id);
             setCanteenInfo(info);
             alert('已成功修改！');
         } catch (error) {
@@ -30,36 +30,36 @@ const ModifyCanteenInfo = () => {
 
     // 处理简介修改
     const handleIntroChange = async () => {
-        await CanteenApi.updateCanteenIntro(newCanteenName, newIntro);
+        await CanteenAPI.updateCanteenIntro(newCanteenName, newIntro);
         // 更新完数据后重新获取食堂信息
-        const info = await CanteenApi.getCanteenInfoById(id);
+        const info = await CanteenAPI.getCanteenInfoById(id);
         setCanteenInfo(info);
         alert('已成功修改！');
     };
 
     // 处理位置修改
     const handleLocationChange = async () => {
-        await CanteenApi.updateCanteenLocation(newCanteenName, newLocation);
+        await CanteenAPI.updateCanteenLocation(newCanteenName, newLocation);
         // 更新完数据后重新获取食堂信息
-        const info = await CanteenApi.getCanteenInfoById(id);
+        const info = await CanteenAPI.getCanteenInfoById(id);
         setCanteenInfo(info);
         alert('已成功修改！');
     };
 
     // 处理营业时间修改
     const handleBusinessHoursChange = async () => {
-        await CanteenApi.updateCanteenBusinessHours(newCanteenName, newBusinessHours);
+        await CanteenAPI.updateCanteenBusinessHours(newCanteenName, newBusinessHours);
         // 更新完数据后重新获取食堂信息
-        const info = await CanteenApi.getCanteenInfoById(id);
+        const info = await CanteenAPI.getCanteenInfoById(id);
         setCanteenInfo(info);
         alert('已成功修改！');
     };
 
     // 处理公告修改
     const handleAnnouncementChange = async () => {
-        await CanteenApi.updateCanteenAnnouncement(newCanteenName, newAnnouncement);
+        await CanteenAPI.updateCanteenAnnouncement(newCanteenName, newAnnouncement);
         // 更新完数据后重新获取食堂信息
-        const info = await CanteenApi.getCanteenInfoById(id);
+        const info = await CanteenAPI.getCanteenInfoById(id);
         setCanteenInfo(info);
         alert('已成功修改！');
     };
@@ -67,7 +67,7 @@ const ModifyCanteenInfo = () => {
     // 处理删除
     const handleCanteenDelete = async () => {
         try {
-            await CanteenApi.deleteCanteen(id);
+            await CanteenAPI.deleteCanteen(id);
             // 处理删除成功的逻辑，例如重定向到餐厅列表页面
             navigateTo('/canteen-info');
         } catch (error) {
@@ -86,7 +86,7 @@ const ModifyCanteenInfo = () => {
     useEffect(() => {
         const fetchCanteenInfo = async () => {
             try {
-                const info = await CanteenApi.getCanteenInfoById(id);
+                const info = await CanteenAPI.getCanteenInfoById(id);
                 setCanteenInfo(info);
                 setNewIntro(info.intro);
                 setNewLocation(info.location);

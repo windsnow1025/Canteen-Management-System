@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Pagination } from 'antd';
 import { Input } from 'antd';
 import NavBar from "../../components/NavBar";
-import DishApi from "../../service/DishApi";
+import DishAPI from "../../service/DishAPI";
 import base64StringToDataURL from "../../utils/Base64StringToDataURL";
 
 const { Search } = Input;
@@ -20,7 +20,7 @@ const DishPage = () => {
 
     const fetchDishes = async () => {
         try {
-            const response = await DishApi.getAllDishInfos();
+            const response = await DishAPI.getAllDishInfos();
 
             // 解析 Base64 图片字符串为 Data URL
             const dishesWithImages = await Promise.all(response.map(async (dish) => {

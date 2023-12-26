@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import EvaluationApi from "../../service/EvaluationApi";
+import EvaluationAPI from "../../service/EvaluationAPI";
 import NavBar from "../../components/NavBar";
 import base64StringToDataURL from "../../utils/Base64StringToDataURL";
 import {Collapse} from "antd";
-import UserApi from "../../service/UserApi";
+import UserAPI from "../../service/UserAPI";
 
 const {Panel} = Collapse;
 
@@ -16,7 +16,7 @@ const EvaluationManagement = () => {
         // 获取菜品评价信息
         const fetchEvaluationInfos = async () => {
             try {
-                const response = await EvaluationApi.getAllEvaluationInfos();
+                const response = await EvaluationAPI.getAllEvaluationInfos();
                 // 解析 Base64 图片字符串为 Data URL
                 const evaluationsWithImages = await Promise.all(response.map(async (evaluation) => {
                     const imageUrl = await base64StringToDataURL(evaluation.picture);
@@ -32,7 +32,7 @@ const EvaluationManagement = () => {
         };
         const fetchUserInfo = async () => {
             try {
-                const userInfo = await UserApi.getUserInfo();
+                const userInfo = await UserAPI.getUserInfo();
                 setUserInfo(userInfo);
             } catch (error) {
                 console.error("Error fetching user info:", error);
@@ -46,7 +46,7 @@ const EvaluationManagement = () => {
 
     const handleDeleteEvaluation = async (evaluationId) => {
         try {
-            await EvaluationApi.deleteEvaluationById(evaluationId);
+            await EvaluationAPI.deleteEvaluationById(evaluationId);
             window.location.reload()
         } catch (error) {
             console.error('Error adding evaluation:', error);

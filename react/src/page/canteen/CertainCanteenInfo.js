@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Link, useLocation} from 'react-router-dom';
-import CanteenApi from "../../service/CanteenApi";
+import CanteenAPI from "../../service/CanteenAPI";
 import NavBar from "../../components/NavBar";
 
 const CertainCanteenInfo = () => {
@@ -10,7 +10,7 @@ const CertainCanteenInfo = () => {
 
     useEffect(() => {
         const fetchCanteenInfo = async () => {
-            const info = await CanteenApi.getCanteenInfoById(canteenId);
+            const info = await CanteenAPI.getCanteenInfoById(canteenId);
             setCanteenInfo(info);
         };
 

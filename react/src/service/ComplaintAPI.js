@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default class ComplaintApi {
+export default class ComplaintAPI {
     // 获取所有投诉信息
     static async getAllComplaintInfos() {
         const token = localStorage.getItem('token');

@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import { Pagination, Button } from 'antd';
 import { Input } from 'antd';
 import NavBar from "../../components/NavBar";
-import PostApi from "../../service/PostApi";
+import PostAPI from "../../service/PostAPI";
 import base64StringToDataURL from "../../utils/Base64StringToDataURL";
 import {Link} from "react-router-dom";
-import UserApi from "../../service/UserApi";
+import UserAPI from "../../service/UserAPI";
 
 const Community = () => {
     const { Search } = Input;
@@ -19,7 +19,7 @@ const Community = () => {
     useEffect(() => {
         const fetchPostInfos = async () => {
             try {
-                const response = await PostApi.getPostInfos();
+                const response = await PostAPI.getPostInfos();
                 const postsWithImages = await Promise.all(response.map(async (post) => {
                     const imageUrl = await base64StringToDataURL(post.picture);
                     return {
@@ -64,7 +64,7 @@ const Community = () => {
 
     const handleLikeClick = async (postId) => {
         try {
-            const response = await PostApi.likePost(postId);
+            const response = await PostAPI.likePost(postId);
             alert("点赞成功");
             console.log(response);
         } catch (error) {
@@ -78,7 +78,7 @@ const Community = () => {
         useEffect(() => {
             const fetchUsername = async () => {
                 try {
-                    const username = await UserApi.getUserNameById(post.userId);
+                    const username = await UserAPI.getUserNameById(post.userId);
                     setUsername(username);
                 } catch (error) {
                     console.error('Error fetching user info:', error);

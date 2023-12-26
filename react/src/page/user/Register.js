@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import NavBar from "../../components/NavBar";
-import UserApi from "../../service/UserApi";
+import UserAPI from "../../service/UserAPI";
 
 
 
@@ -11,7 +11,7 @@ const Register = () => {
 
     const handleSignUp = async () => {
         try {
-            const returnMessage = await UserApi.signUp(username, password);
+            const returnMessage = await UserAPI.signUp(username, password);
             setMessage(returnMessage); // 可以根据返回的消息做相应处理
         } catch (error) {
             setMessage("注册失败");

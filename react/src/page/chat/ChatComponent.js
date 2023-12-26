@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import useWebSocket from './useWebSocket';
 import NavBar from "../../components/NavBar";
-import UserApi from "../../service/UserApi";
+import UserAPI from "../../service/UserAPI";
 import {useParams} from 'react-router-dom';
 
 const ChatComponent = () => {
@@ -22,7 +22,7 @@ const ChatComponent = () => {
     useEffect(() => {
         const fetchUserName = async () => {
             try {
-                const userInfo = await UserApi.getUserInfo();
+                const userInfo = await UserAPI.getUserInfo();
                 setSenderUsername(userInfo.username);
             } catch (error) {
                 console.error('Error:', error);

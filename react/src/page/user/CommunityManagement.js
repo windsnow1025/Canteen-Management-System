@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import NavBar from "../../components/NavBar";
 import base64StringToDataURL from "../../utils/Base64StringToDataURL";
 import {Collapse} from "antd";
-import PostApi from "../../service/PostApi";
-import CommentApi from "../../service/CommentApi";
+import PostAPI from "../../service/PostAPI";
+import CommentAPI from "../../service/CommentAPI";
 
 const {Panel} = Collapse;
 
@@ -20,7 +20,7 @@ const CommunityManagement = () => {
         // 获取帖子信息
         const fetchPostInfos = async () => {
             try {
-                const response = await PostApi.getPostInfos();
+                const response = await PostAPI.getPostInfos();
                 // 解析 Base64 图片字符串为 Data URL
                 const postsWithImages = await Promise.all(response.map(async (post) => {
                     const imageUrl = await base64StringToDataURL(post.picture);
@@ -40,7 +40,7 @@ const CommunityManagement = () => {
 
     const handlePostIdClick = async (postId) => {
         try {
-            const commentInfos = await CommentApi.getCommentInfosByPostId(postId);
+            const commentInfos = await CommentAPI.getCommentInfosByPostId(postId);
             setComments(commentInfos);
             setSelectedPostId(postId);
         } catch (error) {
@@ -51,7 +51,7 @@ const CommunityManagement = () => {
 
     const handleDeletePost = async (postId) => {
         try {
-            await PostApi.deletePost(postId);
+            await PostAPI.deletePost(postId);
             window.location.reload()
         } catch (error) {
             console.error('Error adding evaluation:', error);
@@ -60,7 +60,7 @@ const CommunityManagement = () => {
 
     const handleDeleteComment = async (commentId) => {
         try {
-            await CommentApi.deleteCommentById(commentId);
+            await CommentAPI.deleteCommentById(commentId);
             window.location.reload()
         } catch (error) {
             console.error('Error adding evaluation:', error);

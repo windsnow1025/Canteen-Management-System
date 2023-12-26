@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {Link, useParams} from 'react-router-dom';
 import NavBar from "../../components/NavBar";
-import UserApi from "../../service/UserApi";
-import PostApi from "../../service/PostApi";
+import UserAPI from "../../service/UserAPI";
+import PostAPI from "../../service/PostAPI";
 
 const UserProfile = () => {
     const { userId } = useParams();
@@ -13,9 +13,9 @@ const UserProfile = () => {
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                const response = await UserApi.getUserNameById(userId);
+                const response = await UserAPI.getUserNameById(userId);
                 setUserName(response);
-                const posts = await PostApi.getPostInfosByUsername(response);
+                const posts = await PostAPI.getPostInfosByUsername(response);
                 setUserPosts(posts);
                 setLoading(false);
             } catch (error) {

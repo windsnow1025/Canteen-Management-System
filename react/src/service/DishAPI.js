@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default class DishApi{
+export default class DishAPI {
     static async getAllDishInfos() {
         const token = localStorage.getItem('token');
         const res = await axios.get(`${process.env.REACT_APP_HTTP_API_BASE_URL}/dish/infos`, {

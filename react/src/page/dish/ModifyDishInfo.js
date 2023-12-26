@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation,useNavigate } from 'react-router-dom';
-import DishApi from "../../service/DishApi";
+import DishAPI from "../../service/DishAPI";
 import NavBar from "../../components/NavBar";
 
 const ModifyDishInfo = () => {
@@ -17,9 +17,9 @@ const ModifyDishInfo = () => {
     const handleDishNameChange = async () => {
         try {
             // 更新菜品名称
-            await DishApi.updateDishName(dishId, newDishName);
+            await DishAPI.updateDishName(dishId, newDishName);
             // 更新完数据后重新获取菜品信息
-            const info = await DishApi.getDishInfoById(dishId);
+            const info = await DishAPI.getDishInfoById(dishId);
             setDishInfo(info);
             alert('已成功修改！');
         } catch (error) {
@@ -30,36 +30,36 @@ const ModifyDishInfo = () => {
 
     // 处理价格修改
     const handlePriceChange = async () => {
-        await DishApi.updateDishPrice(dishId, newPrice);
+        await DishAPI.updateDishPrice(dishId, newPrice);
         // 更新完数据后重新获取菜品信息
-        const info = await DishApi.getDishInfoById(dishId);
+        const info = await DishAPI.getDishInfoById(dishId);
         setDishInfo(info);
         alert('已成功修改！');
     };
 
     // 处理折扣率修改
     const handleDiscountRateChange = async () => {
-        await DishApi.updateDishDiscountRate(dishId, newDiscountRate);
+        await DishAPI.updateDishDiscountRate(dishId, newDiscountRate);
         // 更新完数据后重新获取菜品信息
-        const info = await DishApi.getDishInfoById(dishId);
+        const info = await DishAPI.getDishInfoById(dishId);
         setDishInfo(info);
         alert('已成功修改！');
     };
 
     // 处理菜系修改
     const handleCuisineChange = async () => {
-        await DishApi.updateDishCuisine(dishId, newCuisine);
+        await DishAPI.updateDishCuisine(dishId, newCuisine);
         // 更新完数据后重新获取菜品信息
-        const info = await DishApi.getDishInfoById(dishId);
+        const info = await DishAPI.getDishInfoById(dishId);
         setDishInfo(info);
         alert('已成功修改！');
     };
 
     // 处理图片修改
     const handlePictureChange = async () => {
-        await DishApi.updateDishPicture(dishId, newPicture);
+        await DishAPI.updateDishPicture(dishId, newPicture);
         // 更新完数据后重新获取菜品信息
-        const info = await DishApi.getDishInfoById(dishId);
+        const info = await DishAPI.getDishInfoById(dishId);
         setDishInfo(info);
         alert('已成功修改！');
     };
@@ -67,7 +67,7 @@ const ModifyDishInfo = () => {
     // 处理删除
     const handleDishDelete = async () => {
         try {
-            await DishApi.deleteDish(dishId);
+            await DishAPI.deleteDish(dishId);
             // 处理删除成功的逻辑，例如重定向到菜品列表页面
             navigateTo('/dish-info');
         } catch (error) {
@@ -91,7 +91,7 @@ const ModifyDishInfo = () => {
     useEffect(() => {
         const fetchDishInfo = async () => {
             try {
-                const info = await DishApi.getDishInfoById(dishId);
+                const info = await DishAPI.getDishInfoById(dishId);
                 setDishInfo(info);
                 setNewDishName(info.dishName);
                 setNewPrice(info.price);

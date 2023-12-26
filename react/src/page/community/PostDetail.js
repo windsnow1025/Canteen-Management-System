@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import PostApi from '../../service/PostApi';
-import CommentApi from '../../service/CommentApi';
-import UserApi from '../../service/UserApi';
+import PostAPI from '../../service/PostAPI';
+import CommentAPI from '../../service/CommentAPI';
+import UserAPI from '../../service/UserAPI';
 import NavBar from "../../components/NavBar";
 import { Collapse } from "antd";
 import base64StringToDataURL from "../../utils/Base64StringToDataURL";
@@ -14,7 +14,7 @@ const CommentComponent = ({ comment }) => {
         // 获取用户信息
         const fetchUserInfo = async () => {
             try {
-                const username = await UserApi.getUserNameById(comment.userId);
+                const username = await UserAPI.getUserNameById(comment.userId);
                 setUserName(username);
             } catch (error) {
                 console.error('Error fetching user info:', error);
@@ -46,7 +46,7 @@ const PostDetail = () => {
         // 获取帖子信息
         const fetchPostInfo = async () => {
             try {
-                const post = await PostApi.getPostInfoById(postId);
+                const post = await PostAPI.getPostInfoById(postId);
                 // 解析 Base64 图片字符串为 Data URL
                 const imageUrl = await base64StringToDataURL(post.picture);
 
@@ -62,7 +62,7 @@ const PostDetail = () => {
         // 获取帖子的所有评论信息
         const fetchCommentInfos = async () => {
             try {
-                const response = await CommentApi.getCommentInfosByPostId(postId);
+                const response = await CommentAPI.getCommentInfosByPostId(postId);
                 setComments(response);
             } catch (error) {
                 console.error('Error fetching comment infos:', error);
@@ -75,9 +75,9 @@ const PostDetail = () => {
 
     const handleAddComment = async () => {
         try {
-            await CommentApi.addComment(postId, newComment);
+            await CommentAPI.addComment(postId, newComment);
             // 添加评论成功后，重新获取评论信息
-            const response = await CommentApi.getCommentInfosByPostId(postId);
+            const response = await CommentAPI.getCommentInfosByPostId(postId);
             setComments(response);
             // 清空新评论的数据
             setNewComment('');

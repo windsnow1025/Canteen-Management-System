@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import NavBar from "../../components/NavBar";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import CanteenApi from '../../service/CanteenApi';
-import UserApi from "../../service/UserApi";
+import CanteenAPI from '../../service/CanteenAPI';
+import UserAPI from "../../service/UserAPI";
 import axios from "axios";
 
 const Announcement = () => {
@@ -14,10 +14,10 @@ const Announcement = () => {
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                const userInfo = await UserApi.getUserInfo();
+                const userInfo = await UserAPI.getUserInfo();
                 setCanteenId(userInfo.canteenId);
 
-                const CanteenName = await CanteenApi.getCanteenInfoById(userInfo.canteenId);
+                const CanteenName = await CanteenAPI.getCanteenInfoById(userInfo.canteenId);
                 setCanteenName(CanteenName.canteenName);
             } catch (error) {
                 console.error('Error:', error);
@@ -28,7 +28,7 @@ const Announcement = () => {
     }, []);
     const handleConfirm = async () => {
         try {
-            const message = await CanteenApi.updateCanteenAnnouncement(canteenName, inputValue);
+            const message = await CanteenAPI.updateCanteenAnnouncement(canteenName, inputValue);
             toast.success(message); // Show a success message
             setInputValue(''); // Clear the input field
         } catch (error) {
