@@ -47,7 +47,6 @@ function App() {
                     <Route path="/dish-maintenance/:canteenId" element={<DishMaintenance />} />
                     <Route path="/modify-dish-info" element={<ModifyDishInfo />} />
                     <Route path="/announcement" element={<Announcement />} />
-                    <Route path="/chat" element={<ChatComponent />} />
                     <Route path="/account-management" element={<AccountManagement />} />
                     <Route path="/dish/:dishId" element={<DishDetail/>} />
                     <Route path="/evaluation-management" element={<EvaluationManagement/>} />
@@ -57,6 +56,7 @@ function App() {
                     <Route path="/complaint-form" element={<ComplaintForm/>} />
                     <Route path="/complaint-handling" element={<ComplaintHandlingPage/>} />
                     <Route path="/user/:userId" element={<UserProfile />} />
+                    <Route path="/chat/:userName" element={<ChatComponent />} />
                 </Routes>
             </div>
         </Router>

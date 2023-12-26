@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import NavBar from "../components/NavBar";
 import UserApi from "../api/UserApi";
 import PostApi from "../api/PostApi";
@@ -42,9 +42,7 @@ const UserProfile = () => {
                             <p>{post.content}</p>
                         </div>
                     ))}
-                    <button
-                        className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded mx-auto block">私聊
-                    </button>
+                    <Link to={`/chat/${userName}`} className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded mx-auto block">私聊</Link>
                 </div>
 
             </div>
