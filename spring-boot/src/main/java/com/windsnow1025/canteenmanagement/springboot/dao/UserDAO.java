@@ -50,7 +50,7 @@ public class UserDAO {
                     if (Objects.equals(userType, "master_admin")){
                         continue;
                     }
-                    String userLevel = (String) result.get("user_level");
+                    float userLevel = (float) result.get("user_level");
                     int canteenID = (int) result.get("canteen_id");
                     userList.add(new User(id, username, password, userType, userLevel, canteenID));
                 }
@@ -72,7 +72,7 @@ public class UserDAO {
                 Map<String, Object> resultMap = result.getFirst();
                 int userId = (int) resultMap.get("id");
                 String userType = (String) resultMap.get("user_type");
-                String userLevel = (String) resultMap.get("user_level");
+                float userLevel = (float) resultMap.get("user_level");
                 int canteenId = (int) resultMap.get("canteen_id");
                 return new User(userId, username, password, userType, userLevel, canteenId);
             } else {
@@ -93,7 +93,7 @@ public class UserDAO {
                 int userId = (int) resultMap.get("id");
                 String password = (String) resultMap.get("password");
                 String userType = (String) resultMap.get("user_type");
-                String userLevel = (String) resultMap.get("user_level");
+                float userLevel = (float) resultMap.get("user_level");
                 int canteenId = (int) resultMap.get("canteen_id");
                 return new User(userId, username, password, userType, userLevel, canteenId);
             } else {
@@ -175,7 +175,7 @@ public class UserDAO {
         }
     }
 
-    public boolean updateLevel(String username, String newLevel) {
+    public boolean updateLevel(String username, float newLevel) {
         String sql = "UPDATE user SET user_level = ? WHERE username = ?";
         try {
             int rowsAffected = jdbcHelper.executeUpdate(sql, newLevel, username);

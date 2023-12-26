@@ -1,5 +1,7 @@
 package com.windsnow1025.canteenmanagement.springboot;
 
+import com.windsnow1025.canteenmanagement.springboot.logic.UserLogic;
+import com.windsnow1025.canteenmanagement.springboot.util.JwtUtil;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebListener;
 import jakarta.servlet.http.*;
@@ -12,7 +14,9 @@ import static com.windsnow1025.canteenmanagement.springboot.util.RequestUtil.*;
 @WebListener
 public class ServletListener implements ServletContextListener, HttpSessionListener, HttpSessionAttributeListener, ServletRequestListener {
 
+    private final UserLogic userLogic;
     public ServletListener() {
+        userLogic = new UserLogic();
     }
 
     @Override
@@ -71,22 +75,15 @@ public class ServletListener implements ServletContextListener, HttpSessionListe
 
             String lastURL = statistics.get("lastURL").toString();
             Long lastTime = (Long) statistics.get("lastTime");
+            String username = statistics.get("username").toString();
 
             int duration = (int) (System.currentTimeMillis() - lastTime);
 
-            // Statistics for messages
-//            if (lastURL.contains("messageId")) {
-//                Map<String, String> params = getParams(lastURL);
-//                String userIdParam = params.get("userId");
-//                String messageIdParam = params.get("messageId");
-//
-//                if (userIdParam != null && messageIdParam != null) {
-//                    int userId = Integer.parseInt(userIdParam);
-//                    int messageId = Integer.parseInt(messageIdParam);
-//
-//                    statisticLogic.increaseDuration(userId, messageId, duration);
-//                }
-//            }
+            // Statistics for userLevel
+            if (lastURL != null) {
+                // 1000 seconds = 1 level
+                userLogic.addLevel(username, duration / 1000000.0f);
+            }
 
             // Statistics for ... (to be added)
         }
@@ -96,15 +93,26 @@ public class ServletListener implements ServletContextListener, HttpSessionListe
     public void requestInitialized(ServletRequestEvent sre) {
         /* Request is initialized. */
         ServletRequest request = sre.getServletRequest();
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
+
+        if (!(request instanceof HttpServletRequest httpRequest)) {
+            return;
+        }
+
         HttpSession session = httpRequest.getSession(true);
 
         String currentURL = getRequestFullURL(httpRequest);
         Long currentTime = System.currentTimeMillis();
 
+        String token = httpRequest.getHeader("Authorization");
+        if (token == null) {
+            return;
+        }
+        String username = JwtUtil.parseJWT(token);
+
         Map<String, Object> statistics = new HashMap<>();
         statistics.put("lastURL", currentURL);
         statistics.put("lastTime", currentTime);
+        statistics.put("username", username);
 
         session.setAttribute("statistics", statistics);
     }

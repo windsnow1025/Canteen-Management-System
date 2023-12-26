@@ -7,13 +7,13 @@ public class User implements Serializable {
     private String username;
     private String password;
     private String userType;
-    private String userLevel;
+    private float userLevel;
     private int canteenId;
 
     public User() {
     }
 
-    public User(int id, String username, String password, String userType, String userLevel, int canteenId) {
+    public User(int id, String username, String password, String userType, float userLevel, int canteenId) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -22,7 +22,7 @@ public class User implements Serializable {
         this.canteenId = canteenId;
     }
 
-    public User(String username, String password, String userType, String userLevel, int canteenId) {
+    public User(String username, String password, String userType, float userLevel, int canteenId) {
         this.username = username;
         this.password = password;
         this.userType = userType;
@@ -62,11 +62,11 @@ public class User implements Serializable {
         this.userType = userType;
     }
 
-    public String getUserLevel() {
+    public float getUserLevel() {
         return userLevel;
     }
 
-    public void setUserLevel(String userLevel) {
+    public void setUserLevel(float userLevel) {
         this.userLevel = userLevel;
     }
 

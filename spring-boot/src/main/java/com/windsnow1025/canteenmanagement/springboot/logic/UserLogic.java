@@ -41,7 +41,7 @@ public class UserLogic {
         return JwtUtil.createJWT(user.getUsername());
     }
 
-    public boolean signUp(String username, String password, String userType, String userLevel, int canteenId) {
+    public boolean signUp(String username, String password, String userType, float userLevel, int canteenId) {
         User user = new User(username, password, userType, userLevel, canteenId);
         return userDao.insert(user);
     }
@@ -60,9 +60,22 @@ public class UserLogic {
         }
     }
 
-    public boolean updateLevel(String token, String newLevel) {
+    public boolean updateLevel(String token, float newLevel) {
         String oldUsername = JwtUtil.parseJWT(token);
         return userDao.updateLevel(oldUsername, newLevel);
+    }
+
+    public boolean addLevel(String username, float addLevel) {
+        User user = userDao.selectByUsername(username);
+        float oldLevel = user.getUserLevel();
+        if (oldLevel >= 99) {
+            return true;
+        }
+        float newLevel = oldLevel + addLevel;
+        if (newLevel >= 99) {
+            newLevel = 99;
+        }
+        return userDao.updateLevel(username, newLevel);
     }
 
     public boolean delete(String token, int id) {
