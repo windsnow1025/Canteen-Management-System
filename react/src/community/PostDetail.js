@@ -81,6 +81,7 @@ const PostDetail = () => {
             setComments(response);
             // 清空新评论的数据
             setNewComment('');
+            alert("评论发表成功！")
         } catch (error) {
             console.error('Error adding comment:', error);
         }
@@ -100,7 +101,7 @@ const PostDetail = () => {
                     </div>
                 )}
 
-                <div className="bg-white p-4 mb-4 rounded">
+                <div className="bg-white p-4 mb-4 rounded overflow-y-auto max-h-60">
                     {/* 评论列表 */}
                     <ul>
                         {comments.map((comment) => (
