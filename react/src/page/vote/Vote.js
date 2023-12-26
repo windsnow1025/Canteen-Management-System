@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import NavBar from "../components/NavBar";
-import VoteApi from "../api/VoteApi";
+import NavBar from "../../components/NavBar";
+import VoteApi from "../../service/VoteAPI";
 
 const Vote = () => {
     const [votes, setVotes] = useState([]);
@@ -20,9 +20,9 @@ const Vote = () => {
 
     const handleVote = async (id, result) => {
         try {
-            await VoteApi.updateVoteResult(id, result);
-            const updatedVotes = votes.map(vote => vote.id === id ? { ...vote, voteResult: result } : vote);
-            setVotes(updatedVotes);
+            const currentVote = await VoteApi.getVoteInfoById(id);
+            const updatedResult = currentVote.voteResult + result.toString();
+            await VoteApi.updateVoteResult(id, updatedResult);
         } catch (error) {
             console.error('Error voting:', error);
         }
@@ -31,7 +31,10 @@ const Vote = () => {
     const handleShowResult = async (id) => {
         try {
             const result = await VoteApi.getVoteInfoById(id);
-            console.log(result);
+            setVoteResults(prevState => ({
+                ...prevState,
+                [id]: result.voteResult
+            }));
         } catch (error) {
             console.error('Error fetching vote result:', error);
         }
@@ -48,7 +51,14 @@ const Vote = () => {
                         <button onClick={() => handleVote(vote.id, 1)} className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded mr-2">是</button>
                         <button onClick={() => handleVote(vote.id, 0)} className="bg-red-500 hover:bg-red-dark text-white font-bold py-2 px-4 rounded">否</button>
                         <button onClick={() => handleShowResult(vote.id)} className="bg-green-500 hover:bg-green-dark text-white font-bold py-2 px-4 rounded ml-2">显示结果</button>
-                        {voteResults[vote.id] && <p className="mt-2">结果：{voteResults[vote.id]}</p>}
+                        {voteResults[vote.id] ? (
+                            <p className="mt-2">
+                                结果：是：{voteResults[vote.id].split('').filter(char => char === '1').length}票
+                                否：{voteResults[vote.id].split('').filter(char => char === '0').length}票
+                            </p>
+                        ) : (
+                            <p className="mt-2">还没有人投票</p>
+                        )}
                     </div>
                 ))}
             </div>
