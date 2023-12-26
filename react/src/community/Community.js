@@ -7,49 +7,49 @@ import base64StringToDataURL from "../utils/Base64StringToDataURL";
 import {Link} from "react-router-dom";
 import UserApi from "../api/UserApi";
 
-const { Search } = Input;
-const onSearch = (value, _e, info) => console.log(info?.source, value);
 const Community = () => {
+    const { Search } = Input;
     const [postInfos, setPostInfos] = useState([]);
+    const [filteredPostInfos, setFilteredPostInfos] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 5;
 
     useEffect(() => {
-        // 获取帖子信息
         const fetchPostInfos = async () => {
             try {
                 const response = await PostApi.getPostInfos();
-                // 解析 Base64 图片字符串为 Data URL
                 const postsWithImages = await Promise.all(response.map(async (post) => {
                     const imageUrl = await base64StringToDataURL(post.picture);
-
                     return {
                         ...post, picture: imageUrl,
                     };
                 }));
                 setPostInfos(postsWithImages);
+                setFilteredPostInfos(postsWithImages);
             } catch (error) {
                 console.error('Error fetching evaluation infos:', error);
             }
         };
-
         fetchPostInfos();
     }, []);
+
+    const onSearch = (value) => {
+        const lowerCaseValue = value.toLowerCase();
+        const filtered = postInfos.filter(post => post.title.toLowerCase().includes(lowerCaseValue) || post.content.toLowerCase().includes(lowerCaseValue));
+        setFilteredPostInfos(filtered);
+    };
 
     const onChange = (pageNumber) => {
         console.log('Page: ', pageNumber);
         setCurrentPage(pageNumber);
     };
+
     const handleLikeClick = async (postId) => {
         try {
-            // 调用 likePost 方法
             const response = await PostApi.likePost(postId);
             alert("点赞成功");
-
-            // 处理成功的情况，例如刷新界面等
             console.log(response);
         } catch (error) {
-            // 处理错误，比如打印错误日志或者显示错误消息
             console.error('Error liking post:', error);
         }
     };
@@ -58,7 +58,6 @@ const Community = () => {
         const [username, setUsername] = useState('');
 
         useEffect(() => {
-            // 获取帖子作者的用户名
             const fetchUsername = async () => {
                 try {
                     const username = await UserApi.getUserInfoById(post.userId);
@@ -67,7 +66,6 @@ const Community = () => {
                     console.error('Error fetching user info:', error);
                 }
             };
-
             fetchUsername();
         }, [post.userId]);
 
@@ -91,7 +89,6 @@ const Community = () => {
         );
     };
 
-
     return (
         <>
             <NavBar/>
@@ -102,13 +99,13 @@ const Community = () => {
             </a>
             <div >
                 <div className="bg-white rounded-lg shadow-lg mx-32 mt-4">
-                    {postInfos.map((post, index) => (
+                    {filteredPostInfos.map((post, index) => (
                         <div key={index} className="mb-4">
                             <PostComponent post={post} />
                         </div>
                     ))}
                 </div>
-                <Pagination className="text-center mt-4 mb-16" showQuickJumper defaultPageSize={pageSize} total={postInfos.length} onChange={onChange}/>
+                <Pagination className="text-center mt-4 mb-16" showQuickJumper defaultPageSize={pageSize} total={filteredPostInfos.length} onChange={onChange}/>
             </div>
         </>
     )
