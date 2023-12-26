@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import avataUrl1 from '../images/user_avatar.jpg';
-import messageIcon from '../images/message.png';
-import messageIconAlert from '../images/messageAlert.png';
-import UserInfo from "../user/UserInfo";
+import avatarUrl from '../asset/images/user_avatar.jpg';
+import messageIcon from '../asset/images/message.png';
+import messageIconAlert from '../asset/images/messageAlert.png';
+
 class NavBar extends Component {
     messageAlertFlag = false;
     iconUrl = this.messageAlertFlag ? messageIconAlert : messageIcon;
@@ -16,7 +16,7 @@ class NavBar extends Component {
                 </div>
                 <div className="px-4 py-2 block w-1/3 flex items-center">
                     <a href="/user-info" className="px-4 py-2 block">
-                        <img src={avataUrl1} alt="User" className="w-9 h-9 rounded-full border-2 border-white" />
+                        <img src={avatarUrl} alt="User" className="w-9 h-9 rounded-full border-2 border-white" />
                     </a>
                     <div className="px-4 py-2 block font-bold">
                         上理食堂社区

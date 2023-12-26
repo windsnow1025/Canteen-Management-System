@@ -1,6 +1,6 @@
 import React from 'react';
 import NavBar from "./components/NavBar";
-import dishPhoto from './images/dish1.jpg';
+import dishPhoto from './asset/images/dish1.jpg';
 
 const cardStyle: React.CSSProperties = {
     width: 620,

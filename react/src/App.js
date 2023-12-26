@@ -1,7 +1,6 @@
 import React from 'react';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './index.css';
-import Register from "./user/Register";
-import Login from "./user/Login";
 import FirstPage from "./FirstPage";
 import Community from "./community/Community";
 import ChangePassword from "./user/ChangePassword";
@@ -29,16 +28,17 @@ import UserProfile from "./user/UserProfile";
 import VoteManagement from "./vote/VoteManagement";
 import Vote from "./vote/Vote";
 
+
 function App() {
     return (
         <Router>
             <div className="App">
                 <Routes>
+                    <Route path="/" element={<FirstPage />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/change-password" element={<ChangePassword />} />
                     <Route path="/community" element={<Community />} />
-                    <Route path="/" element={<FirstPage />} />
                     <Route path="/user-info" element={<UserInfo />} />
                     <Route path="/canteen-info" element={<CanteenInfo />} />
                     <Route path="/canteen" element={<Canteen />} />
