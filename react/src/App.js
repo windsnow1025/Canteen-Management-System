@@ -1,43 +1,43 @@
 import React from 'react';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './index.css';
-import Register from "./user/Register";
-import Login from "./user/Login";
 import FirstPage from "./FirstPage";
-import Community from "./community/Community";
-import ChangePassword from "./user/ChangePassword";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import UserInfo from "./user/UserInfo";
-import CanteenInfo from "./canteen/CanteenInfo";
-import Canteen from "./canteen/Canteen"
-import CertainCanteenInfo from "./canteen/CertainCanteenInfo";
-import ModifyCanteenInfo from "./canteen/ModifyCanteenInfo";
-import AddCanteen from "./canteen/AddCanteen";
-import DishPage from "./dish/DishPage";
-import DishMaintenance from "./dish/DishMaintenance";
-import ModifyDishInfo from "./dish/ModifyDishInfo";
-import Announcement from "./canteen/Announcement";
-import ChatComponent from "./chat/ChatComponent";
-import AccountManagement from "./user/AccountManagement";
-import DishDetail from "./dish/DishDetail";
-import EvaluationManagement from "./user/EvaluationManagement";
-import CommunityManagement from "./user/CommunityManagement";
-import CreatePost from "./community/CreatePost";
-import PostDetail from "./community/PostDetail";
-import ComplaintForm from "./user/ComplaintForm";
-import ComplaintHandlingPage from "./user/ComplaintHandlingPage";
-import UserProfile from "./user/UserProfile";
-import VoteManagement from "./vote/VoteManagement";
+import Register from "./page/user/Register";
+import Login from "./page/user/Login";
+import Community from "./page/community/Community";
+import ChangePassword from "./page/user/ChangePassword";
+import UserInfo from "./page/user/UserInfo";
+import CanteenInfo from "./page/canteen/CanteenInfo";
+import Canteen from "./page/canteen/Canteen"
+import CertainCanteenInfo from "./page/canteen/CertainCanteenInfo";
+import ModifyCanteenInfo from "./page/canteen/ModifyCanteenInfo";
+import AddCanteen from "./page/canteen/AddCanteen";
+import DishPage from "./page/dish/DishPage";
+import DishMaintenance from "./page/dish/DishMaintenance";
+import ModifyDishInfo from "./page/dish/ModifyDishInfo";
+import Announcement from "./page/canteen/Announcement";
+import ChatComponent from "./page/chat/ChatComponent";
+import AccountManagement from "./page/user/AccountManagement";
+import DishDetail from "./page/dish/DishDetail";
+import EvaluationManagement from "./page/user/EvaluationManagement";
+import CommunityManagement from "./page/user/CommunityManagement";
+import CreatePost from "./page/community/CreatePost";
+import PostDetail from "./page/community/PostDetail";
+import ComplaintForm from "./page/user/ComplaintForm";
+import ComplaintHandlingPage from "./page/user/ComplaintHandlingPage";
+import UserProfile from "./page/user/UserProfile";
+import VoteManagement from "./page/vote/VoteManagement";
 
 function App() {
     return (
         <Router>
             <div className="App">
                 <Routes>
+                    <Route path="/" element={<FirstPage />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/change-password" element={<ChangePassword />} />
                     <Route path="/community" element={<Community />} />
-                    <Route path="/" element={<FirstPage />} />
                     <Route path="/user-info" element={<UserInfo />} />
                     <Route path="/canteen-info" element={<CanteenInfo />} />
                     <Route path="/canteen" element={<Canteen />} />
