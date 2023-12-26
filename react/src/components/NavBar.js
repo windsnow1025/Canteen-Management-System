@@ -34,7 +34,7 @@ class NavBar extends Component {
                         <>
                             <a href="/user-info">我的</a>
                             <a className="px-4 py-2 block">|</a>
-                            <a href="/messages">
+                            <a href="/complaint-handling">
                                 <img src={this.iconUrl} alt="User" className="w-6 h-6" />
                             </a>
                         </>
