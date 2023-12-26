@@ -77,7 +77,7 @@ export default class UserApi {
         return res.data.message;
     }
 
-    static async getUserInfoById(userId) {
+    static async getUserNameById(userId) {
             const token = localStorage.getItem('token');
             const response = await axios.get(`${process.env.REACT_APP_HTTP_API_BASE_URL}/user/info/${userId}`, {
                 headers: { Authorization: token ? `${token}` : '' }

@@ -1,55 +1,73 @@
 import React, {useEffect, useState} from 'react';
-import { Pagination } from 'antd';
-import { Input, Space } from 'antd';
+import { Pagination, Button } from 'antd';
+import { Input } from 'antd';
 import NavBar from "../components/NavBar";
 import PostApi from "../api/PostApi";
 import base64StringToDataURL from "../utils/Base64StringToDataURL";
 import {Link} from "react-router-dom";
 import UserApi from "../api/UserApi";
 
-const { Search } = Input;
-const onSearch = (value, _e, info) => console.log(info?.source, value);
 const Community = () => {
+    const { Search } = Input;
     const [postInfos, setPostInfos] = useState([]);
+    const [filteredPostInfos, setFilteredPostInfos] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [sortTime, setSortTime] = useState(true); // true for ascending, false for descending
+    const [sortLikes, setSortLikes] = useState(true); // true for ascending, false for descending
     const pageSize = 5;
 
     useEffect(() => {
-        // 获取帖子信息
         const fetchPostInfos = async () => {
             try {
                 const response = await PostApi.getPostInfos();
-                // 解析 Base64 图片字符串为 Data URL
                 const postsWithImages = await Promise.all(response.map(async (post) => {
                     const imageUrl = await base64StringToDataURL(post.picture);
-
                     return {
                         ...post, picture: imageUrl,
                     };
                 }));
                 setPostInfos(postsWithImages);
+                setFilteredPostInfos(postsWithImages);
             } catch (error) {
                 console.error('Error fetching evaluation infos:', error);
             }
         };
-
         fetchPostInfos();
     }, []);
+
+    const onSearch = (value) => {
+        const lowerCaseValue = value.toLowerCase();
+        const filtered = postInfos.filter(post => post.title.toLowerCase().includes(lowerCaseValue) || post.content.toLowerCase().includes(lowerCaseValue));
+        setFilteredPostInfos(filtered);
+    };
+
+    const sortByTime = () => {
+        const sorted = [...filteredPostInfos].sort((a, b) => {
+            const aTime = new Date(a.time.replace(/-/g, '/'));
+            const bTime = new Date(b.time.replace(/-/g, '/'));
+            return sortTime ? aTime - bTime : bTime - aTime;
+        });
+        setFilteredPostInfos(sorted);
+        setSortTime(!sortTime); // reverse the sort direction
+    };
+
+    const sortByLikes = () => {
+        const sorted = [...filteredPostInfos].sort((a, b) => sortLikes ? a.upvote - b.upvote : b.upvote - a.upvote);
+        setFilteredPostInfos(sorted);
+        setSortLikes(!sortLikes); // reverse the sort direction
+    };
 
     const onChange = (pageNumber) => {
         console.log('Page: ', pageNumber);
         setCurrentPage(pageNumber);
     };
+
     const handleLikeClick = async (postId) => {
         try {
-            // 调用 likePost 方法
             const response = await PostApi.likePost(postId);
             alert("点赞成功");
-
-            // 处理成功的情况，例如刷新界面等
             console.log(response);
         } catch (error) {
-            // 处理错误，比如打印错误日志或者显示错误消息
             console.error('Error liking post:', error);
         }
     };
@@ -58,16 +76,14 @@ const Community = () => {
         const [username, setUsername] = useState('');
 
         useEffect(() => {
-            // 获取帖子作者的用户名
             const fetchUsername = async () => {
                 try {
-                    const username = await UserApi.getUserInfoById(post.userId);
+                    const username = await UserApi.getUserNameById(post.userId);
                     setUsername(username);
                 } catch (error) {
                     console.error('Error fetching user info:', error);
                 }
             };
-
             fetchUsername();
         }, [post.userId]);
 
@@ -82,7 +98,7 @@ const Community = () => {
                         <p className="text-gray-500">{post.content}</p>
                     </div>
                     <div className="text-gray-500 text-sm mt-2 text-right mr-10">
-                        <p>{username}</p>
+                        <Link to={`/user/${post.userId}`}>{username}</Link>
                         <p>{post.time}</p>
                         <button onClick={() => handleLikeClick(post.id)}>{post.upvote} 点赞</button>
                     </div>
@@ -91,24 +107,34 @@ const Community = () => {
         );
     };
 
-
     return (
         <>
             <NavBar/>
             <h1 className="text-center font-bold text-4xl mt-5 mb-10 my-auto">社区内容</h1>
-            <Search className="w-1/3 mx-32" placeholder="输入搜索条件（帖子标题、内容、用户名）" onSearch={onSearch} enterButton />
-            <a href="/create-post">
-                <button className="text-right text-sm bg-blue-400 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">发帖</button>
-            </a>
-            <div >
+            <div className="flex justify-between items-center mx-32">
+                <Search className="w-1/3" placeholder="输入搜索条件（帖子标题、内容、用户名）" onSearch={onSearch}
+                        enterButton/>
+                <div className="flex space-x-4">
+                    <Button onClick={sortByTime}>按时间{sortTime ? "升序" : "降序"}</Button>
+                    <Button onClick={sortByLikes}>按点赞数{sortLikes ? "升序" : "降序"}</Button>
+                    <a href="/create-post" className="mr-10">
+                        <button
+                            className="text-sm bg-blue-400 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">发帖
+                        </button>
+                    </a>
+                </div>
+            </div>
+
+            <div>
                 <div className="bg-white rounded-lg shadow-lg mx-32 mt-4">
-                    {postInfos.map((post, index) => (
+                    {filteredPostInfos.map((post, index) => (
                         <div key={index} className="mb-4">
-                            <PostComponent post={post} />
+                        <PostComponent post={post}/>
                         </div>
                     ))}
                 </div>
-                <Pagination className="text-center mt-4 mb-16" showQuickJumper defaultPageSize={pageSize} total={postInfos.length} onChange={onChange}/>
+                <Pagination className="text-center mt-4 mb-16" showQuickJumper defaultPageSize={pageSize}
+                            total={filteredPostInfos.length} onChange={onChange}/>
             </div>
         </>
     )
