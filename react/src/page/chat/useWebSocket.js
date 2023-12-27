@@ -36,7 +36,7 @@ const useWebSocket = (relativePath) => {
   }, [relativePath]);
 
   const getWebSocketUrl = (relativePath) => {
-    const protocolPrefix = 'ws://';
+    const protocolPrefix = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
     const host = window.location.host;
     return `${protocolPrefix}${host}${relativePath}`;
   };
