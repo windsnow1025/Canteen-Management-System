@@ -29,10 +29,14 @@ export default class UserAPI {
 
     static async getUserInfo() {
         const token = localStorage.getItem('token');
-        const res = await axios.get(`${process.env.REACT_APP_HTTP_API_BASE_URL}/user/info`, {
-            headers: {Authorization: `${token}`}
-        });
-        return res.data;
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_HTTP_API_BASE_URL}/user/info`, {
+                headers: {Authorization: `${token}`}
+            });
+            return res.data;
+        } catch {
+            return null;
+        }
     }
 
     static async updateUserType(userId,userType,canteenId) {
