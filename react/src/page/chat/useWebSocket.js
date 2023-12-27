@@ -1,14 +1,19 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-const useWebSocket = (relativePath) => {
+const useWebSocket = (url) => {
   const [messages, setMessages] = useState([]);
   const [connected, setConnected] = useState(false);
   const ws = useRef(null);
 
   useEffect(() => {
-    const url = getWebSocketUrl(relativePath);
+    let fullURL;
+    if (url.includes('ws')) {
+      fullURL = url;
+    } else {
+      fullURL = getWebSocketUrl(url);
+    }
 
-    ws.current = new WebSocket(url);
+    ws.current = new WebSocket(fullURL);
 
     ws.current.onopen = () => {
       console.log('WebSocket connected');
@@ -33,7 +38,7 @@ const useWebSocket = (relativePath) => {
     return () => {
       ws.current.close();
     };
-  }, [relativePath]);
+  }, [url]);
 
   const getWebSocketUrl = (relativePath) => {
     const protocolPrefix = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
