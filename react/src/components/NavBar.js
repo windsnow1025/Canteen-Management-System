@@ -1,22 +1,38 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import avatarUrl from '../asset/images/user_avatar.jpg';
 import messageIcon from '../asset/images/message.png';
 import messageIconAlert from '../asset/images/messageAlert.png';
+import UserAPI from "../service/UserAPI";
+import ComplaintAPI from "../service/ComplaintAPI";
 
 class NavBar extends Component {
-    messageAlertFlag = false;
-    iconUrl = this.messageAlertFlag ? messageIconAlert : messageIcon;
+    state = {
+        userInfo: null,
+        messageAlertFlag: false,
+        nullComplaintsCount: 0,
+    };
+
+    async componentDidMount() {
+        const data = await UserAPI.getUserInfo();
+        this.setState({ userInfo: data });
+
+        if (data && data.userType === 'canteen_admin') {
+            const complaints = await ComplaintAPI.getComplaintInfosByCanteenId(data.canteenId);
+            const nullComplaintsCount = complaints.filter(complaint => complaint.complaintResult === null).length;
+            this.setState({ nullComplaintsCount: nullComplaintsCount, messageAlertFlag: nullComplaintsCount !== 0 });
+        }
+    }
 
     render() {
         const token = localStorage.getItem('token');
+        const iconUrl = this.state.messageAlertFlag ? messageIconAlert : messageIcon;
+
         return (
             <nav className="bg-gray-100 shadow flex justify-between items-center">
-                <div className="w-1/6">
-
-                </div>
+                <div className="w-1/6"></div>
                 <div className="px-4 py-2 block w-1/3 flex items-center">
                     <a href="/user-info" className="px-4 py-2 block">
-                        <img src={avatarUrl} alt="User" className="w-9 h-9 rounded-full border-2 border-white" />
+                        <img src={avatarUrl} alt="User" className="w-9 h-9 rounded-full border-2 border-white"/>
                     </a>
                     <div className="px-4 py-2 block font-bold">
                         上理食堂社区
@@ -33,10 +49,15 @@ class NavBar extends Component {
                     {token ? (
                         <>
                             <a href="/user-info">我的</a>
-                            <a className="px-4 py-2 block">|</a>
-                            <a href="/complaint-handling">
-                                <img src={this.iconUrl} alt="User" className="w-6 h-6" />
-                            </a>
+                            {this.state.userInfo && this.state.userInfo.userType === 'canteen_admin' && (
+                                <>
+                                    <a className="px-4 py-2 block">|</a>
+                                    <a href="/complaint-handling">
+                                        <img src={iconUrl} alt="User" className="w-6 h-6"/>
+                                    </a>
+                                    {this.state.messageAlertFlag && <span className="text-red-500">{this.state.nullComplaintsCount}</span>}
+                                </>
+                            )}
                         </>
                     ) : (
                         <>
@@ -46,7 +67,6 @@ class NavBar extends Component {
                         </>
                     )}
                 </div>
-
             </nav>
         );
     }
