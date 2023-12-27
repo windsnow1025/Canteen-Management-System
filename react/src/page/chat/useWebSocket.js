@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-const useWebSocket = (url) => {
+const useWebSocket = (relativePath) => {
   const [messages, setMessages] = useState([]);
   const [connected, setConnected] = useState(false);
   const ws = useRef(null);
 
   useEffect(() => {
-    // Initialize WebSocket connection
+    const url = getWebSocketUrl(relativePath);
+
     ws.current = new WebSocket(url);
 
     ws.current.onopen = () => {
@@ -32,7 +33,13 @@ const useWebSocket = (url) => {
     return () => {
       ws.current.close();
     };
-  }, [url]);
+  }, [relativePath]);
+
+  const getWebSocketUrl = (relativePath) => {
+    const protocolPrefix = 'ws://';
+    const host = window.location.host;
+    return `${protocolPrefix}${host}${relativePath}`;
+  };
 
   // Function to send messages
   const sendMessage = useCallback(

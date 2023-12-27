@@ -11,8 +11,8 @@ const ChatComponent = () => {
     const [senderUsername, setSenderUsername] = useState('');
     const handleSend = () => {
         const message = {
-            sender: senderUsername, // TODO: Replace with actual sender
-            receiver: userName, // TODO: Replace with actual receiver
+            sender: senderUsername,
+            receiver: userName,
             content: input
         };
         sendMessage(message);
