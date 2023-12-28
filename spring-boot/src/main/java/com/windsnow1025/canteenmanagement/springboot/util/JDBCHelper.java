@@ -128,9 +128,25 @@ public class JDBCHelper extends DatabaseHelper {
             VALUES ("master","mpassword","master_admin",100,-1)
             """;
 
-    private static final String INSERT_ADMIN = """
+    private static final String INSERT_ADMIN1 = """
             INSERT INTO user (username, password, user_type, user_level, canteen_id)
-            VALUES ("admin","apassword","canteen_admin",99,1)
+            VALUES ("admin1","apassword","canteen_admin",50,1)
+            """;
+    private static final String INSERT_ADMIN2 = """
+            INSERT INTO user (username, password, user_type, user_level, canteen_id)
+            VALUES ("admin2","apassword","canteen_admin",50,2)
+            """;
+    private static final String INSERT_ADMIN3 = """
+            INSERT INTO user (username, password, user_type, user_level, canteen_id)
+            VALUES ("admin3","apassword","canteen_admin",50,3)
+            """;
+    private static final String INSERT_ADMIN4 = """
+            INSERT INTO user (username, password, user_type, user_level, canteen_id)
+            VALUES ("admin4","apassword","canteen_admin",50,4)
+            """;
+    private static final String INSERT_ADMIN5 = """
+            INSERT INTO user (username, password, user_type, user_level, canteen_id)
+            VALUES ("admin5","apassword","canteen_admin",50,5)
             """;
     private static final String INSERT_CONSUMER = """
             INSERT INTO user (username, password, user_type, user_level, canteen_id)
@@ -189,7 +205,7 @@ public class JDBCHelper extends DatabaseHelper {
 
     private static final String INSERT_POST_1 = """
             INSERT INTO post (user_id, time, title, content, picture)
-            VALUES (2, "2023-12-25-12:20", "test", "this is a test", null)
+            VALUES (2, "2023-12-25-12:20", "test", "this is a test", NULL)
             """;
 
     private static JDBCHelper instance;
@@ -208,7 +224,7 @@ public class JDBCHelper extends DatabaseHelper {
     @Override
     protected void setDatabaseConfig() {
         dbDriverClassName = "com.mysql.cj.jdbc.Driver";
-        dbVersion = "1.6.0";
+        dbVersion = "1.6.1";
 
         String schemaName = System.getenv("MYSQL_DATABASE");
         dbUrl = "jdbc:mysql://learn-mysql:3306/" + schemaName;
@@ -247,7 +263,11 @@ public class JDBCHelper extends DatabaseHelper {
             statement.executeUpdate(CREATE_TABLE_USER_LIKE);
 
             statement.executeUpdate(INSERT_MASTER);
-            statement.executeUpdate(INSERT_ADMIN);
+            statement.executeUpdate(INSERT_ADMIN1);
+            statement.executeUpdate(INSERT_ADMIN2);
+            statement.executeUpdate(INSERT_ADMIN3);
+            statement.executeUpdate(INSERT_ADMIN4);
+            statement.executeUpdate(INSERT_ADMIN5);
             statement.executeUpdate(INSERT_CONSUMER);
             statement.executeUpdate(INSERT_CANTEEN_1);
             statement.executeUpdate(INSERT_CANTEEN_2);
