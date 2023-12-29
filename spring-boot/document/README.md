@@ -10,7 +10,7 @@ username: master
 password: mpassword
 userType: master_admin
 
-username: admin
+username: admin1
 password: apassword
 userType: canteen_admin
 
